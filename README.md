@@ -1,2 +1,4 @@
 # CatchBall
-A plugin that make entity to be catchable
+my first minecraft plugin
+
+**WIP**

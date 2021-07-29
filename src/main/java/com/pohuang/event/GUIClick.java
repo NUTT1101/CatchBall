@@ -1,0 +1,78 @@
+package com.pohuang.event;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pohuang.ConfigSetting;
+import com.pohuang.HeadDrop;
+import com.pohuang.GUI.CatchableList;
+
+import org.bukkit.Sound;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import net.md_5.bungee.api.ChatColor;
+
+
+public class GUIClick implements Listener{
+    List<String> savelist = new ArrayList<>();
+
+    @EventHandler
+    public void guiClick(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        String title = ConfigSetting.toChat(ConfigSetting.catchableListTitle, "", "");
+        HeadDrop headDrop = new HeadDrop();
+        
+        if (event.getView().getTitle().equals(title)) {
+            event.setCancelled(true);
+
+            if (event.getClickedInventory().equals(player.getInventory())) { return; }
+            Integer page = Integer.valueOf(ChatColor.stripColor(event.getClickedInventory().getItem(49).getItemMeta().getDisplayName()).split(" ")[1]);
+             
+            
+            switch (event.getSlot()) {
+                case 45:
+                    new CatchableList().openCatchableList(player, page - 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
+                    break;
+                case 53:
+                    new CatchableList().openCatchableList(player, page + 1);
+                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
+                    event.setCancelled(true);
+                    break;
+                default:
+                    if (event.getClickedInventory().getItem(event.getSlot()) != null) {
+                        ItemStack clickItem = event.getClickedInventory().getItem(event.getSlot());
+                        ItemMeta clickItemMeta = clickItem.getItemMeta();
+                        List<String> lore = clickItemMeta.getLore();
+
+                        EntityType entityType = EntityType.valueOf(ChatColor.stripColor(clickItemMeta.getLore().get(0).split(" ")[1]));
+
+                        if (ConfigSetting.catchableEntity.contains(entityType)) {
+                            ConfigSetting.catchableEntity.remove(entityType);      
+                            lore.set(1, ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &c關閉"));
+                            
+                        } else {
+                            ConfigSetting.catchableEntity.add(entityType);
+                            lore.set(1, ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &a開啟"));
+                        }
+
+                        clickItemMeta.setLore(lore);
+                        clickItem.setItemMeta(clickItemMeta);
+                        player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
+                        player.sendMessage(ChatColor.AQUA + headDrop.getEntityDisplayname(entityType.toString()) + clickItemMeta.getLore().get(1));
+                        
+                        ConfigSetting.saveEntityList();
+                        
+                        break;
+                    }              
+            }
+        }
+    }         
+     
+}

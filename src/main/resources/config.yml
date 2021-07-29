@@ -1,0 +1,77 @@
+#插件是否開啟
+Enabled: true
+#雞是不是會掉落金雞蛋
+ChickenDropGoldEgg: true
+#金雞蛋掉落的機率
+ChickenDropGoldEggChance: 50%
+#捕捉到的聲音，關閉直接打false
+CatchSucessSound: ENTITY_ARROW_HIT_PLAYER
+#編輯生物捕捉介面的標題名稱
+CatchableListTitle: "&l生物捕捉設定"
+#編輯生物捕捉介面上下一頁按鈕名稱
+PrevPage: "&a上一頁"
+NextPage: "&a下一頁"
+CurrentPage: "&a當前頁面: &e{PAGE}"
+
+DropSkullSetting:
+    
+
+#可捕捉之生物  
+CatchableEntity:
+- sheep
+
+#捕捉球合成
+Recipe:
+    #是否開啟
+    enabled: true
+    #合成代號
+    key:
+        #輸入GOLDEGG代表使用插件提供的金雞蛋來合成，也可以依需求替換成Minecraft原生材料
+        G: GOLDEGG
+        E: egg
+    #合成表
+    shape:
+    - "GGG"
+    - "GEG"
+    - "GGG"
+
+#插件內建物品命名
+Items:
+    CatchBall:
+        DisplayName: "&a捕&b捉&c球"
+        Lore:
+        - "&7用於捕捉特定生物"
+
+    GoldEgg:
+        DisplayName: "&6金雞蛋"
+        GoldEggLore:
+        - "&7雞在生蛋時會有&e{PERCENT}&7機率生出"
+        - "&7可用於合成捕捉球"
+    
+Message:
+    ConsoleExcuteCommand: "&c此指令只有玩家才可執行!" 
+    NoPermission: "&c您沒有權限!"
+    PlayerInventoryFull: "&a您背包物品已滿，故物品掉落在您腳下!"
+    ArgDoesNotExist: "&a指令使用方法: 
+        \n&b/ctb get &7取得插件特殊物品
+        \n&b/ctb reload &7重新整理插件設定
+        \n&b/ctb list &7列出所有可捕捉實體與捕捉狀態
+        \n&b/ctb add &7將指定的實體新增至捕捉清單
+        \n&b/ctb remove &7將指定的實體從捕捉清單移除"
+    ArgTooMuch: "&c輸入的指令參數過多!"
+    UnknownCommandArgument: "&c未知的指令參數!"
+    SucessGetBall: "&a成功提取 {ITEM}"
+    ReloadSucess: "&a插件設定重新整理完畢!"
+    CanNotCatchable: "&c此生物無法捕捉，故 {BALL} &c掉落在 &e{LOCATION}"
+    BallHitBlock: "&c您未捕捉特定的生物，故 {BALL} 掉落在 &e{LOCATION}"
+    CatchSucess: "&a成功捕捉 {ENTITY} 位置: {LOCATION}"
+    SavedEntityNotFound: "&c未找到此捕捉生物的數據!"
+    ItemDoesNotExist: "&c請輸入要提取的物品  &7CatchBall | GoldEgg"
+    ItemNameError: "&c請輸入正確的物品名稱  &7CatchBall | GoldEgg"
+    AddEntityDoesNotExist: "&c請輸入要新增至捕捉生物清單的實體名稱!"
+    UnknownEntityType: "&c未知的實體名稱!"
+    EntityDoesExists: "&c實體已存在列表裡面!"
+    SucessAddEntity: "&a成功將 &b{ENTITY} &a新增至捕捉清單!"
+    RemoveEntityDoesNotExist: "&c請輸入要從捕捉列表移除的生物名稱"
+    RemoveEntityNotFound: "&c未在捕捉列表內找到實體"
+    SucessRemove: "&a成功從捕捉列表移除 &b{ENTITY}"
