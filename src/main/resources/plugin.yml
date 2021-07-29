@@ -2,7 +2,7 @@ name: CatchBall
 main: com.pohuang.CatchBall
 author: NUTT1101
 description: "§bA plugin that make entity to be catchable.\n§dContect Me: https://discord.gg/sjFufBqguq"  
-version: "1.0.0-beta02"
+version: "1.0.0-beta03"
 api-version: 1.13
 permissions:
   catchball.op:

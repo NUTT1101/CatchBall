@@ -24,6 +24,8 @@ public class ConfigSetting {
     public static String nextPage;
     public static String currentPage;
 
+    public static List<String> dropSkullLore;
+
     public static Boolean recipeEnabled;
     
     public static String catchBallName;
@@ -52,6 +54,8 @@ public class ConfigSetting {
     public static String removeEntityDoesNotExist;
     public static String removeEntityNotFound;
     public static String sucessRemove;
+    public static String skullDoesNotFound;
+    public static String locationUnsafe;
     
     private static File load(String fileName) {
         switch (fileName) {
@@ -88,6 +92,9 @@ public class ConfigSetting {
 
         currentPage = config.isSet("CurrentPage") ? config.getString("CurrentPage") : "&d當前頁面: &e{PAGE}";
 
+        dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&e生物種類: &a{ENTITY}",
+        "&e抓捕者: &a{PLAYER}", "&e抓捕時間: &a{TIME}", "&e抓捕地點: &a{LOCATION}") ;
+
         recipeEnabled = config.isSet("Recipe.enabled") ? config.getBoolean("Recipe.enabled") : true;
         
         catchBallName = config.isSet("Items.CatchBall.DisplayName") ? config.getString("Items.CatchBall.DisplayName") : 
@@ -112,7 +119,7 @@ public class ConfigSetting {
         "&a您背包物品已滿，故物品掉落在您腳下";
 
         argDoesNotExist = config.isSet("Message.ArgDoesNotExist") ? config.getString("Message.ArgDoesNotExist") :
-        "&a指令使用方法: \n&b/ctb get &7取得捕捉球!";
+        "&a指令使用方法: \n&b/ctb get &7取得插件特殊物品\n&b/ctb reload &7重新整理插件設定\n&b/ctb list &7列出所有可捕捉實體與捕捉狀態\n&b/ctb add &7將指定的實體新增至捕捉清單\n&b/ctb remove &7將指定的實體從捕捉清單移除";
 
         argTooMuch = config.isSet("Message.ArgTooMuch") ? config.getString("Message.ArgTooMuch") :
         "&c輸入的指令參數過多!";
@@ -162,6 +169,12 @@ public class ConfigSetting {
         sucessRemove = config.isSet("Message.SucessRemove") ? config.getString("Message.SucessRemove") :
         "&a成功從捕捉列表移除 &b{ENTITY}";
 
+        skullDoesNotFound = config.isSet("Message.SkullDoesNotFound") ? config.getString("Message.SkullDoesNotFound") :
+        "&c頭顱存放的實體數據遺失";
+
+        locationUnsafe = config.isSet("Message.LocationUnsafe") ? config.getString("Message.LocationUnsafe") :
+        "&c未能找到一個安全的區域生成，故此次重生已取消";
+
         if (!enabled) { return false; }
         
         if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
@@ -176,9 +189,9 @@ public class ConfigSetting {
                 
             // There is a common issue that you put an unknown entityType in the list of CatchableEntity
             } catch (Exception e) {
-                plugin.getLogger().info("§c未知的實體類型: " + entity);
-                plugin.getLogger().info("§c請檢察config.yml中的CatchableEntity");
-                plugin.getLogger().info("§c錯誤種類: " + e.getMessage());
+                plugin.getLogger().info("§cunkown EntityType: " + entity);
+                plugin.getLogger().info("§cPlease check \"CatchableEntity\" list in config.yml");
+                plugin.getLogger().info("§cError Message: " + e.getMessage());
             }
             
         }

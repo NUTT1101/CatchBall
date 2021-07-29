@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -36,9 +37,6 @@ public class HeadDrop {
         
         YamlConfiguration entityFile = ConfigSetting.getEntityFile();
 
-        String entityType = hitEntity.getType().toString().toLowerCase();
-        entityType = entityType.replace(entityType.charAt(0), entityType.toUpperCase().charAt(0));
-
         ItemStack entityHead = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta headMeta = entityHead.getItemMeta();
         
@@ -57,10 +55,11 @@ public class HeadDrop {
         }
 
         List<String> headLore = new ArrayList<>();
-        headLore.add("§e生物種類: §a" + getEntityDisplayname(hitEntity.getType().toString())); 
-        headLore.add("§e抓捕者: §a" + player.getName());
-        headLore.add("§e抓捕時間: §a" + format.format(now)); 
-        headLore.add("§e抓捕地點: §a" + location);
+        
+        headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
+            replace("{ENTITY}", hitEntity.getType().toString()).replace("{PLAYER}", player.getName()).replace("{TIME}", format.format(now)).
+            replace("{LOCATION}", location)).collect(Collectors.toList()));
+
         new BukkitRunnable() {
             
             @Override

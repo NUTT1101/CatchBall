@@ -22,7 +22,7 @@ public class CatchBall extends JavaPlugin{
     public void onEnable() {
         ConfigSetting.checkConfig();
         if (!ConfigSetting.enabled) { 
-            this.getLogger().info("插件狀態為: " + plguinStatus);
+            this.getLogger().info("Plugin Status: " + plguinStatus);
         } else {
             registerEvent();
             registerCommand();

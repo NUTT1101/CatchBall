@@ -13,8 +13,12 @@ PrevPage: "&a上一頁"
 NextPage: "&a下一頁"
 CurrentPage: "&a當前頁面: &e{PAGE}"
 
-DropSkullSetting:
-    
+#捕捉掉落頭顱敘述
+DropSkullLore:
+- "&e生物種類: &a{ENTITY}"
+- "&e抓捕者: &a{PLAYER}"
+- "&e抓捕時間: &a{TIME}"
+- "&e抓捕地點: &a{LOCATION}"
 
 #可捕捉之生物  
 CatchableEntity:
@@ -75,3 +79,5 @@ Message:
     RemoveEntityDoesNotExist: "&c請輸入要從捕捉列表移除的生物名稱"
     RemoveEntityNotFound: "&c未在捕捉列表內找到實體"
     SucessRemove: "&a成功從捕捉列表移除 &b{ENTITY}"
+    SkullDoesNotFound: "&c頭顱存放的實體數據遺失"
+    LocationUnsafe: "&c未能找到一個安全的區域生成，故此次重生已取消"

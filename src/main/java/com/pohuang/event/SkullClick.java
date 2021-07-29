@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pohuang.CatchBall;
+import com.pohuang.ConfigSetting;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -48,19 +49,19 @@ public class SkullClick implements Listener{
                 String path = data.get(new NamespacedKey(plugin, "skullData"), PersistentDataType.STRING).toString();
 
                 if (path == null) {
-                    player.sendMessage("頭顱已廢棄");
+                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.skullDoesNotFound, "", ""));
                     event.setCancelled(true);
                 } else {
                     try {
                         EntityType entityType = EntityType.valueOf(data.get(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING));
                         Location clickLocation = event.getClickedBlock().getLocation();
                         
-                        for (int i=0; i<50; i++) {
+                        for (int i=0; i < 3; i++) {
                             if (clickLocation.getBlock().getType().equals(Material.AIR)) { break; }
                             clickLocation.setY(clickLocation.getY() + 1D);
-
-                            if (i == 49) {
-                                player.sendMessage("未能找到一個安全的區域生成，故此次重生已取消");
+                            
+                            if (i == 2) {
+                                player.sendMessage(ConfigSetting.toChat(ConfigSetting.locationUnsafe, "", ""));
                                 event.setCancelled(true);
                                 return;
                             }

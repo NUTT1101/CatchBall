@@ -7,6 +7,7 @@ import com.pohuang.ConfigSetting;
 import com.pohuang.HeadDrop;
 import com.pohuang.GUI.CatchableList;
 
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -31,6 +32,8 @@ public class GUIClick implements Listener{
         if (event.getView().getTitle().equals(title)) {
             event.setCancelled(true);
 
+            if (event.getClickedInventory() == null) { return; }
+
             if (event.getClickedInventory().equals(player.getInventory())) { return; }
             Integer page = Integer.valueOf(ChatColor.stripColor(event.getClickedInventory().getItem(49).getItemMeta().getDisplayName()).split(" ")[1]);
              
@@ -46,7 +49,7 @@ public class GUIClick implements Listener{
                     event.setCancelled(true);
                     break;
                 default:
-                    if (event.getClickedInventory().getItem(event.getSlot()) != null) {
+                    if (event.getClickedInventory().getItem(event.getSlot()) != null && event.getClickedInventory().getItem(event.getSlot()).getType().equals(Material.PLAYER_HEAD)) {
                         ItemStack clickItem = event.getClickedInventory().getItem(event.getSlot());
                         ItemMeta clickItemMeta = clickItem.getItemMeta();
                         List<String> lore = clickItemMeta.getLore();
