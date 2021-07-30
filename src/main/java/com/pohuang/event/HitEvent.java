@@ -9,6 +9,7 @@ import com.pohuang.items.Ball;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -16,6 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.inventory.ItemStack;
+
+import net.minecraft.nbt.NBTTagCompound;
 
 
 
@@ -50,10 +53,12 @@ public class HitEvent implements Listener {
         if (event.getHitEntity() != null) {
             Entity hitEntity = (Entity) event.getHitEntity();
             hitLocation = hitEntity.getLocation();
-
+            net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
+            String checkCustom = nmsEntity.save(new NBTTagCompound()).getString("Paper.SpawnReason");
+            
             // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
             for (EntityType entity : catchableEntity) {
-                if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player)) {
+                if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player) && !checkCustom.equals("CUSTOM")) {
                     hitEntity.remove();
                     // hitEntity.getWorld().dropItem(hitEntity.getLocation(), entityToItemStack(entity));
                     if (!(ConfigSetting.catchSucessSound.equals("FALSE"))) { 
@@ -92,5 +97,4 @@ public class HitEvent implements Listener {
         return xyz;
     }
 
-    
 }

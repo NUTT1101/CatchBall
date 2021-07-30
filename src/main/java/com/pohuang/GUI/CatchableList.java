@@ -45,11 +45,18 @@ public class CatchableList {
         for (String entity : entityList) {
             ItemStack skull = new HeadDrop().skullTextures(new ItemStack(Material.PLAYER_HEAD), entityFile, entity);
             ItemMeta skullMeta = skull.getItemMeta();
-            String catchable = ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity)) ? "&a開啟" : "&c關閉";
+            String catchable = ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity)) ? "&aTRUE" : "&cFALSE";
 
-            skullMeta.setDisplayName(ChatColor.AQUA + entityFile.getString("EntityList." + entity + ".DisplayName"));
-            skullMeta.setLore(Arrays.asList(ChatColor.GOLD + "生物種類: " + ChatColor.WHITE + entity, 
-               ChatColor.GOLD + "允許抓捕: " + ChatColor.translateAlternateColorCodes('&', catchable)));
+            skullMeta.setDisplayName(ChatColor.WHITE + entity);
+            
+            List<String> lore = new ArrayList<>();
+            for (int i=0; i < ConfigSetting.guiSkullLore.size(); i++) {
+                lore.add(i, ChatColor.translateAlternateColorCodes('&', ConfigSetting.guiSkullLore.get(i).
+                replace("{ENTITY}", ChatColor.AQUA + entityFile.getString("EntityList." + entity + ".DisplayName")).
+                replace("{CATCHABLE}", catchable)));
+            }
+            skullMeta.setLore(lore);
+            
             skull.setItemMeta(skullMeta);
             head.add(skull);
         }

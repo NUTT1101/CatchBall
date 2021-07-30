@@ -23,6 +23,7 @@ public class ConfigSetting {
     public static String prevPage;
     public static String nextPage;
     public static String currentPage;
+    public static List<String> guiSkullLore;
 
     public static List<String> dropSkullLore;
 
@@ -71,8 +72,10 @@ public class ConfigSetting {
         // check if the file exist
         if (!load("configFile").exists()) { plugin.saveResource("config.yml", false); }
         if (!load("entityFile").exists()) { plugin.saveResource("entity.yml", false); }
+        
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
+        FileConfiguration entityfile = YamlConfiguration.loadConfiguration(load("entityFile"));
 
         enabled = config.isSet("Enabled") ? config.getBoolean("Enabled") : true;
         chickenDropGoldEgg = config.isSet("ChickenDropGoldEgg") ? config.getBoolean("ChickenDropGoldEgg") : true;
@@ -91,6 +94,9 @@ public class ConfigSetting {
         nextPage = config.isSet("NextPage") ? config.getString("NextPage") : "&a下一頁";
 
         currentPage = config.isSet("CurrentPage") ? config.getString("CurrentPage") : "&d當前頁面: &e{PAGE}";
+
+        guiSkullLore = config.isSet("GUISkullLore") ? config.getStringList("GUISkullLore") : Arrays.asList("&6自訂義名稱: {ENTITY}", 
+            "&6允許抓捕: {CATCHABLE}");
 
         dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&e生物種類: &a{ENTITY}",
         "&e抓捕者: &a{PLAYER}", "&e抓捕時間: &a{TIME}", "&e抓捕地點: &a{LOCATION}") ;
@@ -179,7 +185,7 @@ public class ConfigSetting {
         
         if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
         
-        for (String entity : config.getStringList("CatchableEntity")) {            
+        for (String entity : entityfile.getStringList("CatchableEntity")) {            
             try {
                 if (EntityType.valueOf(entity.toUpperCase()) != null) {
 
@@ -214,17 +220,17 @@ public class ConfigSetting {
     }
 
     public static void saveEntityList() {
-        YamlConfiguration config = YamlConfiguration.loadConfiguration(load("configFile"));                   
+        YamlConfiguration entityFile = YamlConfiguration.loadConfiguration(load("entityFile"));                   
         List<String> savelist = new ArrayList<>();
         
         for (int i=0; i < ConfigSetting.catchableEntity.toArray().length; i++) {
             savelist.add(ConfigSetting.catchableEntity.get(i).toString());
         }
 
-        config.set("CatchableEntity", savelist.toArray());
+        entityFile.set("CatchableEntity", savelist.toArray());
 
         try{
-            config.save(load("configFile"));
+            entityFile.save(load("entityFile"));
         } catch (IOException e) {
             e.printStackTrace();
         }

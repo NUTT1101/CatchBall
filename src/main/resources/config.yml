@@ -6,12 +6,16 @@ ChickenDropGoldEgg: true
 ChickenDropGoldEggChance: 50%
 #捕捉到的聲音，關閉直接打false
 CatchSucessSound: ENTITY_ARROW_HIT_PLAYER
+
 #編輯生物捕捉介面的標題名稱
 CatchableListTitle: "&l生物捕捉設定"
 #編輯生物捕捉介面上下一頁按鈕名稱
 PrevPage: "&a上一頁"
 NextPage: "&a下一頁"
 CurrentPage: "&a當前頁面: &e{PAGE}"
+GUISkullLore:
+- "&6自訂義名稱: {ENTITY}"
+- "&6允許抓捕: {CATCHABLE}"
 
 #捕捉掉落頭顱敘述
 DropSkullLore:
@@ -19,10 +23,6 @@ DropSkullLore:
 - "&e抓捕者: &a{PLAYER}"
 - "&e抓捕時間: &a{TIME}"
 - "&e抓捕地點: &a{LOCATION}"
-
-#可捕捉之生物  
-CatchableEntity:
-- sheep
 
 #捕捉球合成
 Recipe:

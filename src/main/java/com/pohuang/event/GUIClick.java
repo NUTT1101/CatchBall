@@ -54,15 +54,15 @@ public class GUIClick implements Listener{
                         ItemMeta clickItemMeta = clickItem.getItemMeta();
                         List<String> lore = clickItemMeta.getLore();
 
-                        EntityType entityType = EntityType.valueOf(ChatColor.stripColor(clickItemMeta.getLore().get(0).split(" ")[1]));
+                        EntityType entityType = EntityType.valueOf(ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()));
 
                         if (ConfigSetting.catchableEntity.contains(entityType)) {
                             ConfigSetting.catchableEntity.remove(entityType);      
-                            lore.set(1, ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &c關閉"));
+                            lore.set(getLoreIndex(lore, "允許抓捕"), ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &cFALSE"));
                             
                         } else {
                             ConfigSetting.catchableEntity.add(entityType);
-                            lore.set(1, ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &a開啟"));
+                            lore.set(getLoreIndex(lore, "允許抓捕"), ChatColor.translateAlternateColorCodes('&', "&6允許抓捕: &aTRUE"));
                         }
 
                         clickItemMeta.setLore(lore);
@@ -76,6 +76,15 @@ public class GUIClick implements Listener{
                     }              
             }
         }
-    }         
+    }
+
+    public int getLoreIndex(List<String> lore, String contain) {
+        for (int i=0; i<lore.size(); i++) {
+            if (lore.get(i).contains(contain)) {
+                return i;
+            }
+        }
+        return 1;
+    }
      
 }

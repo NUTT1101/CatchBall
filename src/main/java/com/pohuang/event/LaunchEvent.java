@@ -6,10 +6,12 @@ import java.util.UUID;
 
 import com.pohuang.items.Ball;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -30,10 +32,13 @@ public class LaunchEvent implements Listener{
             if (!(event.getEntity().getShooter() instanceof Player)) { return; }
             
             Player player = (Player) event.getEntity().getShooter();
-            ItemStack mainHand = (ItemStack) player.getInventory().getItemInMainHand();
+            ItemStack mainHand = player.getInventory().getItemInMainHand();
+            
+            ItemStack hold =  !mainHand.getType().equals(Material.SNOWBALL) ?
+                player.getInventory().getItemInOffHand() : mainHand;
 
             // check if tool of player is catchBall
-            if (mainHand.getItemMeta().equals(catchBall.getItemMeta())) {
+            if (hold.getItemMeta().equals(catchBall.getItemMeta())) {
 
                 // every thing be has a Unique id , so get that to do condition
                 ballUUID.add(event.getEntity().getUniqueId());
