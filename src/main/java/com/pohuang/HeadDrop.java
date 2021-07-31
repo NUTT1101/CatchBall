@@ -56,9 +56,15 @@ public class HeadDrop {
 
         List<String> headLore = new ArrayList<>();
         
-        headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
+        if (player == null) {
+            headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
+            replace("{ENTITY}", hitEntity.getType().toString()).replace("{PLAYER}", "Dispenser").replace("{TIME}", format.format(now)).
+            replace("{LOCATION}", location)).collect(Collectors.toList()));
+        } else {
+            headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
             replace("{ENTITY}", hitEntity.getType().toString()).replace("{PLAYER}", player.getName()).replace("{TIME}", format.format(now)).
             replace("{LOCATION}", location)).collect(Collectors.toList()));
+        }
 
         new BukkitRunnable() {
             
@@ -81,7 +87,7 @@ public class HeadDrop {
     public ItemStack skullTextures(ItemStack item, YamlConfiguration entityFile, String skullName) {
         SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + skullName + ".Skull")));
+        profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + skullName.toUpperCase() + ".Skull")));
         
         try {
             Field profileField = skullMeta.getClass().getDeclaredField("profile");
@@ -101,7 +107,7 @@ public class HeadDrop {
         List<String> entitList = new ArrayList<>();
         entitList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
         if (entitList.contains(entityName)) {
-            return entityFile.getString("EntityList." + entityName + ".DisplayName");
+            return entityFile.getString("EntityList." + entityName.toUpperCase() + ".DisplayName");
         }
     
         return entityName;

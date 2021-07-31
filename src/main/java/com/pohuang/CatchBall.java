@@ -11,13 +11,17 @@ import com.pohuang.event.SkullClick;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import net.md_5.bungee.api.ChatColor;
 
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
     private Boolean plguinStatus = config.getBoolean("Enable");
-    
+    private Plugin resPlug = getServer().getPluginManager().getPlugin("Residence");
+
     @Override
     public void onEnable() {
         ConfigSetting.checkConfig();
@@ -27,6 +31,10 @@ public class CatchBall extends JavaPlugin{
             registerEvent();
             registerCommand();
             new BallRecipe();
+
+            if (resPlug != null) {
+                this.getLogger().info(ChatColor.GREEN + "Residence Hook!");
+            }
         }
     }
 

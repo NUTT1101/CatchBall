@@ -54,7 +54,6 @@ public class BallRecipe {
                 
             }
             
-            // check Recipe is set
             if (Bukkit.getRecipe(ballKey) != null) { Bukkit.removeRecipe(ballKey); }
             
             Bukkit.addRecipe(ballRecipe);

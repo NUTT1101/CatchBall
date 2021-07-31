@@ -6,14 +6,14 @@ import java.util.UUID;
 
 import com.pohuang.items.Ball;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.ThrowableProjectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.projectiles.BlockProjectileSource;
 
 public class LaunchEvent implements Listener{
     private ItemStack catchBall = new Ball().getCatchBall();
@@ -25,24 +25,27 @@ public class LaunchEvent implements Listener{
     @EventHandler
     public void onCatchBallThrow(ProjectileLaunchEvent event) {
         
-        // catchBall is a SnowBall
-        if (event.getEntity() instanceof Snowball) {
-            
-            // check if shooter is a player
-            if (!(event.getEntity().getShooter() instanceof Player)) { return; }
-            
-            Player player = (Player) event.getEntity().getShooter();
-            ItemStack mainHand = player.getInventory().getItemInMainHand();
-            
-            ItemStack hold =  !mainHand.getType().equals(Material.SNOWBALL) ?
-                player.getInventory().getItemInOffHand() : mainHand;
+        if (!(event.getEntity() instanceof Snowball)) { return; }
 
-            // check if tool of player is catchBall
-            if (hold.getItemMeta().equals(catchBall.getItemMeta())) {
+        if (event.getEntity().getShooter() instanceof Player) { 
+            if (!(event.getEntity() instanceof ThrowableProjectile)) { return; }
 
-                // every thing be has a Unique id , so get that to do condition
-                ballUUID.add(event.getEntity().getUniqueId());
-            }
+            ThrowableProjectile throwableProjectile = (ThrowableProjectile) event.getEntity();
+            ItemStack ball = throwableProjectile.getItem();
+
+            if (!ball.getItemMeta().equals(catchBall.getItemMeta())) { return; }
+            
+            ballUUID.add(event.getEntity().getUniqueId());
+        
+        } else if (event.getEntity().getShooter() instanceof BlockProjectileSource) {
+            if (!(event.getEntity() instanceof ThrowableProjectile)) { return; }
+            
+            ThrowableProjectile throwableProjectile = (ThrowableProjectile) event.getEntity();
+            
+            if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta())) { return; }
+            
+            ballUUID.add(event.getEntity().getUniqueId());
         }
     }
+
 }

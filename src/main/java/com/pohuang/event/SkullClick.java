@@ -52,6 +52,11 @@ public class SkullClick implements Listener{
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.skullDoesNotFound, "", ""));
                     event.setCancelled(true);
                 } else {
+                    if (!new HitEvent().resCheck(player, event.getClickedBlock().getLocation())) {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     try {
                         EntityType entityType = EntityType.valueOf(data.get(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING));
                         Location clickLocation = event.getClickedBlock().getLocation();

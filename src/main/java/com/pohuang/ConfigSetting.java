@@ -34,6 +34,8 @@ public class ConfigSetting {
 
     public static String goldEggName;
     public static List<String> goldEggLore;
+
+    public static List<String> residenceFlag;
     
     public static String consoleExcuteCommand;
     public static String noPermission;
@@ -57,16 +59,7 @@ public class ConfigSetting {
     public static String sucessRemove;
     public static String skullDoesNotFound;
     public static String locationUnsafe;
-    
-    private static File load(String fileName) {
-        switch (fileName) {
-            case "configFile":
-                return new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml");
-            case "entityFile":
-                return new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml");
-        }
-        return null;
-    }
+    public static String noResidencePermissions;
 
     public static Boolean checkConfig() {
         // check if the file exist
@@ -114,6 +107,9 @@ public class ConfigSetting {
         
         goldEggLore = config.isSet("Items.GoldEgg.Lore") ? config.getStringList("Items.GoldEgg.Lore") : 
         Arrays.asList("&7雞在生蛋時會有&e{PERCENT}%&7機率生出", "&7可用於合成捕捉球");
+
+        residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag") :
+        Arrays.asList("animalkilling");
 
         consoleExcuteCommand = config.isSet("Message.ConsoleExcuteCommand") ? config.getString("Message.ConsoleExcuteCommand") : 
         "&c此指令只有玩家才可執行!" ;
@@ -181,6 +177,9 @@ public class ConfigSetting {
         locationUnsafe = config.isSet("Message.LocationUnsafe") ? config.getString("Message.LocationUnsafe") :
         "&c未能找到一個安全的區域生成，故此次重生已取消";
 
+        noResidencePermissions = config.isSet("Message.NoResidencePermissions") ? config.getString("Message.NoResidencePermissions") :
+        "&c您無法在此生成或捕捉動物，因為您缺少了此領地的 &e{FLAG} &c權限";
+        
         if (!enabled) { return false; }
         
         if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
@@ -203,6 +202,16 @@ public class ConfigSetting {
         }
 
         return true;
+    }
+
+    private static File load(String fileName) {
+        switch (fileName) {
+            case "configFile":
+                return new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml");
+            case "entityFile":
+                return new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml");
+        }
+        return null;
     }
     
     public static String toChat(String text, String location, String entity) {

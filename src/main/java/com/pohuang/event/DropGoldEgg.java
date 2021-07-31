@@ -18,9 +18,10 @@ public class DropGoldEgg implements Listener{
 
     @EventHandler
     public void ChickenDropEgg(EntityDropItemEvent event){
+        ConfigSetting.chickenDropGoldEggChance = ConfigSetting.chickenDropGoldEggChance > 100 ? 100 : ConfigSetting.chickenDropGoldEggChance ;
+
         if (event.getEntityType().equals(chicken) && status){
 
-            // 1% chance to drop goldEgg
             if (chance.nextInt(99) < ConfigSetting.chickenDropGoldEggChance) {
                 event.setCancelled(true);
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), new GoldEgg().getGoldEgg());                
