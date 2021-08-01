@@ -198,7 +198,7 @@ public class ConfigSetting {
             }
         } catch (IllegalArgumentException e) {
             plugin.getLogger().info(ChatColor.RED + e.getMessage());
-            plugin.getLogger().info(ChatColor.RED + "Unknown Residense flag!");
+            plugin.getLogger().info(ChatColor.RED + "Unknown Residence flag!");
             plugin.getLogger().info(ChatColor.RED + "Please check your config setting!");
             residenceFlag.clear();
             residenceFlag.add("animalkilling");
