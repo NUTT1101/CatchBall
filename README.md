@@ -4,4 +4,4 @@
 - English(Default)
 - [Chinese](https://github.com/NUTT1101/CatchBall/blob/main/CatchBall_zh-Tw.zip)
 
-**install: move `config.yml` and `entity.yml` to plugin folder.**
+**Language Install: move `config.yml` and `entity.yml` to plugin folder.**
