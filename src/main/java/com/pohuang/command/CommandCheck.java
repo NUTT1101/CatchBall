@@ -11,9 +11,6 @@ import org.bukkit.command.CommandSender;
 public class CommandCheck {
     private static List<String> argmumentList = Arrays.asList("get", "reload", "list", "add", "remove");
     
-    /* check commandSender , permission and argument
-    if return false, this command will be stop and send error message to player
-    if return true , this command will be continue execution */    
     public static Boolean check(CommandSender sender, Command command, String label, String[] args) {
         
         // Check if player has permission 

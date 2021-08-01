@@ -25,11 +25,9 @@ public class GoldEgg {
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        ConfigSetting.goldEggLore = ConfigSetting.goldEggLore.stream().map(lore -> ChatColor.
+        meta.setLore(ConfigSetting.goldEggLore.stream().map(lore -> ChatColor.
             translateAlternateColorCodes('&', lore).replace("{PERCENT}", String.valueOf(ConfigSetting.
-            chickenDropGoldEggChance))).collect(Collectors.toList());
-
-        meta.setLore(ConfigSetting.goldEggLore);
+            chickenDropGoldEggChance))).collect(Collectors.toList()));
         
         goldEgg.setItemMeta(meta);
     }

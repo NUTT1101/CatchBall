@@ -1,8 +1,8 @@
 name: CatchBall
 main: com.pohuang.CatchBall
 author: NUTT1101
-description: "§bA plugin that make entity to be catchable.\n§dContect Me: https://discord.gg/sjFufBqguq"  
-version: "1.0.0-beta05"
+description: "§bA plugin that make entity to be catchable.\n§dContect Me: https://discord.link/nuttPluginClub"  
+version: "1.0.0"
 api-version: 1.13
 softdepend: [Residence]
 permissions:
@@ -10,5 +10,5 @@ permissions:
     default: op
 commands:
   ctb:
-    description: catchball command
+    description: "Command Help : /ctb"
     

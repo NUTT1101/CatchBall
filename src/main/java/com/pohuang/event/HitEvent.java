@@ -72,14 +72,14 @@ public class HitEvent implements Listener {
                 for (EntityType entity : catchableEntity) {
                     if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player) && !checkCustom.equals("CUSTOM")) {
                         // hitEntity.getWorld().dropItem(hitEntity.getLocation(), entityToItemStack(entity));
-                        if (!(ConfigSetting.catchSucessSound.equals("FALSE"))) { 
-                            player.playSound(player.getLocation(), Sound.valueOf(ConfigSetting.catchSucessSound), 1f, 1f);
+                        if (!(ConfigSetting.catchSuccessSound.equals("FALSE"))) { 
+                            player.playSound(player.getLocation(), Sound.valueOf(ConfigSetting.catchSuccessSound), 1f, 1f);
                         }
 
                         event.getHitEntity().remove();
                         hitEntity.getWorld().dropItem(hitLocation, new HeadDrop().getEntityHead(event.getHitEntity(), player));
                         
-                        player.sendMessage(ConfigSetting.toChat(ConfigSetting.catchSucess, getCoordinate(hitLocation), entity.toString()));
+                        player.sendMessage(ConfigSetting.toChat(ConfigSetting.catchSuccess, getCoordinate(hitLocation), entity.toString()));
                         return true;
                     }             
                 }
@@ -115,25 +115,20 @@ public class HitEvent implements Listener {
                 for (EntityType entity : catchableEntity) {
                     if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player) && !checkCustom.equals("CUSTOM")) {
                         hitEntity.remove();
-
                         hitEntity.getWorld().dropItem(hitLocation, new HeadDrop().getEntityHead(event.getHitEntity(), null));
                         
                         return true;
                     }             
                 }
                 
-                // if player hit a can not be catch entity, catchBall will be return
                 hitEntity.getWorld().dropItem(hitLocation, catchBall);   
 
-            // hit block, catchBall will be return
             } else if (event.getHitBlock() != null) {
                 hitLocation = event.getHitBlock().getLocation();
                 event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), catchBall);
                 return false;
             }
         }
-
-        
 
         return false;
     }
@@ -162,8 +157,8 @@ public class HitEvent implements Listener {
 
         if (ResidenceApi.getResidenceManager().getByLoc(location) != null) {
             ClaimedResidence residence = ResidenceApi.getResidenceManager().getByLoc(location);
-
-            for (String flags : ConfigSetting.residenceFlag) {
+            
+            for (String flags : ConfigSetting.residenceFlag) {        
                 if (!residence.getPermissions().playerHas(player, Flags.valueOf(flags.toLowerCase()) , true)) {
 
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").

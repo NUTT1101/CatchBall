@@ -5,6 +5,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.bekvon.bukkit.residence.containers.Flags;
+import com.pohuang.Recipe.BallRecipe;
+import com.pohuang.items.Ball;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -18,24 +23,24 @@ public class ConfigSetting {
     public static List<EntityType> catchableEntity = new ArrayList<>();
     public static Boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
-    public static String catchSucessSound;
+    public static String catchSuccessSound;
     public static String catchableListTitle;
     public static String prevPage;
     public static String nextPage;
     public static String currentPage;
-    public static List<String> guiSkullLore;
+    public static List<String> guiSkullLore = new ArrayList<>();
 
-    public static List<String> dropSkullLore;
+    public static List<String> dropSkullLore = new ArrayList<>();
 
     public static Boolean recipeEnabled;
     
     public static String catchBallName;
-    public static List<String> catchBallLore;
+    public static List<String> catchBallLore = new ArrayList<>();
 
     public static String goldEggName;
-    public static List<String> goldEggLore;
+    public static List<String> goldEggLore = new ArrayList<>();
 
-    public static List<String> residenceFlag;
+    public static List<String> residenceFlag = new ArrayList<>();
     
     public static String consoleExcuteCommand;
     public static String noPermission;
@@ -43,20 +48,20 @@ public class ConfigSetting {
     public static String argDoesNotExist;
     public static String argTooMuch;
     public static String unknownCommandArgument;
-    public static String sucessGetBall;
-    public static String reloadSucess;
+    public static String successGetBall;
+    public static String reloadSuccess;
     public static String canNotCatchable;
     public static String ballHitBlock;
-    public static String catchSucess;
+    public static String catchSuccess;
     public static String addEntityDoesNotExist;
     public static String unknownEntityType;
     public static String entityDoesExists;
-    public static String sucessAddEntity;
+    public static String successAddEntity;
     public static String itemDoesNotExist;
     public static String itemNameError;
     public static String removeEntityDoesNotExist;
     public static String removeEntityNotFound;
-    public static String sucessRemove;
+    public static String successRemove;
     public static String skullDoesNotFound;
     public static String locationUnsafe;
     public static String noResidencePermissions;
@@ -73,117 +78,132 @@ public class ConfigSetting {
         enabled = config.isSet("Enabled") ? config.getBoolean("Enabled") : true;
         chickenDropGoldEgg = config.isSet("ChickenDropGoldEgg") ? config.getBoolean("ChickenDropGoldEgg") : true;
         
+        if (!enabled) { return false; }
+
         chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance") ? Integer.parseInt
-        (config.getString("ChickenDropGoldEggChance").replace("%", ""))  : 50;
+            (config.getString("ChickenDropGoldEggChance").replace("%", ""))  : 50;
         
-        catchSucessSound = config.isSet("CatchSucessSound") ? config.getString("CatchSucessSound").toUpperCase() :
-        "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
+        catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase() :
+            "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
 
-        catchableListTitle = config.isSet("CatchableListTitle") ? config.getString("CatchableListTitle") : 
-        "&l生物捕捉設定";
+        catchableListTitle = "&lCatch List Settings";
 
-        prevPage = config.isSet("PrevPage") ? config.getString("PrevPage") : "&a上一頁";
+        prevPage = "&aPrevious Page";
         
-        nextPage = config.isSet("NextPage") ? config.getString("NextPage") : "&a下一頁";
+        nextPage = "&aNext Page";
 
-        currentPage = config.isSet("CurrentPage") ? config.getString("CurrentPage") : "&d當前頁面: &e{PAGE}";
+        currentPage = "&eCurrent Page: &a{PAGE}";
 
-        guiSkullLore = config.isSet("GUISkullLore") ? config.getStringList("GUISkullLore") : Arrays.asList("&6自訂義名稱: {ENTITY}", 
-            "&6允許抓捕: {CATCHABLE}");
+        guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}"); 
 
-        dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&e生物種類: &a{ENTITY}",
-        "&e抓捕者: &a{PLAYER}", "&e抓捕時間: &a{TIME}", "&e抓捕地點: &a{LOCATION}") ;
+        dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&eENTITY TYPE: &a{ENTITY}",
+            "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
 
         recipeEnabled = config.isSet("Recipe.enabled") ? config.getBoolean("Recipe.enabled") : true;
         
         catchBallName = config.isSet("Items.CatchBall.DisplayName") ? config.getString("Items.CatchBall.DisplayName") : 
-        "&a捕&b捉&c球";
+            "&aCat&bch &cball";
         
         catchBallLore = config.isSet("Items.CatchBall.Lore") ? config.getStringList("Items.CatchBall.Lore") : 
-        Arrays.asList("&7用於捕捉特定生物");
+            Arrays.asList("&7Used to capture catchable entity");
 
         goldEggName = config.isSet("Items.GoldEgg.DisplayName") ? config.getString("Items.GoldEgg.DisplayName") : 
-        "&6金雞蛋";
+        "&6GoldEgg";
         
         goldEggLore = config.isSet("Items.GoldEgg.Lore") ? config.getStringList("Items.GoldEgg.Lore") : 
-        Arrays.asList("&7雞在生蛋時會有&e{PERCENT}%&7機率生出", "&7可用於合成捕捉球");
+            Arrays.asList("&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG",
+            "&7Can be used with CraftRecipe to make CatchBall");
 
         residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag") :
         Arrays.asList("animalkilling");
 
         consoleExcuteCommand = config.isSet("Message.ConsoleExcuteCommand") ? config.getString("Message.ConsoleExcuteCommand") : 
-        "&c此指令只有玩家才可執行!" ;
+        "&cThis command can only be executed by player!" ;
 
         noPermission = config.isSet("Message.NoPermission") ? config.getString("Message.NoPermission") :
-        "&c您沒有權限!";
+        "&cYou have no permission!";
         
         playerInventoryFull = config.isSet("Message.PlayerInventoryFull") ? config.getString("Message.PlayerInventoryFull") :
-        "&a您背包物品已滿，故物品掉落在您腳下";
+        "&aYour inventory is full, so item falls at your feet!";
 
         argDoesNotExist = config.isSet("Message.ArgDoesNotExist") ? config.getString("Message.ArgDoesNotExist") :
-        "&a指令使用方法: \n&b/ctb get &7取得插件特殊物品\n&b/ctb reload &7重新整理插件設定\n&b/ctb list &7列出所有可捕捉實體與捕捉狀態\n&b/ctb add &7將指定的實體新增至捕捉清單\n&b/ctb remove &7將指定的實體從捕捉清單移除";
+        "&aCommands Usage: \n&b/ctb get &7Get special items of plugins.\n&b/ctb reload &7Reload plugin.\n&b/ctb list &7Lists all catchable entities and states\n&b/ctb add &7Add the entity to the catch list\n&b/ctb remove &7Remove the entity from the catchable list";
 
         argTooMuch = config.isSet("Message.ArgTooMuch") ? config.getString("Message.ArgTooMuch") :
-        "&c輸入的指令參數過多!";
+        "&cToo many Argument!";
 
         unknownCommandArgument = config.isSet("Message.UnknownCommandArgument") ? config.getString("Message.UnknownCommandArgument") :
-        "&c未知的指令參數!";
+        "&cUnknown Argument!";
         
-        sucessGetBall = config.isSet("Message.SucessGetBall") ? config.getString("Message.SucessGetBall") :
-        "&a成功提取 {BALL}";
+        successGetBall = config.isSet("Message.SuccessGetBall") ? config.getString("Message.SuccessGetBall") :
+        "&aSuccessfully get {ITEM}";
 
-        reloadSucess = config.isSet("Message.ReloadSucess") ? config.getString("Message.ReloadSucess") :
-        "&a插件重新整理完畢!";
+        reloadSuccess = config.isSet("Message.ReloadSuccess") ? config.getString("Message.ReloadSuccess") :
+        "&aThe plugin reloaded successfully!";
 
         canNotCatchable = config.isSet("Message.CanNotCatchable") ? config.getString("Message.CanNotCatchable") :
-        "&c此生物無法捕捉，故 {BALL} &c掉落在 &e{LOCATION}";
+        "&cThis entity cannot be captured, so &e{BALL} &7fell in &e{LOCATION}";
 
         ballHitBlock = config.isSet("Message.BallHitBlock") ? config.getString("Message.BallHitBlock") :
-        "您未捕捉特定的生物，故 {BALL} 掉落在 &e{LOCATION}";
+        "&cYou did not hit a entity,So {BALL} fell in {LOCATION}";
 
-        catchSucess = config.isSet("Message.CatchSucess") ? config.getString("Message.CatchSucess") :
-        "&a成功捕捉 {ENTITY} 位置: {LOCATION}";
+        catchSuccess = config.isSet("Message.CatchSuccess") ? config.getString("Message.CatchSuccess") :
+        "&aSuccessfully captured {ENTITY} location: {LOCATION}";
 
         itemDoesNotExist = config.isSet("Message.ItemDoesNotExist") ? config.getString("Message.ItemDoesNotExist") :
-        "&c請輸入要提取的物品  &7CatchBall | GoldEgg";
+        "&cPlease enter the item to be picked up  &7CatchBall | GoldEgg";
 
         itemNameError = config.isSet("Message.ItemNameError") ? config.getString("Message.ItemNameError") :
-        "&c請輸入正確的物品名稱  &7CatchBall | GoldEgg";
+        "&cPlease enter the correct item name  &7CatchBall | GoldEgg";
 
         addEntityDoesNotExist = config.isSet("Message.AddEntityDoesNotExist") ? config.getString("Message.AddEntityDoesNotExist") :
-        "&c請輸入要新增至捕捉生物清單的實體名稱!";
+        "&cPlease enter the name of the entity to be added to the list of captured creatures!";
 
         unknownEntityType = config.isSet("Message.UnknownEntityType") ? config.getString("Message.UnknownEntityType") :
-        "&c未知的實體名稱!";
+        "&cUnknown entity type!";
 
         entityDoesExists = config.isSet("Message.EntityDoesExists") ? config.getString("Message.EntityDoesExists") :
-        "&c實體已存在列表裡面!";
+        "&cThe entity already exists in the catchable list!";
 
-        sucessAddEntity = config.isSet("Message.SucessAddEntity") ? config.getString("Message.SucessAddEntity") :
-        "&a成功將 &b{ENTITY} &a新增至捕捉清單!";
+        successAddEntity = config.isSet("Message.SuccessAddEntity") ? config.getString("Message.SuccessAddEntity") :
+        "&b{ENTITY} &aSuccessfully added to the catchable list!";
 
         removeEntityDoesNotExist = config.isSet("Message.RemoveEntityDoesNotExist") ? config.getString("Message.RemoveEntityDoesNotExist") :
-        "&c請輸入要從捕捉列表移除的生物名稱";
+        "&cPlease enter the name of the entity to be removed from the catchable list";
 
         removeEntityNotFound = config.isSet("Message.RemoveEntityNotFound") ? config.getString("Message.RemoveEntityNotFound") :
-        "&c未在捕捉列表內找到實體";
+        "&cNo entity found in the catchable list";
 
-        sucessRemove = config.isSet("Message.SucessRemove") ? config.getString("Message.SucessRemove") :
-        "&a成功從捕捉列表移除 &b{ENTITY}";
+        successRemove = config.isSet("Message.SuccessRemove") ? config.getString("Message.SuccessRemove") :
+        "&aSuccessfully removed from the catchable list &b{ENTITY}";
 
         skullDoesNotFound = config.isSet("Message.SkullDoesNotFound") ? config.getString("Message.SkullDoesNotFound") :
-        "&c頭顱存放的實體數據遺失";
+        "&cThe data stored in the skull is missing";
 
         locationUnsafe = config.isSet("Message.LocationUnsafe") ? config.getString("Message.LocationUnsafe") :
-        "&c未能找到一個安全的區域生成，故此次重生已取消";
+        "&cCould not find a safe area to spawn, so this request has been cancelled";
 
         noResidencePermissions = config.isSet("Message.NoResidencePermissions") ? config.getString("Message.NoResidencePermissions") :
-        "&c您無法在此生成或捕捉動物，因為您缺少了此領地的 &e{FLAG} &c權限";
+        "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense";
         
-        if (!enabled) { return false; }
-        
+        new Ball();
+        new BallRecipe();
+
         if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
         
+        try {
+            if (plugin.getServer().getPluginManager().getPlugin("Residence") != null) {
+                residenceFlag.stream().
+                map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
+            }
+        } catch (IllegalArgumentException e) {
+            plugin.getLogger().info(ChatColor.RED + e.getMessage());
+            plugin.getLogger().info(ChatColor.RED + "Unknown Residense flag!");
+            plugin.getLogger().info(ChatColor.RED + "Please check your config setting!");
+            residenceFlag.clear();
+            residenceFlag.add("animalkilling");
+        }
+
         for (String entity : entityfile.getStringList("CatchableEntity")) {            
             try {
                 if (EntityType.valueOf(entity.toUpperCase()) != null) {
@@ -193,7 +213,7 @@ public class ConfigSetting {
                 }
                 
             // There is a common issue that you put an unknown entityType in the list of CatchableEntity
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 plugin.getLogger().info("§cunkown EntityType: " + entity);
                 plugin.getLogger().info("§cPlease check \"CatchableEntity\" list in config.yml");
                 plugin.getLogger().info("§cError Message: " + e.getMessage());

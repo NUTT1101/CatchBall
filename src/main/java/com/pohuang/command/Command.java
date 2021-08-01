@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.pohuang.ConfigSetting;
 import com.pohuang.GUI.CatchableList;
-import com.pohuang.Recipe.BallRecipe;
+
 import com.pohuang.items.Ball;
 import com.pohuang.items.GoldEgg;
 
@@ -54,16 +54,15 @@ public class Command implements CommandExecutor {
 
                 player.getInventory().addItem(checkItem(args[1]));
                 
-                String message = checkItem(args[1]).equals(catchBall) ? ConfigSetting.toChat(ConfigSetting.sucessGetBall, "", "").
-                    replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.sucessGetBall, "", "").
+                String message = checkItem(args[1]).equals(catchBall) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                    replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.goldEggName);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 
             } else if (args[0].equalsIgnoreCase("reload")) {
                 ConfigSetting.checkConfig();
-                new BallRecipe();
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.reloadSucess, "", ""));
+                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.reloadSuccess, "", ""));
                 return true;
 
             } else if (args[0].equalsIgnoreCase("list")){
@@ -88,7 +87,7 @@ public class Command implements CommandExecutor {
                 }
 
                 ConfigSetting.catchableEntity.add(EntityType.valueOf(args[1].toUpperCase()));
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.sucessAddEntity, "", args[1].toUpperCase()));
+                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successAddEntity, "", args[1].toUpperCase()));
                 ConfigSetting.saveEntityList();
                 return true;
                 
@@ -109,7 +108,7 @@ public class Command implements CommandExecutor {
                 }
 
                 ConfigSetting.catchableEntity.remove(EntityType.valueOf(args[1].toUpperCase()));
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.sucessRemove, "", args[1].toUpperCase()));
+                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successRemove, "", args[1].toUpperCase()));
                 ConfigSetting.saveEntityList();
                 return true;
 

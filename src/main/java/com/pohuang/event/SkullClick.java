@@ -1,8 +1,5 @@
 package com.pohuang.event;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.pohuang.CatchBall;
 import com.pohuang.ConfigSetting;
 
@@ -18,7 +15,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
@@ -28,10 +24,8 @@ import net.minecraft.nbt.MojangsonParser;
 import net.minecraft.nbt.NBTTagCompound;
 
 
-
 public class SkullClick implements Listener{
     private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
-    List<MerchantRecipe> merchantRecipeList = new ArrayList<>();
     
     @EventHandler
     public void skullClick(PlayerInteractEvent event) {

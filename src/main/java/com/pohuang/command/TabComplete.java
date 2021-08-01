@@ -15,7 +15,6 @@ import org.bukkit.util.StringUtil;
 public class TabComplete implements TabCompleter {
     List<String> entityList = new ArrayList<>();
     
-    
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         

@@ -1,87 +1,79 @@
-#插件是否開啟
+#Whether the plugin is enable or not(true/false)
 Enabled: true
-#雞是不是會掉落金雞蛋
+#Whether the chickens will drop the "GoldEgg" (true/false)
 ChickenDropGoldEgg: true
-#金雞蛋掉落的機率
+#Chance of chicken to drop GoldEgg  
 ChickenDropGoldEggChance: 50%
-#捕捉到的聲音，關閉直接打false
-CatchSucessSound: ENTITY_ARROW_HIT_PLAYER
+#Captured sound effects, No sound to type (false)
+#Sound Support : https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+CatchSuccessSound: ENTITY_ARROW_HIT_PLAYER
 
-#編輯生物捕捉介面的標題名稱
-CatchableListTitle: "&l生物捕捉設定"
-#編輯生物捕捉介面上下一頁按鈕名稱
-PrevPage: "&a上一頁"
-NextPage: "&a下一頁"
-CurrentPage: "&a當前頁面: &e{PAGE}"
-GUISkullLore:
-- "&6自訂義名稱: {ENTITY}"
-- "&6允許抓捕: {CATCHABLE}"
-
-#捕捉掉落頭顱敘述
+#The lore of the Catch List GUI
 DropSkullLore:
-- "&e生物種類: &a{ENTITY}"
-- "&e抓捕者: &a{PLAYER}"
-- "&e抓捕時間: &a{TIME}"
-- "&e抓捕地點: &a{LOCATION}"
+- "&eENTITY TYPE: &a{ENTITY}"
+- "&eThe Catcher: &a{PLAYER}"
+- "&eCapture Time: &a{TIME}"
+- "&eCapture Location: &a{LOCATION}"
 
-#捕捉球合成
+#CatchBall on CraftRecipe
 Recipe:
-    #是否開啟
+    #Whether to turn it on or off
     enabled: true
-    #合成代號
+    #Recipe key
     key:
-        #輸入GOLDEGG代表使用插件提供的金雞蛋來合成，也可以依需求替換成Minecraft原生材料
+        #GOLDEGG is the plugin provide custom item
+        #Item Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/material/package-summary.html
         G: GOLDEGG
         E: egg
-    #合成表
+    #Recipe
     shape:
     - "GGG"
     - "GEG"
     - "GGG"
 
-#插件內建物品命名
+#The plugin special item setting
 Items:
     CatchBall:
-        DisplayName: "&a捕&b捉&c球"
+        DisplayName: "&aCat&bch &cball"
         Lore:
-        - "&7用於捕捉特定生物"
+        - "&7Used to capture catchable entity"
 
     GoldEgg:
-        DisplayName: "&6金雞蛋"
-        GoldEggLore:
-        - "&7雞在生蛋時會有&e{PERCENT}&7機率生出"
-        - "&7可用於合成捕捉球"
+        DisplayName: "&6GoldEgg"
+        Lore:
+        - "&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG"
+        - "&7Can be used with CraftRecipe to make CatchBall"
 
-#捕捉者須擁有以下領地權限才可捕捉其他領地內的實體
+#Catcher must have this permission flag to be capture entity. (depend on Plugin Residence)
 ResidenceFlag:
 - animalkilling
 
 Message:
-    ConsoleExcuteCommand: "&c此指令只有玩家才可執行!" 
-    NoPermission: "&c您沒有權限!"
-    PlayerInventoryFull: "&a您背包物品已滿，故物品掉落在您腳下!"
-    ArgDoesNotExist: "&a指令使用方法: 
-        \n&b/ctb get &7取得插件特殊物品
-        \n&b/ctb reload &7重新整理插件設定
-        \n&b/ctb list &7列出所有可捕捉實體與捕捉狀態
-        \n&b/ctb add &7將指定的實體新增至捕捉清單
-        \n&b/ctb remove &7將指定的實體從捕捉清單移除"
-    ArgTooMuch: "&c輸入的指令參數過多!"
-    UnknownCommandArgument: "&c未知的指令參數!"
-    SucessGetBall: "&a成功提取 {ITEM}"
-    ReloadSucess: "&a插件設定重新整理完畢!"
-    CanNotCatchable: "&c此生物無法捕捉，故 {BALL} &c掉落在 &e{LOCATION}"
-    BallHitBlock: "&c您未捕捉特定的生物，故 {BALL} 掉落在 &e{LOCATION}"
-    CatchSucess: "&a成功捕捉 {ENTITY} 位置: {LOCATION}"
-    ItemDoesNotExist: "&c請輸入要提取的物品  &7CatchBall | GoldEgg"
-    ItemNameError: "&c請輸入正確的物品名稱  &7CatchBall | GoldEgg"
-    AddEntityDoesNotExist: "&c請輸入要新增至捕捉生物清單的實體名稱!"
-    UnknownEntityType: "&c未知的實體名稱!"
-    EntityDoesExists: "&c實體已存在列表裡面!"
-    SucessAddEntity: "&a成功將 &b{ENTITY} &a新增至捕捉清單!"
-    RemoveEntityDoesNotExist: "&c請輸入要從捕捉列表移除的生物名稱"
-    RemoveEntityNotFound: "&c未在捕捉列表內找到實體"
-    SucessRemove: "&a成功從捕捉列表移除 &b{ENTITY}"
-    SkullDoesNotFound: "&c頭顱存放的實體數據遺失"
-    LocationUnsafe: "&c未能找到一個安全的區域生成，故此次重生已取消"
-    NoResidencePermissions: "&c您無法在此生成或捕捉動物，因為您缺少了此領地的 &e{FLAG} &c權限"
+    ConsoleExcuteCommand: "&cThis command can only be executed by player!" 
+    NoPermission: "&cYou have no permission!"
+    PlayerInventoryFull: "&aYour inventory is full, so item falls at your feet!"
+    ArgDoesNotExist: "&aCommands Usage: 
+        \n&b/ctb get &7Get special items of plugins.
+        \n&b/ctb reload &7Reload plugin.
+        \n&b/ctb list &7Lists all catchable entities and states.
+        \n&b/ctb add &7Add the entity to the catch list.
+        \n&b/ctb remove &7Remove the entity from the catchable list."
+    ArgTooMuch: "&cToo many Argument!"
+    UnknownCommandArgument: "&cUnknown Argument!"
+    SuccessGetBall: "&aSuccessfully get {ITEM}!"
+    ReloadSuccess: "&aThe plugin reloaded successfully!"
+    CanNotCatchable: "&cThis entity cannot be captured, so &e{BALL} &7fell in &e{LOCATION}."
+    BallHitBlock: "&cYou did not hit a entity,So {BALL} fell in {LOCATION}!"
+    CatchSuccess: "&aSuccessfully captured {ENTITY} location: {LOCATION}!"
+    ItemDoesNotExist: "&cPlease enter the item to be picked up  &7CatchBall | GoldEgg."
+    ItemNameError: "&cPlease enter the correct item name  &7CatchBall | GoldEgg!1"
+    AddEntityDoesNotExist: "&cPlease enter the name of the entity to be added to the list of captured creatures!"
+    UnknownEntityType: "&cUnknown entity type!"
+    EntityDoesExists: "&cThe entity already exists in the catchable list!"
+    SuccessAddEntity: "&b{ENTITY} &aSuccessfully added to the catchable list!"
+    RemoveEntityDoesNotExist: "&cPlease enter the name of the entity to be removed from the catchable list!"
+    RemoveEntityNotFound: "&cNo entity found in the catchable list!"
+    SuccessRemove: "&aSuccessfully removed from the catchable list &b{ENTITY}!"
+    SkullDoesNotFound: "&cThe data stored in the skull is missing!"
+    LocationUnsafe: "&cCould not find a safe area to spawn, so this request has been cancelled!"
+    NoResidencePermissions: "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense!"

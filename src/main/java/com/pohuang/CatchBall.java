@@ -1,6 +1,5 @@
 package com.pohuang;
 
-import com.pohuang.Recipe.BallRecipe;
 import com.pohuang.command.Command;
 import com.pohuang.command.TabComplete;
 import com.pohuang.event.DropGoldEgg;
@@ -11,7 +10,6 @@ import com.pohuang.event.SkullClick;
 
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -20,19 +18,24 @@ import net.md_5.bungee.api.ChatColor;
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
     private Boolean plguinStatus = config.getBoolean("Enable");
-    private Plugin resPlug = getServer().getPluginManager().getPlugin("Residence");
 
     @Override
     public void onEnable() {
+        if (!this.getServer().getVersion().contains("1.17")) {
+            this.getLogger().info(ChatColor.RED + "=============ERROR=============");
+            this.getLogger().info(ChatColor.RED + "This Plugin only support 1.17 now!");
+            this.getLogger().info(ChatColor.RED + "=============ERROR=============");
+            return;
+        }
+
         ConfigSetting.checkConfig();
         if (!ConfigSetting.enabled) { 
             this.getLogger().info("Plugin Status: " + plguinStatus);
         } else {
             registerEvent();
             registerCommand();
-            new BallRecipe();
 
-            if (resPlug != null) {
+            if (getServer().getPluginManager().getPlugin("Residence") != null) {
                 this.getLogger().info(ChatColor.GREEN + "Residence Hook!");
             }
         }
