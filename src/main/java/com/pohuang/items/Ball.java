@@ -13,7 +13,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Ball {
     private ItemStack catchball;
-    
+     
     // create a catchBall
     public Ball() {
         catchball = new ItemStack(Material.SNOWBALL);
@@ -23,11 +23,9 @@ public class Ball {
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        ConfigSetting.catchBallLore = ConfigSetting.catchBallLore.stream().map(lore -> ChatColor.
+        meta.setLore(ConfigSetting.catchBallLore.stream().map(lore -> ChatColor.
             translateAlternateColorCodes('&', lore)).
-            collect(Collectors.toList());
-
-        meta.setLore(ConfigSetting.catchBallLore);
+            collect(Collectors.toList()));
         
         catchball.setItemMeta(meta);
     }
