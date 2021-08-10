@@ -50,7 +50,9 @@ public class HitEvent implements Listener {
             // check if the ProJectile is catchBall
             if (event.getEntity() instanceof ThrowableProjectile) {
                 ThrowableProjectile throwableProjectile = (ThrowableProjectile) event.getEntity();
-                if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta())) { return false; }
+                if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta()) && throwableProjectile.getItem().getItemMeta() != null) { 
+                    return false; 
+                }
             }
 
             event.setCancelled(true);
