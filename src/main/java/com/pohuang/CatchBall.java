@@ -5,7 +5,6 @@ import com.pohuang.command.TabComplete;
 import com.pohuang.event.DropGoldEgg;
 import com.pohuang.event.GUIClick;
 import com.pohuang.event.HitEvent;
-import com.pohuang.event.LaunchEvent;
 import com.pohuang.event.SkullClick;
 
 import org.bukkit.command.PluginCommand;
@@ -22,9 +21,9 @@ public class CatchBall extends JavaPlugin{
     @Override
     public void onEnable() {
         if (!this.getServer().getVersion().contains("1.17")) {
-            this.getLogger().info(ChatColor.RED + "=============ERROR=============");
-            this.getLogger().info(ChatColor.RED + "This Plugin only support 1.17 now!");
-            this.getLogger().info(ChatColor.RED + "=============ERROR=============");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============ERROR=============");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "This Plugin only support 1.17 now!");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============ERROR=============");
             return;
         }
 
@@ -32,11 +31,12 @@ public class CatchBall extends JavaPlugin{
         if (!ConfigSetting.enabled) { 
             this.getLogger().info("Plugin Status: " + plguinStatus);
         } else {
+            new Metrics(this, 12380);
             registerEvent();
             registerCommand();
 
             if (getServer().getPluginManager().getPlugin("Residence") != null) {
-                this.getLogger().info(ChatColor.GREEN + "Residence Hook!");
+                this.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Residence Hook!");
             }
         }
     }
@@ -45,7 +45,6 @@ public class CatchBall extends JavaPlugin{
     public void registerEvent() {
         PluginManager registerEvent = this.getServer().getPluginManager();
         registerEvent.registerEvents(new HitEvent(), this);
-        registerEvent.registerEvents(new LaunchEvent(), this);
         registerEvent.registerEvents(new DropGoldEgg(), this);
         registerEvent.registerEvents(new SkullClick(), this);
         registerEvent.registerEvents(new GUIClick(), this);

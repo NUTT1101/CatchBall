@@ -1,7 +1,6 @@
 package com.pohuang.event;
 
 import java.util.List;
-import java.util.UUID;
 
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
@@ -17,6 +16,7 @@ import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrowableProjectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -30,7 +30,6 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class HitEvent implements Listener {
     private List<EntityType> catchableEntity = ConfigSetting.catchableEntity;
-    private List<UUID> ballUUID = LaunchEvent.ballUUID;
     private ItemStack catchBall = new Ball().getCatchBall();
     private Location hitLocation;
     private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
@@ -49,7 +48,10 @@ public class HitEvent implements Listener {
             Player player = (Player) event.getEntity().getShooter();
         
             // check if the ProJectile is catchBall
-            if (!checkHasUUID(event.getEntity().getUniqueId())) { return false; } 
+            if (event.getEntity() instanceof ThrowableProjectile) {
+                ThrowableProjectile throwableProjectile = (ThrowableProjectile) event.getEntity();
+                if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta())) { return false; }
+            }
 
             event.setCancelled(true);
 
@@ -100,7 +102,6 @@ public class HitEvent implements Listener {
             }
 
         } else if (event.getEntity().getShooter() instanceof BlockProjectileSource){
-            if (!checkHasUUID(event.getEntity().getUniqueId())) { return false; }
 
             event.setCancelled(true);
             event.getEntity().remove();
@@ -130,15 +131,6 @@ public class HitEvent implements Listener {
             }
         }
 
-        return false;
-    }
-
-    public boolean checkHasUUID(UUID projectileUuid) {
-        if (ballUUID.contains(projectileUuid)) {
-
-            ballUUID.remove(projectileUuid);
-            return true;
-        }
         return false;
     }
 
