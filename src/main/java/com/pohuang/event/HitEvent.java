@@ -10,12 +10,15 @@ import com.pohuang.ConfigSetting;
 import com.pohuang.HeadDrop;
 import com.pohuang.items.Ball;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Snowball;
 import org.bukkit.entity.ThrowableProjectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -46,14 +49,8 @@ public class HitEvent implements Listener {
         // check if shooter is a player
         if (event.getEntity().getShooter() instanceof Player) { 
             Player player = (Player) event.getEntity().getShooter();
-        
-            // check if the ProJectile is catchBall
-            if (event.getEntity() instanceof ThrowableProjectile) {
-                ThrowableProjectile throwableProjectile = (ThrowableProjectile) event.getEntity();
-                if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta()) && throwableProjectile.getItem().getItemMeta() != null) { 
-                    return false; 
-                }
-            }
+
+            if (!checkCatchBall(event.getEntity())) { return false; }
 
             event.setCancelled(true);
 
@@ -94,6 +91,7 @@ public class HitEvent implements Listener {
 
             // hit block, catchBall will be return
             } else if (event.getHitBlock() != null) {   
+                
                 event.getEntity().remove();
 
                 hitLocation = event.getHitBlock().getLocation();
@@ -104,6 +102,8 @@ public class HitEvent implements Listener {
             }
 
         } else if (event.getEntity().getShooter() instanceof BlockProjectileSource){
+
+            if (!checkCatchBall(event.getEntity())) { return false; }
 
             event.setCancelled(true);
             event.getEntity().remove();
@@ -161,6 +161,17 @@ public class HitEvent implements Listener {
                     return false;
                 }
             }
+        }
+
+        return true;
+    }
+
+    public boolean checkCatchBall(Projectile projectile) {
+        if (!(projectile instanceof Snowball)) { return false; }
+
+        if (projectile instanceof ThrowableProjectile) {
+            ThrowableProjectile throwableProjectile = (ThrowableProjectile) projectile;
+            if (!throwableProjectile.getItem().getItemMeta().equals(catchBall.getItemMeta())) { return false; }
         }
 
         return true;
