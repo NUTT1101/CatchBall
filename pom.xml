@@ -14,7 +14,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<buildDirectory>C:\Users\Zhang\pluginTest\plugins</buildDirectory>
-		<libDir>C:\Users\Zhang\CatchBall\lib\</libDir>
+		<libDir>C:\Users\zhang\plugin_dev\CatchBall\lib\</libDir>
 	</properties>
 
 	<repositories>

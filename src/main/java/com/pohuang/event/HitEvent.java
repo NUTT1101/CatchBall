@@ -10,7 +10,6 @@ import com.pohuang.ConfigSetting;
 import com.pohuang.HeadDrop;
 import com.pohuang.items.Ball;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
