@@ -7,7 +7,7 @@
 
 ## Language:
 - English(Default)
-- [ChineseTW](https://github.com/NUTT1101/CatchBall/raw/main/lang/CatchBall_zh-Tw.zip)
+- [ChineseTW(繁體中文)](https://github.com/NUTT1101/CatchBall/raw/main/lang/CatchBall_zh-Tw.zip)
 
 **Language Install: move `config.yml` and `entity.yml` to plugin folder.**
 
