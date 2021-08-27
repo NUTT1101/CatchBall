@@ -18,6 +18,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.Snowball;
+import org.bukkit.entity.Tameable;
 import org.bukkit.entity.ThrowableProjectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -79,7 +80,20 @@ public class HitEvent implements Listener {
                     return false;
                 }
                 
-
+                if (event.getHitEntity() instanceof Tameable) {
+                    Tameable tameable = (Tameable) event.getHitEntity();
+                    Player shooter = (Player) event.getEntity().getShooter();
+                    
+                    if (tameable.isTamed()) {
+                        if (!tameable.getOwner().getName().equals(shooter.getName())){
+                            event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), catchBall);
+                            player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                            return false;
+                        }
+                    }
+                    
+                }
+                
                 Entity hitEntity = (Entity) event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
                 net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
