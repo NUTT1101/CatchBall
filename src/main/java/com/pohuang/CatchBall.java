@@ -20,9 +20,9 @@ public class CatchBall extends JavaPlugin{
 
     @Override
     public void onEnable() {
-        if (!this.getServer().getVersion().contains("1.16")) {
+        if (!this.getServer().getVersion().contains("1.17")) {
             this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "This Plugin only support 1.16 now!");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "This Plugin only support 1.17 now!");
             this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
             return;
         }

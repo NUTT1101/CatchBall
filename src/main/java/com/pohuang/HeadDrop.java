@@ -15,7 +15,7 @@ import com.pohuang.event.HitEvent;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,7 +27,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_16_R3.NBTTagCompound;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class HeadDrop {
     private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
@@ -70,7 +70,7 @@ public class HeadDrop {
             
             @Override
             public void run() {   
-                net.minecraft.server.v1_16_R3.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
+                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
                 NBTTagCompound nbt = new NBTTagCompound();
                 headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entity"), PersistentDataType.STRING, nmsEntity.save(nbt).toString());
                 headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING, hitEntity.getType().toString());

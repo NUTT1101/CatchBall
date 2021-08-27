@@ -12,7 +12,7 @@ import com.pohuang.items.Ball;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -30,7 +30,7 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.minecraft.server.v1_16_R3.NBTTagCompound;
+import net.minecraft.nbt.NBTTagCompound;
 
 
 
@@ -82,7 +82,7 @@ public class HitEvent implements Listener {
 
                 Entity hitEntity = (Entity) event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
-                net.minecraft.server.v1_16_R3.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
+                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
                 String checkCustom = nmsEntity.save(new NBTTagCompound()).getString("Paper.SpawnReason");
                 
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
@@ -127,7 +127,7 @@ public class HitEvent implements Listener {
             if (event.getHitEntity() != null) {
                 Entity hitEntity = (Entity) event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
-                net.minecraft.server.v1_16_R3.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
+                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
                 String checkCustom = nmsEntity.save(new NBTTagCompound()).getString("Paper.SpawnReason");
                 
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
