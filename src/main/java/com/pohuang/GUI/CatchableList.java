@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import com.pohuang.CatchBall;
 import com.pohuang.ConfigSetting;
 import com.pohuang.HeadDrop;
 
@@ -17,12 +16,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 
 import net.md_5.bungee.api.ChatColor;
 
 public class CatchableList {
-    Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     List<ItemStack> head = new ArrayList<>();
     ItemStack prevPage = new ItemStack(Material.PAPER);
     ItemStack nextPage = new ItemStack(Material.PAPER);
@@ -37,7 +34,7 @@ public class CatchableList {
     }
 
     public void openCatchableList(Player player, int page) {
-        YamlConfiguration entityFile = ConfigSetting.getEntityFile();
+        YamlConfiguration entityFile = ConfigSetting.entityFile;
         Set<String> entityList = entityFile.getConfigurationSection("EntityList").getKeys(false);
         
         Inventory catchableInventory = Bukkit.createInventory(player, 54, ConfigSetting.toChat(ConfigSetting.catchableListTitle, "", ""));

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.pohuang.ConfigSetting;
-import com.pohuang.HeadDrop;
 import com.pohuang.GUI.CatchableList;
 
 import org.bukkit.Material;
@@ -27,7 +26,6 @@ public class GUIClick implements Listener{
     public void guiClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         String title = ConfigSetting.toChat(ConfigSetting.catchableListTitle, "", "");
-        HeadDrop headDrop = new HeadDrop();
         
         if (event.getView().getTitle().equals(title)) {
             event.setCancelled(true);
@@ -72,7 +70,9 @@ public class GUIClick implements Listener{
                         clickItemMeta.setLore(lore);
                         clickItem.setItemMeta(clickItemMeta);
                         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
-                        player.sendMessage(ChatColor.AQUA + headDrop.getEntityDisplayname(entityType.toString()) + clickItemMeta.getLore().get(1));
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allowCatchMessage).
+                            replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
+                            replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
                         
                         ConfigSetting.saveEntityList();
                         

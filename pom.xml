@@ -7,7 +7,7 @@
 	
 	<groupId>com.pohuang</groupId>
 	<artifactId>CatchBall</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,6 +29,17 @@
 			<url>https://repo.destroystokyo.com/repository/maven-public//</url>
 		</repository>
 
+		<repository>
+			<id>nexus</id>
+			<name>Lumine Releases</name>
+			<url>https://mvn.lumine.io/repository/maven-public/</url>
+		</repository>
+
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+
 	</repositories>
 
 	<dependencies>
@@ -45,6 +56,20 @@
 			<version>5.0.0.1</version>
 			<scope>system</scope>
 			<systemPath>${libDir}Residence5.0.0.1.jar</systemPath>
+		</dependency>
+
+		<dependency>
+			<groupId>io.lumine.xikage</groupId>
+			<artifactId>MythicMobs</artifactId>
+			<version>4.9.1</version>  
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.TechFortress</groupId>
+			<artifactId>GriefPrevention</artifactId>
+			<version>16.17.1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>

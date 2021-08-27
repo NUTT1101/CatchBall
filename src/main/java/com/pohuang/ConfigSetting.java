@@ -17,8 +17,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
+
 public class ConfigSetting {
-    private static Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final static Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     public static Boolean enabled;
     public static List<EntityType> catchableEntity = new ArrayList<>();
     public static Boolean chickenDropGoldEgg;
@@ -29,6 +31,7 @@ public class ConfigSetting {
     public static String nextPage;
     public static String currentPage;
     public static List<String> guiSkullLore = new ArrayList<>();
+    public static YamlConfiguration entityFile;
 
     public static List<String> dropSkullLore = new ArrayList<>();
 
@@ -41,6 +44,8 @@ public class ConfigSetting {
     public static List<String> goldEggLore = new ArrayList<>();
 
     public static List<String> residenceFlag = new ArrayList<>();
+
+    public static List<String> griefPreventionFlag = new ArrayList<>();
     
     public static String consoleExcuteCommand;
     public static String noPermission;
@@ -65,6 +70,7 @@ public class ConfigSetting {
     public static String skullDoesNotFound;
     public static String locationUnsafe;
     public static String noResidencePermissions;
+    public static String allowCatchMessage;
 
     public static Boolean checkConfig() {
         // check if the file exist
@@ -73,13 +79,14 @@ public class ConfigSetting {
         
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
-        FileConfiguration entityfile = YamlConfiguration.loadConfiguration(load("entityFile"));
 
         enabled = config.isSet("Enabled") ? config.getBoolean("Enabled") : true;
         chickenDropGoldEgg = config.isSet("ChickenDropGoldEgg") ? config.getBoolean("ChickenDropGoldEgg") : true;
         
         if (!enabled) { return false; }
 
+        entityFile = getEntityFile();
+        
         chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance") ? Integer.parseInt
             (config.getString("ChickenDropGoldEggChance").replace("%", ""))  : 50;
         
@@ -115,76 +122,82 @@ public class ConfigSetting {
             "&7Can be used with CraftRecipe to make CatchBall");
 
         residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag") :
-        Arrays.asList("animalkilling");
+            Arrays.asList("animalkilling");
+
+        griefPreventionFlag = config.isSet("GriefPreventionFlag") ? config.getStringList("GriefPreventionFlag") :
+            Arrays.asList("Access");
 
         consoleExcuteCommand = config.isSet("Message.ConsoleExcuteCommand") ? config.getString("Message.ConsoleExcuteCommand") : 
-        "&cThis command can only be executed by player!" ;
+            "&cThis command can only be executed by player!" ;
 
         noPermission = config.isSet("Message.NoPermission") ? config.getString("Message.NoPermission") :
-        "&cYou have no permission!";
+            "&cYou have no permission!";
         
         playerInventoryFull = config.isSet("Message.PlayerInventoryFull") ? config.getString("Message.PlayerInventoryFull") :
-        "&aYour inventory is full, so item falls at your feet!";
+            "&aYour inventory is full, so item falls at your feet!";
 
         argDoesNotExist = config.isSet("Message.ArgDoesNotExist") ? config.getString("Message.ArgDoesNotExist") :
-        "&aCommands Usage: \n&b/ctb get &7Get special items of plugins.\n&b/ctb reload &7Reload plugin.\n&b/ctb list &7Lists all catchable entities and states\n&b/ctb add &7Add the entity to the catch list\n&b/ctb remove &7Remove the entity from the catchable list";
+            "&aCommands Usage: \n&b/ctb get &7Get special items of plugins.\n&b/ctb reload &7Reload plugin.\n&b/ctb list &7Lists all catchable entities and states\n&b/ctb add &7Add the entity to the catch list\n&b/ctb remove &7Remove the entity from the catchable list";
 
         argTooMuch = config.isSet("Message.ArgTooMuch") ? config.getString("Message.ArgTooMuch") :
-        "&cToo many Argument!";
+            "&cToo many Argument!";
 
         unknownCommandArgument = config.isSet("Message.UnknownCommandArgument") ? config.getString("Message.UnknownCommandArgument") :
-        "&cUnknown Argument!";
+            "&cUnknown Argument!";
         
         successGetBall = config.isSet("Message.SuccessGetBall") ? config.getString("Message.SuccessGetBall") :
-        "&aSuccessfully get {ITEM}";
+            "&aSuccessfully get {ITEM}";
 
         reloadSuccess = config.isSet("Message.ReloadSuccess") ? config.getString("Message.ReloadSuccess") :
-        "&aThe plugin reloaded successfully!";
+            "&aThe plugin reloaded successfully!";
 
         canNotCatchable = config.isSet("Message.CanNotCatchable") ? config.getString("Message.CanNotCatchable") :
-        "&cThis entity cannot be captured, so &e{BALL} &7fell in &e{LOCATION}";
+            "&cThis entity cannot be captured, so &e{BALL} &7fell in &e{LOCATION}";
 
         ballHitBlock = config.isSet("Message.BallHitBlock") ? config.getString("Message.BallHitBlock") :
-        "&cYou did not hit a entity,So {BALL} fell in {LOCATION}";
+            "&cYou did not hit a entity,So {BALL} fell in {LOCATION}";
 
         catchSuccess = config.isSet("Message.CatchSuccess") ? config.getString("Message.CatchSuccess") :
-        "&aSuccessfully captured {ENTITY} location: {LOCATION}";
+            "&aSuccessfully captured {ENTITY} location: {LOCATION}";
 
         itemDoesNotExist = config.isSet("Message.ItemDoesNotExist") ? config.getString("Message.ItemDoesNotExist") :
-        "&cPlease enter the item to be picked up  &7CatchBall | GoldEgg";
+            "&cPlease enter the item to be picked up  &7CatchBall | GoldEgg";
 
         itemNameError = config.isSet("Message.ItemNameError") ? config.getString("Message.ItemNameError") :
-        "&cPlease enter the correct item name  &7CatchBall | GoldEgg";
+            "&cPlease enter the correct item name  &7CatchBall | GoldEgg";
 
         addEntityDoesNotExist = config.isSet("Message.AddEntityDoesNotExist") ? config.getString("Message.AddEntityDoesNotExist") :
-        "&cPlease enter the name of the entity to be added to the list of captured creatures!";
+            "&cPlease enter the name of the entity to be added to the list of captured creatures!";
 
         unknownEntityType = config.isSet("Message.UnknownEntityType") ? config.getString("Message.UnknownEntityType") :
-        "&cUnknown entity type!";
+            "&cUnknown entity type!";
 
         entityDoesExists = config.isSet("Message.EntityDoesExists") ? config.getString("Message.EntityDoesExists") :
-        "&cThe entity already exists in the catchable list!";
+            "&cThe entity already exists in the catchable list!";
 
         successAddEntity = config.isSet("Message.SuccessAddEntity") ? config.getString("Message.SuccessAddEntity") :
-        "&b{ENTITY} &aSuccessfully added to the catchable list!";
+            "&b{ENTITY} &aSuccessfully added to the catchable list!";
 
         removeEntityDoesNotExist = config.isSet("Message.RemoveEntityDoesNotExist") ? config.getString("Message.RemoveEntityDoesNotExist") :
-        "&cPlease enter the name of the entity to be removed from the catchable list";
+            "&cPlease enter the name of the entity to be removed from the catchable list";
 
         removeEntityNotFound = config.isSet("Message.RemoveEntityNotFound") ? config.getString("Message.RemoveEntityNotFound") :
-        "&cNo entity found in the catchable list";
+            "&cNo entity found in the catchable list";
 
         successRemove = config.isSet("Message.SuccessRemove") ? config.getString("Message.SuccessRemove") :
-        "&aSuccessfully removed from the catchable list &b{ENTITY}";
+            "&aSuccessfully removed from the catchable list &b{ENTITY}";
 
         skullDoesNotFound = config.isSet("Message.SkullDoesNotFound") ? config.getString("Message.SkullDoesNotFound") :
-        "&cThe data stored in the skull is missing";
+            "&cThe data stored in the skull is missing";
 
         locationUnsafe = config.isSet("Message.LocationUnsafe") ? config.getString("Message.LocationUnsafe") :
-        "&cCould not find a safe area to spawn, so this request has been cancelled";
+            "&cCould not find a safe area to spawn, so this request has been cancelled";
 
         noResidencePermissions = config.isSet("Message.NoResidencePermissions") ? config.getString("Message.NoResidencePermissions") :
-        "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense";
+            "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense";
+
+        allowCatchMessage = config.isSet("Message.AllowCatchMessage") ? config.getString("Message.AllowCatchMessage") : 
+            "&b{ENTITY} &6allow catch: {STATUS} !";
         
         new Ball();
         new BallRecipe();
@@ -204,7 +217,23 @@ public class ConfigSetting {
             residenceFlag.add("animalkilling");
         }
 
-        for (String entity : entityfile.getStringList("CatchableEntity")) {            
+        try {
+            if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
+                for (int i=0; i < griefPreventionFlag.size(); i++) {
+                    String[] flag = griefPreventionFlag.get(i).split("");
+                    flag[0] = flag[0].toUpperCase();
+                    ClaimPermission.valueOf(String.join("", flag));
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            plugin.getLogger().info(ChatColor.RED + e.getMessage());
+            plugin.getLogger().info(ChatColor.RED + "Unknown GriefPrevention flag!");
+            plugin.getLogger().info(ChatColor.RED + "Please check your config setting!");
+            griefPreventionFlag.clear();
+            griefPreventionFlag.add("Access");
+        }
+
+        for (String entity : entityFile.getStringList("CatchableEntity")) {            
             try {
                 if (EntityType.valueOf(entity.toUpperCase()) != null) {
 
@@ -249,7 +278,7 @@ public class ConfigSetting {
     }
 
     public static void saveEntityList() {
-        YamlConfiguration entityFile = YamlConfiguration.loadConfiguration(load("entityFile"));                   
+        YamlConfiguration entityFile = ConfigSetting.entityFile;                   
         List<String> savelist = new ArrayList<>();
         
         for (int i=0; i < ConfigSetting.catchableEntity.toArray().length; i++) {

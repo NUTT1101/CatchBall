@@ -24,14 +24,14 @@ Recipe:
         #GOLDEGG is the plugin provide custom item
         #Item Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/material/package-summary.html
         G: GOLDEGG
-        E: egg
     #Recipe
     shape:
     - "GGG"
-    - "GEG"
+    - "GGG"
     - "GGG"
 
 #The plugin special item setting
+#!!! If you change the information of item , please restart your server or use /reload to reload this plugin , do not use Pluginman !!!
 Items:
     CatchBall:
         DisplayName: "&aCat&bch &cball"
@@ -41,12 +41,16 @@ Items:
     GoldEgg:
         DisplayName: "&6GoldEgg"
         Lore:
-        - "&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG"
+        - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
         - "&7Can be used with CraftRecipe to make CatchBall"
 
-#Catcher must have this permission flag to be capture entity. (depend on Plugin Residence)
+#Catcher must have this permission flag to be capture entity. (depend Plugin Residence)
 ResidenceFlag:
 - animalkilling
+
+#Catcher must have this permission flag to be capture entity. (depend Plugin GriefPrevention)
+GriefPreventionFlag:
+- Access
 
 Message:
     ConsoleExcuteCommand: "&cThis command can only be executed by player!" 
@@ -77,3 +81,4 @@ Message:
     SkullDoesNotFound: "&cThe data stored in the skull is missing!"
     LocationUnsafe: "&cCould not find a safe area to spawn, so this request has been cancelled!"
     NoResidencePermissions: "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense!"
+    AllowCatchMessage: "&b{ENTITY} &6allow catch: {STATUS} !"

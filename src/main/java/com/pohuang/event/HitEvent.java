@@ -26,6 +26,10 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.BlockProjectileSource;
 
+import io.lumine.xikage.mythicmobs.MythicMobs;
+import me.ryanhamshire.GriefPrevention.Claim;
+import me.ryanhamshire.GriefPrevention.ClaimPermission;
+import me.ryanhamshire.GriefPrevention.GriefPrevention;
 import net.minecraft.nbt.NBTTagCompound;
 
 
@@ -34,7 +38,7 @@ public class HitEvent implements Listener {
     private List<EntityType> catchableEntity = ConfigSetting.catchableEntity;
     private ItemStack catchBall = new Ball().getCatchBall();
     private Location hitLocation;
-    private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -61,7 +65,20 @@ public class HitEvent implements Listener {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), catchBall);
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return false;
-                } 
+                }
+
+                if (!mmCheck(player, event.getHitEntity())) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), catchBall);
+                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return false;
+                }
+
+                if (!gfCheck(player, event.getHitEntity().getLocation())) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), catchBall);
+                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return false;
+                }
+                
 
                 Entity hitEntity = (Entity) event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
@@ -155,13 +172,43 @@ public class HitEvent implements Listener {
                 if (!residence.getPermissions().playerHas(player, Flags.valueOf(flags.toLowerCase()) , true)) {
 
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
-                    replace("{FLAG}", flags));
+                        replace("{FLAG}", flags));
     
                     return false;
                 }
             }
         }
 
+        return true;
+    }
+
+    public boolean mmCheck(Player player, Entity entity) {
+        if (plugin.getServer().getPluginManager().getPlugin("MythicMobs") == null) { return true; }
+        
+        if (MythicMobs.inst().getAPIHelper().isMythicMob(entity)) {
+            return false;
+        }
+        
+        return true;
+    }
+
+    public boolean gfCheck(Player player, Location location) {
+        Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, false, null);
+        
+        if (claim == null) { return true; }
+        
+        if (claim.getOwnerID().equals(player.getUniqueId())) { return true; }
+
+        for (String flags : ConfigSetting.griefPreventionFlag) {
+            if (!claim.hasExplicitPermission(player, ClaimPermission.valueOf(flags))) {
+
+                player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
+                    replace("{FLAG}", flags));
+
+                return false;
+            }
+        }
+        
         return true;
     }
 

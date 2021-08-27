@@ -25,7 +25,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 
 public class SkullClick implements Listener{
-    private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     
     @EventHandler
     public void skullClick(PlayerInteractEvent event) {
@@ -51,12 +51,17 @@ public class SkullClick implements Listener{
                         return;
                     }
 
+                    if (!new HitEvent().gfCheck(player, event.getClickedBlock().getLocation())) {
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     try {
                         EntityType entityType = EntityType.valueOf(data.get(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING));
                         Location clickLocation = event.getClickedBlock().getLocation();
                         
                         for (int i=0; i < 3; i++) {
-                            if (clickLocation.getBlock().getType().equals(Material.AIR)) { break; }
+                            if (clickLocation.getBlock().getType().equals(Material.AIR) || clickLocation.getBlock().getType().equals(Material.WATER)) { break; }
                             clickLocation.setY(clickLocation.getY() + 1D);
                             
                             if (i == 2) {

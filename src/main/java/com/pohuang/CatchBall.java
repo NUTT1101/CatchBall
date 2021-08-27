@@ -21,13 +21,14 @@ public class CatchBall extends JavaPlugin{
     @Override
     public void onEnable() {
         if (!this.getServer().getVersion().contains("1.17")) {
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============ERROR=============");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
             this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "This Plugin only support 1.17 now!");
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============ERROR=============");
+            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
             return;
         }
 
         ConfigSetting.checkConfig();
+
         if (!ConfigSetting.enabled) { 
             this.getLogger().info("Plugin Status: " + plguinStatus);
         } else {
@@ -35,8 +36,16 @@ public class CatchBall extends JavaPlugin{
             registerEvent();
             registerCommand();
 
-            if (getServer().getPluginManager().getPlugin("Residence") != null) {
-                this.getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Residence Hook!");
+            if (this.getServer().getPluginManager().getPlugin("Residence") != null) {
+                this.getServer().getConsoleSender().sendMessage("[CatchBall]" + ChatColor.GREEN + "Residence Hook!");
+            }
+
+            if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
+                this.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "MythicMobs Hook!");
+            }
+
+            if (this.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
+                this.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "GriefPrevention Hook!");
             }
         }
     }

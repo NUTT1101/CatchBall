@@ -19,7 +19,7 @@ import org.bukkit.plugin.Plugin;
 
 
 public class BallRecipe {
-    private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
 
     // load from config.yml and add catchBall Recipe
     public BallRecipe() {

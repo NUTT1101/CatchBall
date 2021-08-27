@@ -30,12 +30,12 @@ import net.md_5.bungee.api.ChatColor;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class HeadDrop {
-    private Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
     
     public ItemStack getEntityHead(Entity hitEntity , Player player) {
         
-        YamlConfiguration entityFile = ConfigSetting.getEntityFile();
+        YamlConfiguration entityFile = ConfigSetting.entityFile;
 
         ItemStack entityHead = new ItemStack(Material.PLAYER_HEAD);
         ItemMeta headMeta = entityHead.getItemMeta();
@@ -103,7 +103,7 @@ public class HeadDrop {
     }
 
     public String getEntityDisplayname(String entityName) {
-        YamlConfiguration entityFile = ConfigSetting.getEntityFile();
+        YamlConfiguration entityFile = ConfigSetting.entityFile;
         List<String> entitList = new ArrayList<>();
         entitList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
         if (entitList.contains(entityName)) {
