@@ -1,4 +1,6 @@
 # CatchBall
+- [Spigot](https://www.spigotmc.org/resources/catchball.94867/)
+
 
 ## Version:
 - [1.17](https://www.spigotmc.org/resources/catchball.94867/)
@@ -11,3 +13,5 @@
 
 **Language Install: move `config.yml` and `entity.yml` to plugin folder.**
 
+##bstats
+![Image](https://bstats.org/signatures/bukkit/CatchBall.svg)
