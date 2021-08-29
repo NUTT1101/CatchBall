@@ -179,17 +179,19 @@ public class HitEvent implements Listener {
     public boolean resCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Residence") == null) { return true; }
 
-        if (ResidenceApi.getResidenceManager().getByLoc(location) != null) {
-            ClaimedResidence residence = ResidenceApi.getResidenceManager().getByLoc(location);
-            
-            for (String flags : ConfigSetting.residenceFlag) {        
-                if (!residence.getPermissions().playerHas(player, Flags.valueOf(flags.toLowerCase()) , true)) {
+        if (ResidenceApi.getResidenceManager().getByLoc(location) == null) { return true; }
 
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
-                        replace("{FLAG}", flags));
-    
-                    return false;
-                }
+        ClaimedResidence residence = ResidenceApi.getResidenceManager().getByLoc(location);
+
+        if (residence.getOwnerUUID().equals(player.getUniqueId()) || player.isOp() || player.hasPermission("catchball.op")) { return true; }
+            
+        for (String flags : ConfigSetting.residenceFlag) {        
+            if (!residence.getPermissions().playerHas(player, Flags.valueOf(flags.toLowerCase()) , true)) {
+
+                player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
+                    replace("{FLAG}", flags));
+
+                return false;
             }
         }
 
@@ -207,11 +209,13 @@ public class HitEvent implements Listener {
     }
 
     public boolean gfCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") == null) { return true; }
+
+        if (GriefPrevention.instance.dataStore.getClaimAt(location, false, null) == null) { return true; }
+
         Claim claim = GriefPrevention.instance.dataStore.getClaimAt(location, false, null);
-        
-        if (claim == null) { return true; }
-        
-        if (claim.getOwnerID().equals(player.getUniqueId())) { return true; }
+
+        if (claim.getOwnerID().equals(player.getUniqueId()) || player.hasPermission("catchball.op") || player.isOp()) { return true; }
 
         for (String flags : ConfigSetting.griefPreventionFlag) {
             if (!claim.hasExplicitPermission(player, ClaimPermission.valueOf(flags))) {
