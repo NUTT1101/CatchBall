@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.pohuang.Recipe.BallRecipe;
-import com.pohuang.items.Ball;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -74,8 +73,8 @@ public class ConfigSetting {
 
     public static Boolean checkConfig() {
         // check if the file exist
-        if (!load("configFile").exists()) { plugin.saveResource("config.yml", false); }
-        if (!load("entityFile").exists()) { plugin.saveResource("entity.yml", false); }
+        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml").exists()) { plugin.saveResource("config.yml", false); }
+        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml").exists()) { plugin.saveResource("entity.yml", false); }
         
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
@@ -199,7 +198,6 @@ public class ConfigSetting {
         allowCatchMessage = config.isSet("Message.AllowCatchMessage") ? config.getString("Message.AllowCatchMessage") : 
             "&b{ENTITY} &6allow catch: {STATUS} !";
         
-        new Ball();
         new BallRecipe();
 
         if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
@@ -207,12 +205,13 @@ public class ConfigSetting {
         try {
             if (plugin.getServer().getPluginManager().getPlugin("Residence") != null) {
                 residenceFlag.stream().
-                map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
+                    map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
             }
+
         } catch (IllegalArgumentException e) {
-            plugin.getLogger().info(ChatColor.RED + e.getMessage());
-            plugin.getLogger().info(ChatColor.RED + "Unknown Residence flag!");
-            plugin.getLogger().info(ChatColor.RED + "Please check your config setting!");
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + e.getMessage());
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Unknown Residence flag!");
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Please check your config setting!");
             residenceFlag.clear();
             residenceFlag.add("animalkilling");
         }
@@ -225,10 +224,11 @@ public class ConfigSetting {
                     ClaimPermission.valueOf(String.join("", flag));
                 }
             }
+
         } catch (IllegalArgumentException e) {
-            plugin.getLogger().info(ChatColor.RED + e.getMessage());
-            plugin.getLogger().info(ChatColor.RED + "Unknown GriefPrevention flag!");
-            plugin.getLogger().info(ChatColor.RED + "Please check your config setting!");
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + e.getMessage());
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Unknown GriefPrevention flag!");
+            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Please check your config setting!");
             griefPreventionFlag.clear();
             griefPreventionFlag.add("Access");
         }
@@ -243,24 +243,14 @@ public class ConfigSetting {
                 
             // There is a common issue that you put an unknown entityType in the list of CatchableEntity
             } catch (IllegalArgumentException e) {
-                plugin.getLogger().info("§cunkown EntityType: " + entity);
-                plugin.getLogger().info("§cPlease check \"CatchableEntity\" list in config.yml");
-                plugin.getLogger().info("§cError Message: " + e.getMessage());
+                plugin.getServer().getConsoleSender().sendMessage("§cunkown EntityType: " + entity);
+                plugin.getServer().getConsoleSender().sendMessage("§cPlease check \"CatchableEntity\" list in config.yml");
+                plugin.getServer().getConsoleSender().sendMessage("§cError Message: " + e.getMessage());
             }
             
         }
 
         return true;
-    }
-
-    private static File load(String fileName) {
-        switch (fileName) {
-            case "configFile":
-                return new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml");
-            case "entityFile":
-                return new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml");
-        }
-        return null;
     }
     
     public static String toChat(String text, String location, String entity) {
@@ -273,7 +263,7 @@ public class ConfigSetting {
     }
 
     public static YamlConfiguration getEntityFile() { 
-        YamlConfiguration file = YamlConfiguration.loadConfiguration(load("entityFile"));
+        YamlConfiguration file = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
         return file; 
     }
 
@@ -281,22 +271,20 @@ public class ConfigSetting {
         YamlConfiguration entityFile = ConfigSetting.entityFile;                   
         List<String> savelist = new ArrayList<>();
         
-        for (int i=0; i < ConfigSetting.catchableEntity.toArray().length; i++) {
+        for (int i=0; i < ConfigSetting.catchableEntity.size(); i++) {
             savelist.add(ConfigSetting.catchableEntity.get(i).toString());
         }
 
         entityFile.set("CatchableEntity", savelist.toArray());
 
         try{
-            entityFile.save(load("entityFile"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            entityFile.save(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
+        } catch (IOException e) { e.printStackTrace(); }
     }
 
     public static boolean getEntityFileExist(String entityName) {
         List<String> entityList = new ArrayList<>();
-        entityList.addAll(getEntityFile().getConfigurationSection("EntityList").getKeys(false));
+        entityList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
         return entityList.contains(entityName.toUpperCase());
     }
 }
