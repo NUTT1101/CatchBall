@@ -37,7 +37,7 @@ public class TabComplete implements TabCompleter {
                     return sort;
                 } else if (args[0].equalsIgnoreCase("add")) {
 
-                    for (String entity : ConfigSetting.getEntityFile().getConfigurationSection("EntityList").getKeys(false)) {
+                    for (String entity : ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false)) {
                         if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
                             entityList.add(entity);
                         }
@@ -48,7 +48,7 @@ public class TabComplete implements TabCompleter {
 
                 } else if (args[0].equalsIgnoreCase("remove")) {
 
-                    for (String entity : ConfigSetting.getEntityFile().getConfigurationSection("EntityList").getKeys(false)) {
+                    for (String entity : ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false)) {
                         if (ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
                             entityList.add(entity);
                         }

@@ -12,7 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.plugin.Plugin;
@@ -24,10 +23,8 @@ public class BallRecipe {
     // load from config.yml and add catchBall Recipe
     public BallRecipe() {
         if (ConfigSetting.recipeEnabled) {
-            ItemStack ball = new Ball().getCatchBall();
-            ItemStack goldEgg = new GoldEgg().getGoldEgg();
             NamespacedKey ballKey = new NamespacedKey(plugin, "ballKey");
-            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, ball);
+            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, new Ball().getCatchBall());
             
             FileConfiguration config = plugin.getConfig(); 
             
@@ -41,7 +38,7 @@ public class BallRecipe {
                 String ItemName = config.getString("Recipe.key." + key).toUpperCase();
                 if (ItemName instanceof String) {
                     if (ItemName.equals("GOLDEGG")) {
-                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(goldEgg));
+                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(new GoldEgg().getGoldEgg()));
                     } else {
                         ballRecipe.setIngredient(key.charAt(0), Material.valueOf(ItemName));
                     }

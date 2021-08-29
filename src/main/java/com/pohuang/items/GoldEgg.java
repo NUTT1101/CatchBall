@@ -32,5 +32,5 @@ public class GoldEgg {
         goldEgg.setItemMeta(meta);
     }
 
-    public ItemStack getGoldEgg() { return goldEgg;}
+    public ItemStack getGoldEgg() { return goldEgg; }
 }

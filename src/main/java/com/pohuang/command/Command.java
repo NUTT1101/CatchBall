@@ -18,8 +18,6 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Command implements CommandExecutor {
     private List<String> commandArgument = CommandCheck.getCommandArgument();
-    ItemStack catchBall = new Ball().getCatchBall();
-    ItemStack goldEgg = new GoldEgg().getGoldEgg();
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
@@ -54,7 +52,7 @@ public class Command implements CommandExecutor {
 
                 player.getInventory().addItem(checkItem(args[1]));
                 
-                String message = checkItem(args[1]).equals(catchBall) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                String message = checkItem(args[1]).equals(new Ball().getCatchBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.goldEggName);
 
@@ -125,8 +123,8 @@ public class Command implements CommandExecutor {
    
     private ItemStack checkItem(String item) {
         item = item.toLowerCase();
-        if (item.equals("catchball")) { return catchBall; }
-        if (item.equals("goldegg")) { return goldEgg; }    
+        if (item.equals("catchball")) { return new Ball().getCatchBall(); }
+        if (item.equals("goldegg")) { return new GoldEgg().getGoldEgg(); }    
         return null;
     }
 
