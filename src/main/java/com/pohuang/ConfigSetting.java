@@ -2,9 +2,12 @@ package com.pohuang;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 import com.bekvon.bukkit.residence.containers.Flags;
@@ -21,6 +24,8 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 public class ConfigSetting {
     private final static Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     public static Boolean enabled;
+    public static Boolean updatecheck;
+    public static String version;
     public static List<EntityType> catchableEntity = new ArrayList<>();
     public static Boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
@@ -81,8 +86,12 @@ public class ConfigSetting {
 
         enabled = config.isSet("Enabled") ? config.getBoolean("Enabled") : true;
         chickenDropGoldEgg = config.isSet("ChickenDropGoldEgg") ? config.getBoolean("ChickenDropGoldEgg") : true;
-        
+
         if (!enabled) { return false; }
+        
+        updatecheck = config.isSet("Update-Check") ? config.getBoolean("Update-Check") : true;
+
+        version = getPluginVersion();
 
         entityFile = getEntityFile();
         
@@ -250,6 +259,17 @@ public class ConfigSetting {
             
         }
 
+        String currentVersion = "v" + plugin.getDescription().getVersion();
+        
+        if (updatecheck) {
+            if (!currentVersion.equals(version)) {
+                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
+                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
+            } else {
+                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "Plugin is already the latest version");
+            }
+        }
+
         return true;
     }
     
@@ -257,7 +277,7 @@ public class ConfigSetting {
         if (text.contains("{BALL}")) { text = text.replace("{BALL}", catchBallName); }
         if (text.contains("{LOCATION}")) { text = text.replace("{LOCATION}", location); }
         if (text.contains("ENTITY")) {text = text.replace("{ENTITY}", new HeadDrop().getEntityDisplayname(entity)); }
-
+        
         text = ChatColor.translateAlternateColorCodes('&', text);
         return text;
     }
@@ -286,5 +306,27 @@ public class ConfigSetting {
         List<String> entityList = new ArrayList<>();
         entityList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
         return entityList.contains(entityName.toUpperCase());
+    }
+
+
+    /**
+     * check version of plugin
+     * @return version of plugin
+     */
+    public static String getPluginVersion() {
+        try {
+            InputStream inputStream = new URL(("https://api.spigotmc.org/legacy/update.php?resource=94867")).openStream();
+            Scanner scanner = new Scanner(inputStream);
+            String version = scanner.next();
+            
+            scanner.close();
+
+            return version;
+        } catch (Exception e) {
+            plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
+        }
+
+        return "";
+        
     }
 }

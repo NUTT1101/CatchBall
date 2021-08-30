@@ -1,5 +1,7 @@
 #Whether the plugin is enable or not(true/false)
 Enabled: true
+#Whether the plugin check for update and post the message on console
+Update-Check: true
 #Whether the chickens will drop the "GoldEgg" (true/false)
 ChickenDropGoldEgg: true
 #Chance of chicken to drop GoldEgg  
@@ -31,7 +33,6 @@ Recipe:
     - "GGG"
 
 #The plugin special item setting
-#!!! If you change the information of item , please restart your server or use /reload to reload this plugin , do not use Pluginman !!!
 Items:
     CatchBall:
         DisplayName: "&aCat&bch &cball"

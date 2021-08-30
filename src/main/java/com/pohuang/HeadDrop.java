@@ -24,7 +24,6 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import net.md_5.bungee.api.ChatColor;
 import net.minecraft.nbt.NBTTagCompound;
@@ -66,17 +65,11 @@ public class HeadDrop {
             replace("{LOCATION}", location)).collect(Collectors.toList()));
         }
 
-        new BukkitRunnable() {
-            
-            @Override
-            public void run() {   
-                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
-                NBTTagCompound nbt = new NBTTagCompound();
-                headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entity"), PersistentDataType.STRING, nmsEntity.save(nbt).toString());
-                headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING, hitEntity.getType().toString());
-            }
+        net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
+        NBTTagCompound nbt = new NBTTagCompound();
+        headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entity"), PersistentDataType.STRING, nmsEntity.save(nbt).toString());
+        headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING, hitEntity.getType().toString());
 
-        }.run();
 
         headMeta.setLore(headLore);
         entityHead.setItemMeta(headMeta);
