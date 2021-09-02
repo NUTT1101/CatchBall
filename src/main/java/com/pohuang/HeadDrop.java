@@ -11,11 +11,12 @@ import java.util.stream.Collectors;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.pohuang.event.HitEvent;
+import com.pohuang.nms.SaveNMS_1_16;
+import com.pohuang.nms.SaveNMS_1_17;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +27,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.nbt.NBTTagCompound;
 
 public class HeadDrop {
     private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
@@ -65,10 +65,17 @@ public class HeadDrop {
             replace("{LOCATION}", location)).collect(Collectors.toList()));
         }
 
-        net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
-        NBTTagCompound nbt = new NBTTagCompound();
-        headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entity"), PersistentDataType.STRING, nmsEntity.save(nbt).toString());
-        headMeta.getPersistentDataContainer().set(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING, hitEntity.getType().toString());
+        switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
+            case "v1_17_R1":
+                headMeta = new SaveNMS_1_17().saveEntityNMS(hitEntity, headMeta);
+                break;
+        
+            case "v1_16_R3":
+            headMeta = new SaveNMS_1_16().saveEntityNMS(hitEntity, headMeta);
+                break;
+            default:
+                break;
+        }
 
 
         headMeta.setLore(headLore);
@@ -77,8 +84,8 @@ public class HeadDrop {
         return skullTextures(entityHead, entityFile, hitEntity.getType().toString());
     }
 
-    public ItemStack skullTextures(ItemStack item, YamlConfiguration entityFile, String skullName) {
-        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
+    public ItemStack skullTextures(ItemStack head, YamlConfiguration entityFile, String skullName) {
+        SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
         profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + skullName.toUpperCase() + ".Skull")));
         
@@ -90,9 +97,9 @@ public class HeadDrop {
             e.printStackTrace();
         }
         
-        item.setItemMeta(skullMeta);
+        head.setItemMeta(skullMeta);
         
-        return item;
+        return head;
     }
 
     public String getEntityDisplayname(String entityName) {

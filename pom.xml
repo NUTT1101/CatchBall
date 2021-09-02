@@ -7,7 +7,7 @@
 	
 	<groupId>com.pohuang</groupId>
 	<artifactId>CatchBall</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +43,8 @@
 	</repositories>
 
 	<dependencies>
+
+		<!-- spigot -->
 		<dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>
@@ -51,6 +53,15 @@
         </dependency>
 
 		<dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot1.16</artifactId>
+            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <scope>system</scope>
+			<systemPath>C:\Users\zhang\plugin_dev\api\spigot\spigot-1.16.5-R0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
+
+		<!-- Residence -->
+		<dependency>
 			<groupId>res</groupId>
 			<artifactId>Residence</artifactId>
 			<version>5.0.0.1</version>
@@ -58,6 +69,7 @@
 			<systemPath>${libDir}Residence5.0.0.1.jar</systemPath>
 		</dependency>
 
+		<!-- MythicMobs -->
 		<dependency>
 			<groupId>io.lumine.xikage</groupId>
 			<artifactId>MythicMobs</artifactId>
@@ -65,6 +77,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- GriefPrevention -->
 		<dependency>
 			<groupId>com.github.TechFortress</groupId>
 			<artifactId>GriefPrevention</artifactId>
@@ -72,6 +85,7 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- bStats -->
 		<dependency>
 			<groupId>org.bstats</groupId>
 			<artifactId>bstats-bukkit</artifactId>

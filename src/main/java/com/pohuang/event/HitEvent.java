@@ -9,10 +9,11 @@ import com.pohuang.CatchBall;
 import com.pohuang.ConfigSetting;
 import com.pohuang.HeadDrop;
 import com.pohuang.items.Ball;
+import com.pohuang.nms.checkByCustomEntity.CheckByCustomEntity_1_16;
+import com.pohuang.nms.checkByCustomEntity.CheckByCustomEntity_1_17;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -30,7 +31,6 @@ import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
-import net.minecraft.nbt.NBTTagCompound;
 
 
 
@@ -92,10 +92,11 @@ public class HitEvent implements Listener {
                     
                 }
                 
-                Entity hitEntity = (Entity) event.getHitEntity();
+                Entity hitEntity = event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
-                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
-                String checkCustom = nmsEntity.save(new NBTTagCompound()).getString("Paper.SpawnReason");
+                
+                String checkCustom = getIsCustomEntity(hitEntity);
+                
                 
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
                 for (EntityType entity : catchableEntity) {
@@ -139,8 +140,8 @@ public class HitEvent implements Listener {
             if (event.getHitEntity() != null) {
                 Entity hitEntity = (Entity) event.getHitEntity();
                 hitLocation = hitEntity.getLocation();
-                net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();
-                String checkCustom = nmsEntity.save(new NBTTagCompound()).getString("Paper.SpawnReason");
+
+                String checkCustom = getIsCustomEntity(hitEntity);
                 
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
                 for (EntityType entity : catchableEntity) {
@@ -237,6 +238,23 @@ public class HitEvent implements Listener {
         }
 
         return true;
+    }
+
+    public String getIsCustomEntity(Entity hitEntity) {
+        String checkCustom = null;
+
+        switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
+            case "v1_17_R1":
+                checkCustom = new CheckByCustomEntity_1_17().checkIsCustomEntity(hitEntity);        
+                break;
+            case "v1_16_R3":
+                checkCustom = new CheckByCustomEntity_1_16().checkIsCustomEntity(hitEntity);
+                break;
+            default:
+                break;
+        }
+
+        return checkCustom;
     }
 
 }

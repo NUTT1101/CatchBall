@@ -1,5 +1,7 @@
 package com.pohuang;
 
+import java.util.logging.Level;
+
 import com.pohuang.command.Command;
 import com.pohuang.command.TabComplete;
 import com.pohuang.event.DropGoldEgg;
@@ -20,17 +22,11 @@ public class CatchBall extends JavaPlugin{
 
     @Override
     public void onEnable() {
-        if (!this.getServer().getVersion().contains("1.17")) {
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "This Plugin only support 1.17 now!");
-            this.getServer().getConsoleSender().sendMessage(ChatColor.RED + "=============[CatchBall]=============");
-            return;
-        }
 
         ConfigSetting.checkConfig();
 
-        if (!ConfigSetting.enabled) { 
-            this.getLogger().info("Plugin Status: " + plguinStatus);
+        if (!ConfigSetting.enabled) {
+            this.getLogger().log(Level.WARNING, "Plugin Status: " + plguinStatus);
             
         } else {
             new Metrics(this, 12380);
@@ -38,15 +34,15 @@ public class CatchBall extends JavaPlugin{
             registerCommand();
 
             if (this.getServer().getPluginManager().getPlugin("Residence") != null) {
-                this.getServer().getConsoleSender().sendMessage("[CatchBall]" + ChatColor.GREEN + "Residence Hook!");
+                this.getLogger().log(Level.INFO, ChatColor.GREEN + "Residence Hook!");
             }
 
             if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
-                this.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "MythicMobs Hook!");
+                this.getLogger().log(Level.INFO, ChatColor.GREEN + "MythicMobs Hook!");
             }
 
             if (this.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-                this.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "GriefPrevention Hook!");
+                this.getLogger().log(Level.INFO, ChatColor.GREEN + "GriefPrevention Hook!");
             }
 
         }

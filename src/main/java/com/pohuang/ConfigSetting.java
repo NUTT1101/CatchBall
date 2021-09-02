@@ -1,6 +1,7 @@
 package com.pohuang;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import com.bekvon.bukkit.residence.containers.Flags;
@@ -16,6 +18,7 @@ import com.pohuang.Recipe.BallRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.craftbukkit.libs.org.codehaus.plexus.util.IOUtil;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
@@ -79,7 +82,10 @@ public class ConfigSetting {
     public static Boolean checkConfig() {
         // check if the file exist
         if (!new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml").exists()) { plugin.saveResource("config.yml", false); }
-        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml").exists()) { plugin.saveResource("entity.yml", false); }
+        
+        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml").exists()) { 
+            entityFileCreate(plugin.getServer().getClass().getPackage().getName().split("\\.")[3]);
+        }
         
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
@@ -218,9 +224,9 @@ public class ConfigSetting {
             }
 
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + e.getMessage());
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Unknown Residence flag!");
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Please check your config setting!");
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Unknown Residence flag!");
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Please check your config setting!");
             residenceFlag.clear();
             residenceFlag.add("animalkilling");
         }
@@ -235,9 +241,9 @@ public class ConfigSetting {
             }
 
         } catch (IllegalArgumentException e) {
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + e.getMessage());
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Unknown GriefPrevention flag!");
-            plugin.getServer().getConsoleSender().sendMessage(ChatColor.RED + "Please check your config setting!");
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Unknown Residence flag!");
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Please check your config setting!");
             griefPreventionFlag.clear();
             griefPreventionFlag.add("Access");
         }
@@ -252,9 +258,9 @@ public class ConfigSetting {
                 
             // There is a common issue that you put an unknown entityType in the list of CatchableEntity
             } catch (IllegalArgumentException e) {
-                plugin.getServer().getConsoleSender().sendMessage("§cunkown EntityType: " + entity);
-                plugin.getServer().getConsoleSender().sendMessage("§cPlease check \"CatchableEntity\" list in config.yml");
-                plugin.getServer().getConsoleSender().sendMessage("§cError Message: " + e.getMessage());
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "unkown EntityType: " + entity);
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Please check \"CatchableEntity\" list in config.yml");
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Error Message: " + e.getMessage());
             }
             
         }
@@ -263,14 +269,41 @@ public class ConfigSetting {
         
         if (updatecheck) {
             if (!currentVersion.equals(version)) {
-                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
-                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
+                plugin.getLogger().log(Level.INFO, ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
+                plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
+               
             } else {
-                plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.GREEN + "Plugin is already the latest version");
+                plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Plugin is already the latest version");
             }
         }
 
         return true;
+    }
+
+    public static void entityFileCreate(String version) {
+        switch (version) {
+            case "v1_17_R1":
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(plugin.getDataFolder() , "entity.yml"));
+                    IOUtil.copy(plugin.getResource("v1_17_R1/entity.yml"), fileOutputStream);    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            case "v1_16_R3":
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(new File(plugin.getDataFolder() , "entity.yml"));
+                    IOUtil.copy(plugin.getResource("v1_16_R3/entity.yml"), fileOutputStream);    
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            default:
+                
+                break;
+        }
     }
     
     public static String toChat(String text, String location, String entity) {
@@ -323,7 +356,7 @@ public class ConfigSetting {
 
             return version;
         } catch (Exception e) {
-            plugin.getServer().getConsoleSender().sendMessage("[CatchBall] " + ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
         }
 
         return "";
