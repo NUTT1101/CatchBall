@@ -1,6 +1,7 @@
 package com.pohuang.command;
 
 import java.util.List;
+import java.util.Set;
 
 import com.pohuang.ConfigSetting;
 import com.pohuang.GUI.CatchableList;
@@ -74,6 +75,18 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
+                if (args[1].equalsIgnoreCase("all")) {
+                    Set<String> entityList = ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false);
+                    for (String entity : entityList) {
+                        if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
+                            ConfigSetting.catchableEntity.add(EntityType.valueOf(entity.toUpperCase()));
+                        }
+                    }
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allEntityAddSuccess));
+                    ConfigSetting.saveEntityList();
+                    return true;
+                }
+
                 if (!ConfigSetting.getEntityFileExist(args[1])) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownEntityType, "", ""));
                     return true;
@@ -92,6 +105,13 @@ public class Command implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (args.length == 1) { 
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityDoesNotExist, "", "")); 
+                    return true;
+                }
+
+                if (args[1].equalsIgnoreCase("all")) {
+                    ConfigSetting.catchableEntity.clear();
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allEntityRemoveSuccess));
+                    ConfigSetting.saveEntityList();
                     return true;
                 }
 

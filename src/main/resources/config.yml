@@ -69,6 +69,7 @@ Message:
     ReloadSuccess: "&aThe plugin reloaded successfully!"
     CanNotCatchable: "&cThis entity cannot be captured, so &e{BALL} &7fell in &e{LOCATION}."
     BallHitBlock: "&cYou did not hit a entity,So {BALL} fell in {LOCATION}!"
+    NoPermissionToUse: "&cYou don't have permission to use {BALL}, so {BALL} &cfell in &e{LOCATION}."
     CatchSuccess: "&aSuccessfully captured {ENTITY} location: {LOCATION}!"
     ItemDoesNotExist: "&cPlease enter the item to be picked up  &7CatchBall | GoldEgg."
     ItemNameError: "&cPlease enter the correct item name  &7CatchBall | GoldEgg!1"
@@ -83,3 +84,5 @@ Message:
     LocationUnsafe: "&cCould not find a safe area to spawn, so this request has been cancelled!"
     NoResidencePermissions: "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense!"
     AllowCatchMessage: "&b{ENTITY} &6allow catch: {STATUS} !"
+    AllEntityAddSuccess: "&aAll Entity added success!"
+    AllEntityRemoveSuccess: "&eAll Entity removed success!"

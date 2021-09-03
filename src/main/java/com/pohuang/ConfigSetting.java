@@ -64,6 +64,7 @@ public class ConfigSetting {
     public static String reloadSuccess;
     public static String canNotCatchable;
     public static String ballHitBlock;
+    public static String noPermissionToUse;
     public static String catchSuccess;
     public static String addEntityDoesNotExist;
     public static String unknownEntityType;
@@ -78,6 +79,8 @@ public class ConfigSetting {
     public static String locationUnsafe;
     public static String noResidencePermissions;
     public static String allowCatchMessage;
+    public static String allEntityAddSuccess;
+    public static String allEntityRemoveSuccess;
 
     public static Boolean checkConfig() {
         // check if the file exist
@@ -171,6 +174,9 @@ public class ConfigSetting {
         ballHitBlock = config.isSet("Message.BallHitBlock") ? config.getString("Message.BallHitBlock") :
             "&cYou did not hit a entity,So {BALL} fell in {LOCATION}";
 
+        noPermissionToUse = config.isSet("Message.NoPermissionToUse") ? config.getString("Message.NoPermissionToUse") :
+            "&cYou don''t have permission to use {BALL}, so {BALL} &cfell in &e{LOCATION}.";
+
         catchSuccess = config.isSet("Message.CatchSuccess") ? config.getString("Message.CatchSuccess") :
             "&aSuccessfully captured {ENTITY} location: {LOCATION}";
 
@@ -212,6 +218,12 @@ public class ConfigSetting {
 
         allowCatchMessage = config.isSet("Message.AllowCatchMessage") ? config.getString("Message.AllowCatchMessage") : 
             "&b{ENTITY} &6allow catch: {STATUS} !";
+
+        allEntityAddSuccess = config.isSet("Message.AllEntityAddSuccess") ? config.getString("Message.AllEntityAddSuccess") :
+            "&aAll Entity added success!";
+
+        allEntityRemoveSuccess = config.isSet("Message.AllEntityRemoveSuccess") ? config.getString("Message.AllEntityRemoveSuccess") :
+            "&eAll Entity removed success!";
         
         new BallRecipe();
 
@@ -301,7 +313,7 @@ public class ConfigSetting {
 
                 break;
             default:
-                
+                plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Unknown Error make plugin file can not place!");
                 break;
         }
     }

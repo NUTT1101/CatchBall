@@ -12,6 +12,7 @@ import com.pohuang.items.Ball;
 import com.pohuang.nms.checkByCustomEntity.CheckByCustomEntity_1_16;
 import com.pohuang.nms.checkByCustomEntity.CheckByCustomEntity_1_17;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -53,6 +54,18 @@ public class HitEvent implements Listener {
             Player player = (Player) event.getEntity().getShooter();
 
             if (!checkCatchBall(event.getEntity())) { return false; }
+
+            if (!player.hasPermission("catchball.use")) {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(ConfigSetting.noPermissionToUse, 
+                    getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
+                    , "").replace("{BALL}", ConfigSetting.catchBallName)));
+                
+                if (event.getHitEntity() != null) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
+                } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall()); }
+                
+                return false;
+            }
 
             event.setCancelled(true);
 
