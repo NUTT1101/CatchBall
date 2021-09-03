@@ -4,9 +4,7 @@
 
 
 ## Version:
-- [1.17](https://www.spigotmc.org/resources/catchball.94867/)
-- [1.16](https://github.com/NUTT1101/CatchBall/raw/main/version/CatchBall-1.0.6%20(1.16%20only%20support).jar)
-
+- [1.17, 1.16](https://www.spigotmc.org/resources/catchball.94867/)
 
 ## Language:
 - English(Default)
