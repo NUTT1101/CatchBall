@@ -41,9 +41,9 @@ public class TabComplete implements TabCompleter {
                         if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
                             entityList.add(entity);
                         }
-                        entityList.add("ALL");
                     }
-                    
+
+                    entityList.add("ALL");
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
                     return sort;
 
@@ -55,6 +55,7 @@ public class TabComplete implements TabCompleter {
                         }
                     }
                     
+                    entityList.add("ALL");
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
                     return sort;
                 }
