@@ -60,10 +60,14 @@ public class HitEvent implements Listener {
                     getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
                     , "").replace("{BALL}", ConfigSetting.catchBallName)));
                 
+                event.getEntity().remove();
+
                 if (event.getHitEntity() != null) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
                 } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall()); }
                 
+                event.setCancelled(true);
+
                 return false;
             }
 
