@@ -19,6 +19,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class Command implements CommandExecutor {
     private List<String> commandArgument = CommandCheck.getCommandArgument();
+    private Set<String> entityList = ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false);
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
@@ -87,7 +88,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                if (!ConfigSetting.getEntityFileExist(args[1])) {
+                if (!entityList.contains(args[1])) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownEntityType, "", ""));
                     return true;
                 }
@@ -115,7 +116,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                if (!ConfigSetting.getEntityFileExist(args[1])) {
+                if (!entityList.contains(args[1])) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownEntityType, "", ""));
                     return true;
                 }

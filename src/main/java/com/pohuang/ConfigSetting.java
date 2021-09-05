@@ -82,7 +82,12 @@ public class ConfigSetting {
     public static String allEntityAddSuccess;
     public static String allEntityRemoveSuccess;
 
-    public static Boolean checkConfig() {
+
+    /**
+     * Initialize or reload the pluginl.
+     * @return nothing
+     */
+    public static void checkConfig() {
         // check if the file exist
         if (!new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml").exists()) { plugin.saveResource("config.yml", false); }
         
@@ -96,13 +101,13 @@ public class ConfigSetting {
         enabled = config.isSet("Enabled") ? config.getBoolean("Enabled") : true;
         chickenDropGoldEgg = config.isSet("ChickenDropGoldEgg") ? config.getBoolean("ChickenDropGoldEgg") : true;
 
-        if (!enabled) { return false; }
+        if (!enabled) { return; }
         
         updatecheck = config.isSet("Update-Check") ? config.getBoolean("Update-Check") : true;
 
         version = getPluginVersion();
 
-        entityFile = getEntityFile();
+        entityFile = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
         
         chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance") ? Integer.parseInt
             (config.getString("ChickenDropGoldEggChance").replace("%", ""))  : 50;
@@ -231,8 +236,7 @@ public class ConfigSetting {
         
         try {
             if (plugin.getServer().getPluginManager().getPlugin("Residence") != null) {
-                residenceFlag.stream().
-                    map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
+                residenceFlag.stream().map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
             }
 
         } catch (IllegalArgumentException e) {
@@ -249,6 +253,7 @@ public class ConfigSetting {
                     String[] flag = griefPreventionFlag.get(i).split("");
                     flag[0] = flag[0].toUpperCase();
                     ClaimPermission.valueOf(String.join("", flag));
+                    griefPreventionFlag.set(i, String.join("", flag));
                 }
             }
 
@@ -289,9 +294,13 @@ public class ConfigSetting {
             }
         }
 
-        return true;
+        return;
     }
 
+    /**
+     * Check the version of server to determine entity.yml file output version. 
+     * @param version version of server (use 'v_1_1X_RX' format)
+     */
     public static void entityFileCreate(String version) {
         switch (version) {
             case "v1_17_R1":
@@ -317,21 +326,37 @@ public class ConfigSetting {
                 break;
         }
     }
+
+    /**
+     * Get entityDisplayName saved on entity.yml.
+     * @param entityName name of saved entity
+     * @return entityDisplayName
+     */
+    public static String getEntityDisplayname(String entityName) {
+        if (entityFile.getConfigurationSection("EntityList").contains(entityName)) {
+            return entityFile.getString("EntityList." + entityName.toUpperCase() + ".DisplayName");
+        }
+        return entityName;
+    }
     
-    public static String toChat(String text, String location, String entity) {
-        if (text.contains("{BALL}")) { text = text.replace("{BALL}", catchBallName); }
-        if (text.contains("{LOCATION}")) { text = text.replace("{LOCATION}", location); }
-        if (text.contains("ENTITY")) {text = text.replace("{ENTITY}", new HeadDrop().getEntityDisplayname(entity)); }
-        
-        text = ChatColor.translateAlternateColorCodes('&', text);
-        return text;
+    /**
+     * Replace the message argument from config.yml.
+     * @param text source message
+     * @param location replace {LOCATION} from source message
+     * @param entity replace {ENTITY} from source message
+     * @return replaced message
+     */
+    public static String toChat(String message, String location, String entity) {
+        return ChatColor.translateAlternateColorCodes('&', message).
+            replace("{BALL}", catchBallName).
+            replace("{LOCATION}", location).
+            replace("{ENTITY}", getEntityDisplayname(entity));
     }
-
-    public static YamlConfiguration getEntityFile() { 
-        YamlConfiguration file = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
-        return file; 
-    }
-
+    
+    
+    /**
+     * Save the entity.yml file, if the catchableEntity changes.
+     */
     public static void saveEntityList() {
         YamlConfiguration entityFile = ConfigSetting.entityFile;                   
         List<String> savelist = new ArrayList<>();
@@ -345,12 +370,6 @@ public class ConfigSetting {
         try{
             entityFile.save(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
         } catch (IOException e) { e.printStackTrace(); }
-    }
-
-    public static boolean getEntityFileExist(String entityName) {
-        List<String> entityList = new ArrayList<>();
-        entityList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
-        return entityList.contains(entityName.toUpperCase());
     }
 
 

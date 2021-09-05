@@ -32,6 +32,12 @@ public class HeadDrop {
     private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
     
+    /**
+     * When CatchBall hit catchable entity, It will drop the skull of hitEntity.
+     * @param hitEntity the hitEntity of the hit event 
+     * @param player player who throw the CatchBall 
+     * @return the skull of saved hitEntity info
+     */
     public ItemStack getEntityHead(Entity hitEntity , Player player) {
         
         YamlConfiguration entityFile = ConfigSetting.entityFile;
@@ -84,10 +90,17 @@ public class HeadDrop {
         return skullTextures(entityHead, entityFile, hitEntity.getType().toString());
     }
 
-    public ItemStack skullTextures(ItemStack head, YamlConfiguration entityFile, String skullName) {
+    /**
+     * Get the entity.yml file entity skull textures.
+     * @param head skull of hitEntity
+     * @param entityFile entity.yml file
+     * @param entityType entityType 
+     * @return head with texture value
+     */
+    public ItemStack skullTextures(ItemStack head, YamlConfiguration entityFile, String entityType) {
         SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), null);
-        profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + skullName.toUpperCase() + ".Skull")));
+        profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + entityType.toUpperCase() + ".Skull")));
         
         try {
             Field profileField = skullMeta.getClass().getDeclaredField("profile");
@@ -100,16 +113,5 @@ public class HeadDrop {
         head.setItemMeta(skullMeta);
         
         return head;
-    }
-
-    public String getEntityDisplayname(String entityName) {
-        YamlConfiguration entityFile = ConfigSetting.entityFile;
-        List<String> entitList = new ArrayList<>();
-        entitList.addAll(entityFile.getConfigurationSection("EntityList").getKeys(false));
-        if (entitList.contains(entityName)) {
-            return entityFile.getString("EntityList." + entityName.toUpperCase() + ".DisplayName");
-        }
-    
-        return entityName;
     }
 }
