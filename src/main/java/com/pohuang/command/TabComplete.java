@@ -31,17 +31,17 @@ public class TabComplete implements TabCompleter {
 
             if (args.length == 2) { 
                 entityList.clear();
+                
                 if (args[0].equalsIgnoreCase("get")) {
 
                     StringUtil.copyPartialMatches(args[1], Arrays.asList("CatchBall", "GoldEgg"), sort);
                     return sort;
+
                 } else if (args[0].equalsIgnoreCase("add")) {
 
-                    for (String entity : ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false)) {
-                        if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
-                            entityList.add(entity);
-                        }
-                    }
+                    ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false).stream().
+                        filter(entityName -> ConfigSetting.catchableEntity.contains(EntityType.valueOf(entityName))).
+                        map(entity -> entityList.add(entity));
 
                     entityList.add("ALL");
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
@@ -49,11 +49,9 @@ public class TabComplete implements TabCompleter {
 
                 } else if (args[0].equalsIgnoreCase("remove")) {
 
-                    for (String entity : ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false)) {
-                        if (ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
-                            entityList.add(entity);
-                        }
-                    }
+                    ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false).stream().
+                        filter(entityName -> ConfigSetting.catchableEntity.contains(EntityType.valueOf(entityName))).
+                        map(entity -> entityList.add(entity));
                     
                     entityList.add("ALL");
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
