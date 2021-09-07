@@ -42,8 +42,9 @@ public class TabComplete implements TabCompleter {
                     ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false).stream().
                         filter(entityName -> !ConfigSetting.catchableEntity.contains(EntityType.valueOf(entityName))).
                         forEach(entity -> entityList.add(entity));
+                    
+                    if (ConfigSetting.catchableEntity.size() < 75) { entityList.add("ALL"); }
 
-                    entityList.add("ALL");
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
                     return sort;
 
@@ -53,7 +54,8 @@ public class TabComplete implements TabCompleter {
                         filter(entityName -> ConfigSetting.catchableEntity.contains(EntityType.valueOf(entityName))).
                         forEach(entity -> entityList.add(entity));
                     
-                    entityList.add("ALL");
+                    if (ConfigSetting.catchableEntity.size() == 75) { entityList.add("ALL"); }
+                    
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
                     return sort;
                 }

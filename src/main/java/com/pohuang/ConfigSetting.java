@@ -347,10 +347,11 @@ public class ConfigSetting {
      * @return replaced message
      */
     public static String toChat(String message, String location, String entity) {
-        return ChatColor.translateAlternateColorCodes('&', message).
-            replace("{BALL}", catchBallName).
-            replace("{LOCATION}", location).
-            replace("{ENTITY}", getEntityDisplayname(entity));
+        message = message.contains("{BALL}") ? message.replace("{BALL}", catchBallName) : message;
+        message = message.contains("{LOCATION}") ? message.replace("{LOCATION}", location) : message;
+        message = message.contains("{ENTITY}") ? message.replace("{ENTITY}", getEntityDisplayname(entity)) : message;
+
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
     
     
