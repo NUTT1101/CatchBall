@@ -86,3 +86,6 @@ Message:
     AllowCatchMessage: "&b{ENTITY} &6allow catch: {STATUS} !"
     AllEntityAddSuccess: "&aAll Entity added success!"
     AllEntityRemoveSuccess: "&eAll Entity removed success!"
+    PlayerNotExist: "&cPlease enter a player that want to give the item!"
+    UnknownOrOfflinePlayer: "&cPlayer {PLAYER} not find!"
+    SuccessGiveItemToPlayer: "&aSuccess give {ITEM} to &a{PLAYER}!"

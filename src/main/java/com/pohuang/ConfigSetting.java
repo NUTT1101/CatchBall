@@ -81,6 +81,9 @@ public class ConfigSetting {
     public static String allowCatchMessage;
     public static String allEntityAddSuccess;
     public static String allEntityRemoveSuccess;
+    public static String playerNotExist;
+    public static String unknownOrOfflinePlayer;
+    public static String successGiveItemToPlayer;
 
 
     /**
@@ -229,6 +232,15 @@ public class ConfigSetting {
 
         allEntityRemoveSuccess = config.isSet("Message.AllEntityRemoveSuccess") ? config.getString("Message.AllEntityRemoveSuccess") :
             "&eAll Entity removed success!";
+
+        playerNotExist = config.isSet("Message.PlayerNotExist") ? config.getString("Message.PlayerNotExist") : 
+            "&cPlease enter a player that want to give the item!";
+
+        unknownOrOfflinePlayer = config.isSet("Message.UnknownOrOfflinePlayer") ? config.getString("Message.UnknownOrOfflinePlayer") :
+            "&cPlayer {PLAYER} not find!";
+        
+        successGiveItemToPlayer = config.isSet("Message.SuccessGiveItemToPlayer") ? config.getString("Message.SuccessGiveItemToPlayer") :
+            "&aSuccess give {ITEM} to &a{PLAYER}!";
         
         new BallRecipe();
 

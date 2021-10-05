@@ -9,6 +9,7 @@ import com.pohuang.GUI.CatchableList;
 import com.pohuang.items.Ball;
 import com.pohuang.items.GoldEgg;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
@@ -45,14 +46,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
                 
-                // check if inventory of player is full
-                if (player.getInventory().firstEmpty() == -1) {
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
-                    player.getWorld().dropItem(player.getLocation(), checkItem(args[1]));
-                    return true;
-                }
-
-                player.getInventory().addItem(checkItem(args[1]));
+                givePlayerItem(player, checkItem(args[1]));
                 
                 String message = checkItem(args[1]).equals(new Ball().getCatchBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
@@ -131,6 +125,39 @@ public class Command implements CommandExecutor {
                 ConfigSetting.saveEntityList();
                 return true;
 
+            } else if (args[0].equalsIgnoreCase("give")) {
+                if (args.length == 1) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.playerNotExist, "", ""));
+                    return true;
+                }
+
+                if (args.length == 2) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemDoesNotExist, "", ""));
+                    return true;
+                }
+                
+                Player player = Bukkit.getPlayer(args[1]);
+                
+                if (player == null) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownOrOfflinePlayer, "", "").
+                        replace("{PLAYER}", args[1]));
+                    return true;
+                }
+
+                if (checkItem(args[2]) == null) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemNameError, "", ""));
+                    return true;
+                }
+                
+                givePlayerItem(player, checkItem(args[2]));
+                
+                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successGiveItemToPlayer, "", "").
+                    replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName : ConfigSetting.goldEggName).
+                    replace("{PLAYER}", player.getName()).
+                    replace("&", "§"));
+                
+                return true;
+
             } else if (!commandArgument.contains(args[0])) {
                 
                 // player enter unknown argument
@@ -153,6 +180,17 @@ public class Command implements CommandExecutor {
         if (sender instanceof Player) { return true; }
         sender.sendMessage(ConfigSetting.toChat(ConfigSetting.consoleExcuteCommand, "", ""));
         return false;
-    } 
+    }
+
+    private Boolean givePlayerItem(Player player, ItemStack itemStack) {
+        if (player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
+            player.getWorld().dropItem(player.getLocation(), itemStack);
+            return true;
+        } else {
+            player.getInventory().addItem(itemStack);
+            return true;
+        }
+    }
 
 }

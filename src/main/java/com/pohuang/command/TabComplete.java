@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.pohuang.ConfigSetting;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -33,8 +34,14 @@ public class TabComplete implements TabCompleter {
                 entityList.clear();
 
                 if (args[0].equalsIgnoreCase("get")) {
-
                     StringUtil.copyPartialMatches(args[1], Arrays.asList("CatchBall", "GoldEgg"), sort);
+                    return sort;
+
+                } else if (args[0].equalsIgnoreCase("give")) {
+                    Bukkit.getOnlinePlayers().forEach(player -> {
+                        sort.add(player.getName());
+                    });
+                    StringUtil.copyPartialMatches(args[0], sort, sort);
                     return sort;
 
                 } else if (args[0].equalsIgnoreCase("add")) {
@@ -59,7 +66,12 @@ public class TabComplete implements TabCompleter {
                     StringUtil.copyPartialMatches(args[1], entityList, sort);
                     return sort;
                 }
-            } 
+            } else if (args.length == 3) {
+                if (args[0].equalsIgnoreCase("give")) {
+                    StringUtil.copyPartialMatches(args[2], Arrays.asList("CatchBall", "GoldEgg"), sort);
+                    return sort;
+                }
+            }
 
         }
         
