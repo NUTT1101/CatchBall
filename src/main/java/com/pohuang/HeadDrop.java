@@ -13,6 +13,7 @@ import com.mojang.authlib.properties.Property;
 import com.pohuang.event.HitEvent;
 import com.pohuang.nms.SaveNMS_1_16;
 import com.pohuang.nms.SaveNMS_1_17;
+import com.pohuang.nms.SaveNMS_1_18;
 
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -72,12 +73,14 @@ public class HeadDrop {
         }
 
         switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
+            case "v1_18_R1":
+                headMeta = new SaveNMS_1_18().saveEntityNMS(hitEntity, headMeta);
+                break;
             case "v1_17_R1":
                 headMeta = new SaveNMS_1_17().saveEntityNMS(hitEntity, headMeta);
                 break;
-        
             case "v1_16_R3":
-            headMeta = new SaveNMS_1_16().saveEntityNMS(hitEntity, headMeta);
+                headMeta = new SaveNMS_1_16().saveEntityNMS(hitEntity, headMeta);
                 break;
             default:
                 break;

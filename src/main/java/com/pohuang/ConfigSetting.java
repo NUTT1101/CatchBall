@@ -18,7 +18,6 @@ import com.pohuang.Recipe.BallRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.libs.org.codehaus.plexus.util.IOUtil;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
@@ -314,11 +313,28 @@ public class ConfigSetting {
      * @param version version of server (use 'v_1_1X_RX' format)
      */
     public static void entityFileCreate(String version) {
+        File file = new File(plugin.getDataFolder() , "entity.yml");
         switch (version) {
+            case "v1_18_R1":
+                try {
+                    InputStream inputStream = plugin.getResource("v1_18_R1/entity.yml");
+                    FileOutputStream outputStream = new FileOutputStream(file);
+                    inputStream.transferTo(outputStream);
+                    outputStream.close();
+                    inputStream.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                break;
+            
             case "v1_17_R1":
                 try {
-                    FileOutputStream fileOutputStream = new FileOutputStream(new File(plugin.getDataFolder() , "entity.yml"));
-                    IOUtil.copy(plugin.getResource("v1_17_R1/entity.yml"), fileOutputStream);    
+                    InputStream inputStream = plugin.getResource("v1_17_R1/entity.yml");
+                    FileOutputStream outputStream = new FileOutputStream(file);
+                    inputStream.transferTo(outputStream);
+                    outputStream.close();
+                    inputStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -326,8 +342,11 @@ public class ConfigSetting {
                 break;
             case "v1_16_R3":
                 try {
-                    FileOutputStream fileOutputStream = new FileOutputStream(new File(plugin.getDataFolder() , "entity.yml"));
-                    IOUtil.copy(plugin.getResource("v1_16_R3/entity.yml"), fileOutputStream);    
+                    InputStream inputStream = plugin.getResource("v1_16_R3/entity.yml");
+                    FileOutputStream outputStream = new FileOutputStream(file);
+                    inputStream.transferTo(outputStream);
+                    outputStream.close();
+                    inputStream.close();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

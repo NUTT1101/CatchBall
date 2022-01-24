@@ -4,6 +4,7 @@ import com.pohuang.CatchBall;
 import com.pohuang.ConfigSetting;
 import com.pohuang.nms.loadNMS.LoadNMS_1_16;
 import com.pohuang.nms.loadNMS.LoadNMS_1_17;
+import com.pohuang.nms.loadNMS.LoadNMS_1_18;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -71,6 +72,9 @@ public class SkullClick implements Listener{
                         Entity entity = player.getWorld().spawnEntity(clickLocation, entityType);
                         
                         switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
+                            case "v1_18_R1":
+                                new LoadNMS_1_18().loadEntityNMS(entity, data);;
+                                break;
                             case "v1_17_R1":
                                 new LoadNMS_1_17().loadEntityNMS(entity, data);
                                 break;

@@ -7,14 +7,12 @@
 	
 	<groupId>com.pohuang</groupId>
 	<artifactId>CatchBall</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<buildDirectory>C:\Users\Zhang\pluginTest\plugins</buildDirectory>
-		<libDir>C:\Users\zhang\plugin_dev\CatchBall\lib\</libDir>
 	</properties>
 
 	<repositories>
@@ -45,11 +43,13 @@
 	<dependencies>
 
 		<!-- spigot -->
+		
 		<dependency>
             <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
+            <artifactId>spigot1.17</artifactId>
             <version>1.17.1-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <scope>system</scope>
+			<systemPath>/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/spigot-1.17.jar</systemPath>
         </dependency>
 
 		<dependency>
@@ -57,7 +57,7 @@
             <artifactId>spigot1.16</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
             <scope>system</scope>
-			<systemPath>C:\Users\zhang\plugin_dev\api\spigot\spigot-1.16.5-R0.1-SNAPSHOT.jar</systemPath>
+			<systemPath>/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/spigot-1.16.5.jar</systemPath>
         </dependency>
 
 		<!-- Residence -->
@@ -66,7 +66,7 @@
 			<artifactId>Residence</artifactId>
 			<version>5.0.0.1</version>
 			<scope>system</scope>
-			<systemPath>${libDir}Residence5.0.0.1.jar</systemPath>
+			<systemPath>/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/Residence5.0.0.1.jar</systemPath>
 		</dependency>
 
 		<!-- MythicMobs -->
@@ -96,7 +96,6 @@
 	</dependencies>
 
 	<build>
-		<directory>${buildDirectory}</directory>
 		<pluginManagement>
 			<plugins>
 				<plugin>
