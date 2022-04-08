@@ -73,7 +73,7 @@ public class HeadDrop {
         }
 
         switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
-            case "v1_18_R1":
+            case "v1_18_R2":
                 headMeta = new SaveNMS_1_18().saveEntityNMS(hitEntity, headMeta);
                 break;
             case "v1_17_R1":

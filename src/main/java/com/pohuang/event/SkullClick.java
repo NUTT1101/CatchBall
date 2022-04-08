@@ -72,7 +72,7 @@ public class SkullClick implements Listener{
                         Entity entity = player.getWorld().spawnEntity(clickLocation, entityType);
                         
                         switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
-                            case "v1_18_R1":
+                            case "v1_18_R2":
                                 new LoadNMS_1_18().loadEntityNMS(entity, data);;
                                 break;
                             case "v1_17_R1":

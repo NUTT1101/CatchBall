@@ -262,7 +262,7 @@ public class HitEvent implements Listener {
         String checkCustom = null;
 
         switch (plugin.getServer().getClass().getPackage().getName().split("\\.")[3]) {
-            case "v1_18_R1":
+            case "v1_18_R2":
                 checkCustom = new CheckByCustomEntity_1_18().checkIsCustomEntity(hitEntity);        
                 break;
             case "v1_17_R1":

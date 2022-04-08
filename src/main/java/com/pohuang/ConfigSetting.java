@@ -315,9 +315,9 @@ public class ConfigSetting {
     public static void entityFileCreate(String version) {
         File file = new File(plugin.getDataFolder() , "entity.yml");
         switch (version) {
-            case "v1_18_R1":
+            case "v1_18_R2":
                 try {
-                    InputStream inputStream = plugin.getResource("v1_18_R1/entity.yml");
+                    InputStream inputStream = plugin.getResource("v1_18_R2/entity.yml");
                     FileOutputStream outputStream = new FileOutputStream(file);
                     inputStream.transferTo(outputStream);
                     outputStream.close();
