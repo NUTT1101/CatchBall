@@ -48,13 +48,13 @@ public class HitEvent implements Listener {
         EntityType.PRIMED_TNT, EntityType.TRIDENT, EntityType.PLAYER};   */
 
     @EventHandler
-    public Boolean CatchBallHitEvent(ProjectileHitEvent event){
+    public void CatchBallHitEvent(ProjectileHitEvent event){
         
         // check if shooter is a player
         if (event.getEntity().getShooter() instanceof Player) { 
             Player player = (Player) event.getEntity().getShooter();
 
-            if (!checkCatchBall(event.getEntity())) { return false; }
+            if (!checkCatchBall(event.getEntity())) { return; }
 
             if (!player.hasPermission("catchball.use")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(ConfigSetting.noPermissionToUse, 
@@ -69,7 +69,7 @@ public class HitEvent implements Listener {
                 
                 event.setCancelled(true);
 
-                return false;
+                return;
             }
 
             event.setCancelled(true);
@@ -81,19 +81,19 @@ public class HitEvent implements Listener {
                 if (!resCheck(player, event.getHitEntity().getLocation())) { 
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
-                    return false;
+                    return;
                 }
 
                 if (!mmCheck(player, event.getHitEntity())) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
-                    return false;
+                    return;
                 }
 
                 if (!gfCheck(player, event.getHitEntity().getLocation())) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
-                    return false;
+                    return;
                 }
                 
                 if (event.getHitEntity() instanceof Tameable) {
@@ -104,7 +104,7 @@ public class HitEvent implements Listener {
                         if (!tameable.getOwner().getName().equals(shooter.getName())){
                             event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
                             player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
-                            return false;
+                            return;
                         }
                     }
                     
@@ -128,7 +128,7 @@ public class HitEvent implements Listener {
                         hitEntity.getWorld().dropItem(hitLocation, new HeadDrop().getEntityHead(event.getHitEntity(), player));
                         
                         player.sendMessage(ConfigSetting.toChat(ConfigSetting.catchSuccess, getCoordinate(hitLocation), entity.toString()));
-                        return true;
+                        return;
                     }             
                 }
                 
@@ -145,12 +145,12 @@ public class HitEvent implements Listener {
                 player.sendMessage(ConfigSetting.toChat(ConfigSetting.ballHitBlock, getCoordinate(hitLocation), ""));
                 
                 event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall());
-                return false;
+                return;
             }
 
         } else if (event.getEntity().getShooter() instanceof BlockProjectileSource){
 
-            if (!checkCatchBall(event.getEntity())) { return false; }
+            if (!checkCatchBall(event.getEntity())) { return; }
 
             event.setCancelled(true);
             event.getEntity().remove();
@@ -167,7 +167,7 @@ public class HitEvent implements Listener {
                         hitEntity.remove();
                         hitEntity.getWorld().dropItem(hitLocation, new HeadDrop().getEntityHead(event.getHitEntity(), null));
                         
-                        return true;
+                        return;
                     }             
                 }
                 
@@ -176,11 +176,11 @@ public class HitEvent implements Listener {
             } else if (event.getHitBlock() != null) {
                 hitLocation = event.getHitBlock().getLocation();
                 event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall());
-                return false;
+                return;
             }
         }
 
-        return false;
+        return;
     }
 
 
