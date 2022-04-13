@@ -84,7 +84,6 @@ public class ConfigSetting {
     public static String unknownOrOfflinePlayer;
     public static String successGiveItemToPlayer;
 
-
     /**
      * Initialize or reload the pluginl.
      * @return nothing

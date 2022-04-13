@@ -1,5 +1,7 @@
 package com.pohuang.event;
 
+
+import java.lang.reflect.Method;
 import java.util.List;
 
 import com.bekvon.bukkit.residence.api.ResidenceApi;
@@ -29,7 +31,6 @@ import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.projectiles.BlockProjectileSource;
 
-import io.lumine.xikage.mythicmobs.MythicMobs;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -40,6 +41,7 @@ public class HitEvent implements Listener {
     private List<EntityType> catchableEntity = ConfigSetting.catchableEntity;
     private Location hitLocation;
     private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -218,10 +220,18 @@ public class HitEvent implements Listener {
     public boolean mmCheck(Player player, Entity entity) {
         if (plugin.getServer().getPluginManager().getPlugin("MythicMobs") == null) { return true; }
         
-        if (MythicMobs.inst().getAPIHelper().isMythicMob(entity)) {
-            return false;
+        for (int i=0 ; i < 2; i++) {
+            try {
+                Class<?> api = Class.forName(mmPackage[i]);
+                Object ins = api.getConstructor().newInstance();
+
+                Method isMythicMob = api.getDeclaredMethod("isMythicMob", Entity.class);
+                
+                return !((boolean) isMythicMob.invoke(ins, entity));
+            } catch (Exception e) {
+            }
         }
-        
+
         return true;
     }
 
