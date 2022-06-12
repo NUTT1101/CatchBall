@@ -1,9 +1,0 @@
-<factorypath>
-    <factorypathentry kind="EXTJAR" id="/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/spigot-1.17.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/spigot-1.16.5.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/Residence5.0.1.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/io/lumine/xikage/MythicMobs/4.11.0/MythicMobs-4.11.0.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/com/github/TechFortress/GriefPrevention/16.17.1/GriefPrevention-16.17.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/bstats/bstats-bukkit/2.2.1/bstats-bukkit-2.2.1.jar" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="VARJAR" id="M2_REPO/org/bstats/bstats-base/2.2.1/bstats-base-2.2.1.jar" enabled="true" runInBatchMode="false"/>
-</factorypath>
