@@ -56,7 +56,7 @@
             <artifactId>Residence</artifactId>
             <version>5.0.1.0</version>
             <scope>system</scope>
-            <systemPath>/Users/nutt1101/Documents/minecraft/minecraft_plugins/CatchBall/lib/Residence5.0.1.0.jar</systemPath>
+            <systemPath>${project.basedir}/libs/Residence5.1.0.0.jar</systemPath>
         </dependency>
 
         <dependency>
