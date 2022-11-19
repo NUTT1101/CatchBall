@@ -38,17 +38,16 @@ public class CatchBall extends JavaPlugin{
             registerCommand();
 
             if (this.getServer().getPluginManager().getPlugin("Residence") != null) {
-                this.getLogger().log(Level.INFO, ChatColor.GREEN + "Residence Hook!");
+                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Residence Hook!");
             }
 
             if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
-                this.getLogger().log(Level.INFO, ChatColor.GREEN + "MythicMobs Hook!");
+                getServer().getConsoleSender().sendMessage( ChatColor.GREEN + "MythicMobs Hook!");
             }
 
             if (this.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-                this.getLogger().log(Level.INFO, ChatColor.GREEN + "GriefPrevention Hook!");
+                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "GriefPrevention Hook!");
             }
-
         }
     }
 
