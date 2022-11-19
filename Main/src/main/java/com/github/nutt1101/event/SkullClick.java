@@ -55,8 +55,8 @@ public class SkullClick implements Listener{
                         EntityType entityType = EntityType.valueOf(data.get(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING));
                         Location clickLocation = event.getClickedBlock().getLocation();
 
-                        clickLocation.setX(Math.floor(clickLocation.getX() + 0.5));
-                        clickLocation.setZ(Math.floor(clickLocation.getZ() + 0.5));
+                        clickLocation.setX(clickLocation.getBlockX() + 0.5);
+                        clickLocation.setZ(clickLocation.getBlockZ() + 0.5);
                         
                         for (int i=0; i < 3; i++) {
                             if (clickLocation.getBlock().getType().equals(Material.AIR) || clickLocation.getBlock().getType().equals(Material.WATER)) { break; }
