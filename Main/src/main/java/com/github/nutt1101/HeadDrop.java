@@ -50,7 +50,7 @@ public class HeadDrop {
         
         Date now = new Date();
         String location = "(" + hitEntity.getWorld().getName() + ") " + 
-            new HitEvent().getCoordinate(hitEntity.getLocation());
+            HitEvent.getCoordinate(hitEntity.getLocation());
         
         if (hitEntity.getCustomName() != null) {
             headMeta.setDisplayName(ChatColor.WHITE + hitEntity.getCustomName());

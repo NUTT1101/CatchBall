@@ -174,7 +174,7 @@ public class HitEvent implements Listener {
 
 
     // config text will be use this method , so put on this class
-    public String getCoordinate(Location location) {
+    public static String getCoordinate(Location location) {
         String xyz = String.valueOf(location.getBlockX()) + ", " +
         String.valueOf(location.getBlockY()) + ", " +
         String.valueOf(location.getBlockZ());
