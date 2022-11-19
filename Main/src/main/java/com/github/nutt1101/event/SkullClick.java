@@ -20,7 +20,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.logging.Level;
 
 public class SkullClick implements Listener{
-    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.plugin;
     
     @EventHandler
     public void skullClick(PlayerInteractEvent event) {

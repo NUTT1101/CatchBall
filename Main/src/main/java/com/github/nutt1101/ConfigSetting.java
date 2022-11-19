@@ -22,7 +22,7 @@ import org.bukkit.plugin.Plugin;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 
 public class ConfigSetting {
-    private final static Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final static Plugin plugin = CatchBall.plugin;
     public static Boolean enabled;
     public static Boolean updatecheck;
     public static String version;

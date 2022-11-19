@@ -25,7 +25,7 @@ public class CatchBall extends JavaPlugin{
 
     @Override
     public void onEnable() {
-        plugin = getPlugin(CatchBall.class);
+        plugin = this;
 
         ConfigSetting.checkConfig();
 
