@@ -13,24 +13,21 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.md_5.bungee.api.ChatColor;
 
 public class GoldEgg {
-    private ItemStack goldEgg;
 
-    public GoldEgg() {
+    public static ItemStack makeGoldEgg() {
+        ItemStack goldEgg = new ItemStack(Material.EGG);
 
-        // funny goldEgg
-        goldEgg = new ItemStack(Material.EGG);
-        
         ItemMeta meta = goldEgg.getItemMeta();
         meta.setDisplayName(ConfigSetting.toChat(ConfigSetting.goldEggName, "", ""));
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
         meta.setLore(ConfigSetting.goldEggLore.stream().map(lore -> ChatColor.
-            translateAlternateColorCodes('&', lore).replace("{PERCENT}", String.valueOf(ConfigSetting.
-            chickenDropGoldEggChance))).collect(Collectors.toList()));
-        
-        goldEgg.setItemMeta(meta);
-    }
+                translateAlternateColorCodes('&', lore).replace("{PERCENT}", String.valueOf(ConfigSetting.
+                        chickenDropGoldEggChance))).collect(Collectors.toList()));
 
-    public ItemStack getGoldEgg() { return goldEgg; }
+        goldEgg.setItemMeta(meta);
+
+        return goldEgg;
+    }
 }

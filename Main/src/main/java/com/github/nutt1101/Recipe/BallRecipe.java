@@ -24,7 +24,7 @@ public class BallRecipe {
     public BallRecipe() {
         if (ConfigSetting.recipeEnabled) {
             NamespacedKey ballKey = new NamespacedKey(plugin, "ballKey");
-            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, new Ball().getCatchBall());
+            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, Ball.makeBall());
             
             FileConfiguration config = plugin.getConfig(); 
             
@@ -38,7 +38,7 @@ public class BallRecipe {
                 String ItemName = config.getString("Recipe.key." + key).toUpperCase();
                 if (ItemName instanceof String) {
                     if (ItemName.equals("GOLDEGG")) {
-                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(new GoldEgg().getGoldEgg()));
+                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(GoldEgg.makeGoldEgg()));
                     } else {
                         ballRecipe.setIngredient(key.charAt(0), Material.valueOf(ItemName));
                     }
