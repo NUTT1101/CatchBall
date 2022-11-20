@@ -27,7 +27,7 @@ import java.util.logging.Level;
 public class HitEvent implements Listener {
     private List<EntityType> catchableEntity = ConfigSetting.catchableEntity;
     private Location hitLocation;
-    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.plugin;
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
@@ -53,8 +53,8 @@ public class HitEvent implements Listener {
                 event.getEntity().remove();
 
                 if (event.getHitEntity() != null) {
-                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
-                } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall()); }
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall()); }
                 
                 event.setCancelled(true);
 
@@ -68,19 +68,19 @@ public class HitEvent implements Listener {
             if (event.getHitEntity() != null) {
                 
                 if (!resCheck(player, event.getHitEntity().getLocation())) { 
-                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
                 if (!mmCheck(player, event.getHitEntity())) {
-                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
                 if (!gfCheck(player, event.getHitEntity().getLocation())) {
-                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
@@ -91,7 +91,7 @@ public class HitEvent implements Listener {
                     
                     if (tameable.isTamed()) {
                         if (!tameable.getOwner().getName().equals(shooter.getName())){
-                            event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), new Ball().getCatchBall());
+                            event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                             player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                             return;
                         }
@@ -123,7 +123,7 @@ public class HitEvent implements Listener {
                 
                 // if player hit a can not be catch entity, catchBall will be return
                 player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(hitLocation), ""));
-                hitEntity.getWorld().dropItem(hitLocation, new Ball().getCatchBall());   
+                hitEntity.getWorld().dropItem(hitLocation, Ball.makeBall());   
 
             // hit block, catchBall will be return
             } else if (event.getHitBlock() != null) {   
@@ -133,7 +133,7 @@ public class HitEvent implements Listener {
                 hitLocation = event.getHitBlock().getLocation();
                 player.sendMessage(ConfigSetting.toChat(ConfigSetting.ballHitBlock, getCoordinate(hitLocation), ""));
                 
-                event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall());
+                event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall());
                 return;
             }
 
@@ -160,11 +160,11 @@ public class HitEvent implements Listener {
                     }             
                 }
                 
-                hitEntity.getWorld().dropItem(hitLocation, new Ball().getCatchBall());   
+                hitEntity.getWorld().dropItem(hitLocation, Ball.makeBall());   
 
             } else if (event.getHitBlock() != null) {
                 hitLocation = event.getHitBlock().getLocation();
-                event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), new Ball().getCatchBall());
+                event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall());
                 return;
             }
         }
@@ -174,7 +174,7 @@ public class HitEvent implements Listener {
 
 
     // config text will be use this method , so put on this class
-    public String getCoordinate(Location location) {
+    public static String getCoordinate(Location location) {
         String xyz = String.valueOf(location.getBlockX()) + ", " +
         String.valueOf(location.getBlockY()) + ", " +
         String.valueOf(location.getBlockZ());
@@ -249,7 +249,7 @@ public class HitEvent implements Listener {
 
         if (projectile instanceof ThrowableProjectile) {
             ThrowableProjectile throwableProjectile = (ThrowableProjectile) projectile;
-            if (!throwableProjectile.getItem().getItemMeta().equals(new Ball().getCatchBall().getItemMeta())) { return false; }
+            if (!throwableProjectile.getItem().getItemMeta().equals(Ball.makeBall().getItemMeta())) { return false; }
         }
 
         return true;

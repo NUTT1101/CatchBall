@@ -28,7 +28,7 @@ import org.bukkit.plugin.Plugin;
 import net.md_5.bungee.api.ChatColor;
 
 public class HeadDrop {
-    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.plugin;
     private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm:ss");
     
     /**
@@ -50,7 +50,7 @@ public class HeadDrop {
         
         Date now = new Date();
         String location = "(" + hitEntity.getWorld().getName() + ") " + 
-            new HitEvent().getCoordinate(hitEntity.getLocation());
+            HitEvent.getCoordinate(hitEntity.getLocation());
         
         if (hitEntity.getCustomName() != null) {
             headMeta.setDisplayName(ChatColor.WHITE + hitEntity.getCustomName());

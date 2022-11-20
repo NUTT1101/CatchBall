@@ -20,7 +20,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.logging.Level;
 
 public class SkullClick implements Listener{
-    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.plugin;
     
     @EventHandler
     public void skullClick(PlayerInteractEvent event) {
@@ -54,6 +54,9 @@ public class SkullClick implements Listener{
                     try {
                         EntityType entityType = EntityType.valueOf(data.get(new NamespacedKey(plugin, "entityType"), PersistentDataType.STRING));
                         Location clickLocation = event.getClickedBlock().getLocation();
+
+                        clickLocation.setX(clickLocation.getBlockX() + 0.5);
+                        clickLocation.setZ(clickLocation.getBlockZ() + 0.5);
                         
                         for (int i=0; i < 3; i++) {
                             if (clickLocation.getBlock().getType().equals(Material.AIR) || clickLocation.getBlock().getType().equals(Material.WATER)) { break; }

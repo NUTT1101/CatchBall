@@ -47,7 +47,7 @@ public class Command implements CommandExecutor {
                 
                 givePlayerItem(player, checkItem(args[1]));
                 
-                String message = checkItem(args[1]).equals(new Ball().getCatchBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                     replace("{ITEM}", ConfigSetting.goldEggName);
 
@@ -170,8 +170,8 @@ public class Command implements CommandExecutor {
    
     private ItemStack checkItem(String item) {
         item = item.toLowerCase();
-        if (item.equals("catchball")) { return new Ball().getCatchBall(); }
-        if (item.equals("goldegg")) { return new GoldEgg().getGoldEgg(); }
+        if (item.equals("catchball")) { return Ball.makeBall(); }
+        if (item.equals("goldegg")) { return GoldEgg.makeGoldEgg(); }
         return null;
     }
 

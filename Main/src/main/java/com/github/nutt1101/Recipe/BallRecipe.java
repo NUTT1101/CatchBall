@@ -18,13 +18,13 @@ import org.bukkit.plugin.Plugin;
 
 
 public class BallRecipe {
-    private final Plugin plugin = CatchBall.getPlugin(CatchBall.class);
+    private final Plugin plugin = CatchBall.plugin;
 
     // load from config.yml and add catchBall Recipe
     public BallRecipe() {
         if (ConfigSetting.recipeEnabled) {
             NamespacedKey ballKey = new NamespacedKey(plugin, "ballKey");
-            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, new Ball().getCatchBall());
+            ShapedRecipe ballRecipe = new ShapedRecipe(ballKey, Ball.makeBall());
             
             FileConfiguration config = plugin.getConfig(); 
             
@@ -38,7 +38,7 @@ public class BallRecipe {
                 String ItemName = config.getString("Recipe.key." + key).toUpperCase();
                 if (ItemName instanceof String) {
                     if (ItemName.equals("GOLDEGG")) {
-                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(new GoldEgg().getGoldEgg()));
+                        ballRecipe.setIngredient(key.charAt(0), new RecipeChoice.ExactChoice(GoldEgg.makeGoldEgg()));
                     } else {
                         ballRecipe.setIngredient(key.charAt(0), Material.valueOf(ItemName));
                     }

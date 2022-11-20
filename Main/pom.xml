@@ -57,7 +57,7 @@
             <artifactId>Residence</artifactId>
             <version>5.1.0.0</version>
             <scope>system</scope>
-            <systemPath>Your Residence Plugin Path</systemPath>
+            <systemPath>${project.basedir}/libs/Residence5.1.0.0.jar</systemPath>
         </dependency>
 
         <!-- MythicMobs Api -->
