@@ -290,7 +290,7 @@ public class ConfigSetting {
         }
 
         if (updatecheck) {
-            if (!isLatelyVersion(plugin.getDescription().getVersion(), version)) {
+            if (!isLatestVersion(plugin.getDescription().getVersion(), version)) {
                 plugin.getLogger().log(Level.INFO, ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
                 plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
             } else {
@@ -389,14 +389,14 @@ public class ConfigSetting {
         
     }
     
-    public static boolean isLatelyVersion(String current, String lately) {
-        if (current.equals(lately)) return true;
+    public static boolean isLatestVersion(String current, String latest) {
+        if (current.equals(latest)) return true;
 
         current = current.replace(".","");
-        lately = lately.replace(".", "");
+        latest = latest.replace(".", "");
 
         for (int i = 0; i < 3; i++) {
-            if (current.charAt(i) - '0' < lately.charAt(i) - '0') return false;
+            if (current.charAt(i) - '0' < latest.charAt(i) - '0') return false;
         }
 
         return true;
