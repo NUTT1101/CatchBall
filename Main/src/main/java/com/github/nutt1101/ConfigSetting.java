@@ -15,7 +15,6 @@ import com.github.nutt1101.Recipe.BallRecipe;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
@@ -51,7 +50,7 @@ public class ConfigSetting {
 
     public static List<String> griefPreventionFlag = new ArrayList<>();
     
-    public static String consoleExcuteCommand;
+    public static String consoleExecuteCommand;
     public static String noPermission;
     public static String playerInventoryFull;
     public static String argDoesNotExist;
@@ -148,7 +147,7 @@ public class ConfigSetting {
         griefPreventionFlag = config.isSet("GriefPreventionFlag") ? config.getStringList("GriefPreventionFlag") :
             Arrays.asList("Access");
 
-        consoleExcuteCommand = config.isSet("Message.ConsoleExcuteCommand") ? config.getString("Message.ConsoleExcuteCommand") : 
+        consoleExecuteCommand = config.isSet("Message.ConsoleExcuteCommand") ? config.getString("Message.ConsoleExcuteCommand") :
             "&cThis command can only be executed by player!" ;
 
         noPermission = config.isSet("Message.NoPermission") ? config.getString("Message.NoPermission") :
@@ -290,19 +289,14 @@ public class ConfigSetting {
             
         }
 
-        String currentVersion = "v" + plugin.getDescription().getVersion();
-        
         if (updatecheck) {
-            if (!currentVersion.equals(version)) {
+            if (!isLatelyVersion(plugin.getDescription().getVersion(), version)) {
                 plugin.getLogger().log(Level.INFO, ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
                 plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
-               
             } else {
                 plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Plugin is already the latest version");
             }
         }
-
-        return;
     }
 
     /**
@@ -382,7 +376,7 @@ public class ConfigSetting {
         try {
             InputStream inputStream = new URL(("https://api.spigotmc.org/legacy/update.php?resource=94867")).openStream();
             Scanner scanner = new Scanner(inputStream);
-            String version = scanner.next();
+            String version = scanner.next().replace("v", "");
             
             scanner.close();
 
@@ -393,5 +387,18 @@ public class ConfigSetting {
 
         return "";
         
+    }
+    
+    public static boolean isLatelyVersion(String current, String lately) {
+        if (current.equals(lately)) return true;
+
+        current = current.replace(".","");
+        lately = lately.replace(".", "");
+
+        for (int i = 0; i < 3; i++) {
+            if (current.charAt(i) - '0' < lately.charAt(i) - '0') return false;
+        }
+
+        return true;
     }
 }

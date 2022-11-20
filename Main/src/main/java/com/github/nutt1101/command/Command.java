@@ -177,7 +177,7 @@ public class Command implements CommandExecutor {
 
     private Boolean checkSenderPlayer(CommandSender sender) {
         if (sender instanceof Player) { return true; }
-        sender.sendMessage(ConfigSetting.toChat(ConfigSetting.consoleExcuteCommand, "", ""));
+        sender.sendMessage(ConfigSetting.toChat(ConfigSetting.consoleExecuteCommand, "", ""));
         return false;
     }
 
