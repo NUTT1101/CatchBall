@@ -9,7 +9,7 @@
 ## Language:
 - English(Default)
 - [ChineseTW(繁體中文)](https://nutt1101.github.io/catchball/lang/zh_tw/)
-  - 特別感謝 [阿任](https://github.com/haer0248) 提供本插件繁體中文(zh_tw)翻譯
+  - 特別感謝 [猫又おにぎり](https://github.com/haer0248) 提供本插件繁體中文(zh_tw)翻譯
 
 **Language Install: move `config.yml` and `entity.yml` to plugin folder.**
 
