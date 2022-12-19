@@ -2,7 +2,7 @@ name: CatchBall
 main: com.github.nutt1101.CatchBall
 author: NUTT1101
 description: "§bA plugin that make entity to be catchable.\n§dContact Me: https://discord.link/nuttPluginClub"
-version: "1.1.5"
+version: "1.1.6"
 api-version: 1.13
 softdepend: [Residence, MythicMobs, GriefPrevention]
 permissions:
