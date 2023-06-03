@@ -62,7 +62,8 @@ Message:
         \n&b/ctb reload &7Reload plugin.
         \n&b/ctb list &7Lists all catchable entities and states.
         \n&b/ctb add &7Add the entity to the catch list.
-        \n&b/ctb remove &7Remove the entity from the catchable list."
+        \n&b/ctb remove &7Remove the entity from the catchable list.
+        \n&b/ctb give &7Give player a catchball."
     ArgTooMuch: "&cToo many Argument!"
     UnknownCommandArgument: "&cUnknown Argument!"
     SuccessGetBall: "&aSuccessfully get {ITEM}!"
