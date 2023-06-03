@@ -85,10 +85,9 @@ public class HitEvent implements Listener {
                     return;
                 }
                 
-                if (event.getHitEntity() instanceof Tameable) {
-                    Tameable tameable = (Tameable) event.getHitEntity();
+                if (event.getHitEntity() instanceof Tameable tameable) {
                     Player shooter = (Player) event.getEntity().getShooter();
-                    
+
                     if (tameable.isTamed()) {
                         if (!tameable.getOwner().getName().equals(shooter.getName())){
                             event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());

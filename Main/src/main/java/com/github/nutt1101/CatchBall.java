@@ -19,7 +19,7 @@ import net.md_5.bungee.api.ChatColor;
 
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
-    private Boolean plguinStatus = config.getBoolean("Enable");
+    private Boolean pluginStatus = config.getBoolean("Enable");
 
     public static Plugin plugin;
 
@@ -30,7 +30,7 @@ public class CatchBall extends JavaPlugin{
         ConfigSetting.checkConfig();
 
         if (!ConfigSetting.enabled) {
-            this.getLogger().log(Level.WARNING, "Plugin Status: " + plguinStatus);
+            this.getLogger().log(Level.WARNING, "Plugin Status: " + pluginStatus);
             
         } else {
             new Metrics(this, 12380);
