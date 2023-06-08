@@ -62,9 +62,9 @@
 
         <!-- MythicMobs Api -->
         <dependency>
-            <groupId>io.lumine.xikage</groupId>
-            <artifactId>MythicMobs</artifactId>
-            <version>4.11.0</version>
+            <groupId>io.lumine</groupId>
+            <artifactId>Mythic-Dist</artifactId>
+            <version>5.2.5</version>
             <scope>provided</scope>
         </dependency>
 
@@ -72,7 +72,7 @@
         <dependency>
             <groupId>com.github.TechFortress</groupId>
             <artifactId>GriefPrevention</artifactId>
-            <version>16.17.1</version>
+            <version>16.18.1</version>
             <scope>provided</scope>
         </dependency>
 
