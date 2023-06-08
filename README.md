@@ -4,7 +4,7 @@
 
 
 ## Version:
-- [1,19, 1.18, 1.17, 1.16](https://github.com/NUTT1101/CatchBall/releases)
+- [1.20, 1.19, 1.18, 1.17, 1.16](https://github.com/NUTT1101/CatchBall/releases)
 
 ## Language:
 - English(Default)
