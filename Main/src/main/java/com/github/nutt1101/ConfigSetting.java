@@ -238,7 +238,7 @@ public class ConfigSetting {
         successGiveItemToPlayer = config.isSet("Message.SuccessGiveItemToPlayer") ? config.getString("Message.SuccessGiveItemToPlayer") :
             "&aSuccess give {ITEM} to &a{PLAYER}!";
 
-         invalidItemAmount = config.isSet("Message.invalidItemAmount") ? config.getString("Message.invalidItemAmount") :
+        invalidItemAmount = config.isSet("Message.invalidItemAmount") ? config.getString("Message.invalidItemAmount") :
                     "&cInvalid item amount!";
         
         new BallRecipe();
