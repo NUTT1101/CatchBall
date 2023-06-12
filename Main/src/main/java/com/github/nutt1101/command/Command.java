@@ -3,7 +3,6 @@ package com.github.nutt1101.command;
 import java.util.List;
 import java.util.Set;
 
-
 import com.github.nutt1101.ConfigSetting;
 import com.github.nutt1101.GUI.CatchableList;
 import com.github.nutt1101.items.Ball;
@@ -25,13 +24,17 @@ public class Command implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
         if (command.getName().equals("ctb")) {
 
-            if (!(CommandCheck.check(sender, command, label, args))) { return true; }
+            if (!(CommandCheck.check(sender, command, label, args))) {
+                return true;
+            }
 
             /* player use "/ctb get" command
             player will get a catchBall*/
             if (args[0].equalsIgnoreCase("get")) {
 
-                if (!checkSenderPlayer(sender)) { return true; }
+                if (!checkSenderPlayer(sender)) {
+                    return true;
+                }
 
                 Player player = (Player) sender;
 
@@ -47,9 +50,11 @@ public class Command implements CommandExecutor {
 
                 givePlayerItem(player, checkItem(args[1]));
 
-                String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                        replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                        replace("{ITEM}", ConfigSetting.goldEggName);
+                String message = checkItem(args[1]).equals(Ball.makeBall())
+                        ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").replace("{ITEM}",
+                        ConfigSetting.catchBallName)
+                        : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").replace("{ITEM}",
+                        ConfigSetting.goldEggName);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 
@@ -58,19 +63,22 @@ public class Command implements CommandExecutor {
                 sender.sendMessage(ConfigSetting.toChat(ConfigSetting.reloadSuccess, "", ""));
                 return true;
 
-            } else if (args[0].equalsIgnoreCase("list")){
-                if (!checkSenderPlayer(sender)) { return true; }
+            } else if (args[0].equalsIgnoreCase("list")) {
+                if (!checkSenderPlayer(sender)) {
+                    return true;
+                }
 
                 new CatchableList().openCatchableList((Player) sender, 1);
 
-            } else if (args[0].equalsIgnoreCase("add")){
+            } else if (args[0].equalsIgnoreCase("add")) {
                 if (args.length == 1) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.addEntityDoesNotExist, "", ""));
                     return true;
                 }
 
                 if (args[1].equalsIgnoreCase("all")) {
-                    Set<String> entityList = ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false);
+                    Set<String> entityList = ConfigSetting.entityFile.getConfigurationSection("EntityList")
+                            .getKeys(false);
                     for (String entity : entityList) {
                         if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity))) {
                             ConfigSetting.catchableEntity.add(EntityType.valueOf(entity.toUpperCase()));
@@ -125,21 +133,16 @@ public class Command implements CommandExecutor {
                 return true;
 
             } else if (args[0].equalsIgnoreCase("give")) {
-                if (args.length == 1) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.playerNotExist, "", ""));
-                    return true;
-                }
-
-                if (args.length == 2) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemDoesNotExist, "", ""));
+                if (args.length < 3) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
                     return true;
                 }
 
                 Player player = Bukkit.getPlayer(args[1]);
 
                 if (player == null) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownOrOfflinePlayer, "", "").
-                            replace("{PLAYER}", args[1]));
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownOrOfflinePlayer, "", "")
+                            .replace("{PLAYER}", args[1]));
                     return true;
                 }
 
@@ -149,9 +152,13 @@ public class Command implements CommandExecutor {
                 }
 
                 int itemAmount = 1;
-                if (args.length == 4) {
+                if (args.length >= 4) {
                     try {
                         itemAmount = Integer.parseInt(args[3]);
+                        if (itemAmount <= 0) {
+                            sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
+                            return true;
+                        }
                     } catch (NumberFormatException e) {
                         sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
                         return true;
@@ -160,16 +167,17 @@ public class Command implements CommandExecutor {
 
                 givePlayerItem(player, checkItem(args[2]), itemAmount);
 
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successGiveItemToPlayer, "", "").
-                        replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName : ConfigSetting.goldEggName).
-                        replace("{PLAYER}", player.getName()).
-                        replace("&", "§"));
+                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successGiveItemToPlayer, "", "")
+                        .replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName
+                                : ConfigSetting.goldEggName)
+                        .replace("{PLAYER}", player.getName())
+                        .replace("&", "§"));
 
                 return true;
 
             } else if (!commandArgument.contains(args[0])) {
 
-                // player enter unknown argument
+                // player entered an unknown argument
                 sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownCommandArgument, "", ""));
                 return true;
             }
@@ -180,13 +188,19 @@ public class Command implements CommandExecutor {
 
     private ItemStack checkItem(String item) {
         item = item.toLowerCase();
-        if (item.equals("catchball")) { return Ball.makeBall(); }
-        if (item.equals("goldegg")) { return GoldEgg.makeGoldEgg(); }
+        if (item.equals("catchball")) {
+            return Ball.makeBall();
+        }
+        if (item.equals("goldegg")) {
+            return GoldEgg.makeGoldEgg();
+        }
         return null;
     }
 
     private Boolean checkSenderPlayer(CommandSender sender) {
-        if (sender instanceof Player) { return true; }
+        if (sender instanceof Player) {
+            return true;
+        }
         sender.sendMessage(ConfigSetting.toChat(ConfigSetting.consoleExecuteCommand, "", ""));
         return false;
     }
@@ -194,14 +208,13 @@ public class Command implements CommandExecutor {
     private Boolean givePlayerItem(Player player, ItemStack itemStack, int amount) {
         if (player.getInventory().firstEmpty() == -1) {
             player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
-            itemStack.setAmount(amount);
             player.getWorld().dropItem(player.getLocation(), itemStack);
             return true;
         } else {
-            itemStack.setAmount(amount);
-            player.getInventory().addItem(itemStack);
+            ItemStack item = itemStack.clone();
+            item.setAmount(amount);
+            player.getInventory().addItem(item);
             return true;
         }
     }
-
 }
