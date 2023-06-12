@@ -48,7 +48,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                givePlayerItem(player, checkItem(args[1]));
+                givePlayerItem(player, checkItem(args[2]), 1);
 
                 String message = checkItem(args[1]).equals(Ball.makeBall())
                         ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").replace("{ITEM}",
@@ -209,12 +209,11 @@ public class Command implements CommandExecutor {
         if (player.getInventory().firstEmpty() == -1) {
             player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
             player.getWorld().dropItem(player.getLocation(), itemStack);
-            return true;
         } else {
             ItemStack item = itemStack.clone();
             item.setAmount(amount);
             player.getInventory().addItem(item);
-            return true;
         }
+        return true;
     }
 }
