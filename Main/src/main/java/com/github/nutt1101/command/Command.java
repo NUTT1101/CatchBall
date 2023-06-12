@@ -30,11 +30,11 @@ public class Command implements CommandExecutor {
             /* player use "/ctb get" command
             player will get a catchBall*/
             if (args[0].equalsIgnoreCase("get")) {
-                
+
                 if (!checkSenderPlayer(sender)) { return true; }
 
                 Player player = (Player) sender;
-                
+
                 if (args.length == 1) {
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.itemDoesNotExist, "", ""));
                     return true;
@@ -44,12 +44,12 @@ public class Command implements CommandExecutor {
                     player.sendMessage(ConfigSetting.toChat(ConfigSetting.itemNameError, "", ""));
                     return true;
                 }
-                
+
                 givePlayerItem(player, checkItem(args[1]));
-                
+
                 String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                    replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                    replace("{ITEM}", ConfigSetting.goldEggName);
+                        replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                        replace("{ITEM}", ConfigSetting.goldEggName);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 
@@ -60,12 +60,12 @@ public class Command implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("list")){
                 if (!checkSenderPlayer(sender)) { return true; }
-                
+
                 new CatchableList().openCatchableList((Player) sender, 1);
 
             } else if (args[0].equalsIgnoreCase("add")){
-                if (args.length == 1) { 
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.addEntityDoesNotExist, "", "")); 
+                if (args.length == 1) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.addEntityDoesNotExist, "", ""));
                     return true;
                 }
 
@@ -86,7 +86,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                if (ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) { 
+                if (ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.entityDoesExists, "", ""));
                     return true;
                 }
@@ -95,10 +95,10 @@ public class Command implements CommandExecutor {
                 sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successAddEntity, "", args[1].toUpperCase()));
                 ConfigSetting.saveEntityList();
                 return true;
-                
+
             } else if (args[0].equalsIgnoreCase("remove")) {
-                if (args.length == 1) { 
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityDoesNotExist, "", "")); 
+                if (args.length == 1) {
+                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityDoesNotExist, "", ""));
                     return true;
                 }
 
@@ -114,7 +114,7 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) { 
+                if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityNotFound, "", ""));
                     return true;
                 }
@@ -134,12 +134,12 @@ public class Command implements CommandExecutor {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemDoesNotExist, "", ""));
                     return true;
                 }
-                
+
                 Player player = Bukkit.getPlayer(args[1]);
-                
+
                 if (player == null) {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownOrOfflinePlayer, "", "").
-                        replace("{PLAYER}", args[1]));
+                            replace("{PLAYER}", args[1]));
                     return true;
                 }
 
@@ -147,18 +147,28 @@ public class Command implements CommandExecutor {
                     sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemNameError, "", ""));
                     return true;
                 }
-                
-                givePlayerItem(player, checkItem(args[2]));
-                
+
+                int itemAmount = 1;
+                if (args.length == 4) {
+                    try {
+                        itemAmount = Integer.parseInt(args[3]);
+                    } catch (NumberFormatException e) {
+                        sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
+                        return true;
+                    }
+                }
+
+                givePlayerItem(player, checkItem(args[2]), itemAmount);
+
                 sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successGiveItemToPlayer, "", "").
-                    replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName : ConfigSetting.goldEggName).
-                    replace("{PLAYER}", player.getName()).
-                    replace("&", "§"));
-                
+                        replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName : ConfigSetting.goldEggName).
+                        replace("{PLAYER}", player.getName()).
+                        replace("&", "§"));
+
                 return true;
 
             } else if (!commandArgument.contains(args[0])) {
-                
+
                 // player enter unknown argument
                 sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownCommandArgument, "", ""));
                 return true;
@@ -167,7 +177,7 @@ public class Command implements CommandExecutor {
 
         return true;
     }
-   
+
     private ItemStack checkItem(String item) {
         item = item.toLowerCase();
         if (item.equals("catchball")) { return Ball.makeBall(); }
@@ -181,12 +191,14 @@ public class Command implements CommandExecutor {
         return false;
     }
 
-    private Boolean givePlayerItem(Player player, ItemStack itemStack) {
+    private Boolean givePlayerItem(Player player, ItemStack itemStack, int amount) {
         if (player.getInventory().firstEmpty() == -1) {
             player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
+            itemStack.setAmount(amount);
             player.getWorld().dropItem(player.getLocation(), itemStack);
             return true;
         } else {
+            itemStack.setAmount(amount);
             player.getInventory().addItem(itemStack);
             return true;
         }

@@ -80,6 +80,7 @@ public class ConfigSetting {
     public static String playerNotExist;
     public static String unknownOrOfflinePlayer;
     public static String successGiveItemToPlayer;
+    public static String invalidItemAmount;
 
     /**
      * Initialize or reload the plugin.
@@ -236,6 +237,9 @@ public class ConfigSetting {
         
         successGiveItemToPlayer = config.isSet("Message.SuccessGiveItemToPlayer") ? config.getString("Message.SuccessGiveItemToPlayer") :
             "&aSuccess give {ITEM} to &a{PLAYER}!";
+
+         invalidItemAmount = config.isSet("Message.invalidItemAmount") ? config.getString("Message.invalidItemAmount") :
+                    "&cInvalid item amount!";
         
         new BallRecipe();
 
