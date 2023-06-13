@@ -205,7 +205,7 @@ public class Command implements CommandExecutor {
         return false;
     }
 
-    private Boolean givePlayerItem(Player player, ItemStack itemStack, int amount) {
+    private void givePlayerItem(Player player, ItemStack itemStack, int amount) {
         if (player.getInventory().firstEmpty() == -1) {
             player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
             player.getWorld().dropItem(player.getLocation(), itemStack);
@@ -214,6 +214,5 @@ public class Command implements CommandExecutor {
             item.setAmount(amount);
             player.getInventory().addItem(item);
         }
-        return true;
     }
 }

@@ -21,7 +21,7 @@ public class DropGoldEgg implements Listener{
     public void ChickenDropEgg(EntityDropItemEvent event){
         if (!event.getItemDrop().getItemStack().equals(new ItemStack(Material.EGG))) { return; }
 
-        ConfigSetting.chickenDropGoldEggChance = ConfigSetting.chickenDropGoldEggChance > 100 ? 100 : ConfigSetting.chickenDropGoldEggChance ;
+        ConfigSetting.chickenDropGoldEggChance = Math.min(ConfigSetting.chickenDropGoldEggChance, 100);
 
         if (event.getEntityType().equals(chicken) && ConfigSetting.chickenDropGoldEgg){
 
@@ -30,5 +30,5 @@ public class DropGoldEgg implements Listener{
                 event.getEntity().getWorld().dropItem(event.getEntity().getLocation(), GoldEgg.makeGoldEgg());
             }
         }
-    }    
+    }
 }
