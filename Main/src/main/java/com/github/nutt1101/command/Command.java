@@ -48,13 +48,12 @@ public class Command implements CommandExecutor {
                     return true;
                 }
 
-                givePlayerItem(player, checkItem(args[2]), 1);
 
-                String message = checkItem(args[1]).equals(Ball.makeBall())
-                        ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").replace("{ITEM}",
-                        ConfigSetting.catchBallName)
-                        : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").replace("{ITEM}",
-                        ConfigSetting.goldEggName);
+                getball(player, checkItem(args[1]));
+
+                String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                        replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
+                        replace("{ITEM}", ConfigSetting.goldEggName);
 
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
 
@@ -213,6 +212,16 @@ public class Command implements CommandExecutor {
             ItemStack item = itemStack.clone();
             item.setAmount(amount);
             player.getInventory().addItem(item);
+        }
+    }
+    private Boolean getball(Player player, ItemStack itemStack) {
+        if (player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
+            player.getWorld().dropItem(player.getLocation(), itemStack);
+            return true;
+        } else {
+            player.getInventory().addItem(itemStack);
+            return true;
         }
     }
 }
