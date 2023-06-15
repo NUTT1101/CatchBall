@@ -49,7 +49,7 @@ public class Command implements CommandExecutor {
                 }
 
 
-                getball(player, checkItem(args[1]));
+                getBall(player, checkItem(args[1]));
 
                 String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
                         replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
@@ -214,14 +214,12 @@ public class Command implements CommandExecutor {
             player.getInventory().addItem(item);
         }
     }
-    private Boolean getball(Player player, ItemStack itemStack) {
+    private void getBall(Player player, ItemStack itemStack) {
         if (player.getInventory().firstEmpty() == -1) {
             player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
             player.getWorld().dropItem(player.getLocation(), itemStack);
-            return true;
         } else {
             player.getInventory().addItem(itemStack);
-            return true;
         }
     }
 }
