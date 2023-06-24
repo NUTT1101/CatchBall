@@ -89,7 +89,7 @@ public class HitEvent implements Listener {
                     Player shooter = (Player) event.getEntity().getShooter();
 
                     if (tameable.isTamed()) {
-                        if (!tameable.getOwner().getName().equals(shooter.getName())){
+                        if (tameable.getOwner() != null && !tameable.getOwner().getName().equals(shooter.getName())){
                             event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                             player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                             return;
