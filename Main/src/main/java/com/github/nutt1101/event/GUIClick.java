@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.github.nutt1101.ConfigSetting;
 import com.github.nutt1101.GUI.CatchableList;
+import com.github.nutt1101.utils.TranslationFileReader;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.EntityType;
@@ -70,7 +71,7 @@ public class GUIClick implements Listener{
                         clickItemMeta.setLore(lore);
                         clickItem.setItemMeta(clickItemMeta);
                         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allowCatchMessage).
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allowCatchMessage).
                             replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
                             replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
                         

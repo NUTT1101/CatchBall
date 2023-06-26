@@ -1,6 +1,7 @@
 package com.github.nutt1101.event;
 
 import com.github.nutt1101.*;
+import com.github.nutt1101.utils.TranslationFileReader;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -38,7 +39,7 @@ public class SkullClick implements Listener{
                 String path = data.get(new NamespacedKey(plugin, "skullData"), PersistentDataType.STRING).toString();
 
                 if (path == null) {
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.skullDoesNotFound, "", ""));
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.skullDoesNotFound, "", ""));
                     event.setCancelled(true);
                 } else {
                     if (!new HitEvent().resCheck(player, event.getClickedBlock().getLocation())) {
@@ -63,7 +64,7 @@ public class SkullClick implements Listener{
                             clickLocation.setY(clickLocation.getY() + 1D);
                             
                             if (i == 2) {
-                                player.sendMessage(ConfigSetting.toChat(ConfigSetting.locationUnsafe, "", ""));
+                                player.sendMessage(ConfigSetting.toChat(TranslationFileReader.locationUnsafe, "", ""));
                                 event.setCancelled(true);
                                 return;
                             }

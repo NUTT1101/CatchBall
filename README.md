@@ -8,10 +8,7 @@
 
 ## Language:
 - English(Default)
-- [ChineseTW(繁體中文)](https://nutt1101.github.io/catchball/lang/zh_tw/index.html)
-
-**Language Install: move `config.yml` and `entity.yml` to plugin folder.**
-
+- ChineseTW(繁體中文)
 
 ## Bstats:
 ![Image](https://bstats.org/signatures/bukkit/CatchBall.svg)

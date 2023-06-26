@@ -7,6 +7,7 @@ import com.github.nutt1101.ConfigSetting;
 import com.github.nutt1101.GUI.CatchableList;
 import com.github.nutt1101.items.Ball;
 import com.github.nutt1101.items.GoldEgg;
+import com.github.nutt1101.utils.TranslationFileReader;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -30,36 +31,9 @@ public class Command implements CommandExecutor {
 
             /* player use "/ctb get" command
             player will get a catchBall*/
-            if (args[0].equalsIgnoreCase("get")) {
-
-                if (!checkSenderPlayer(sender)) {
-                    return true;
-                }
-
-                Player player = (Player) sender;
-
-                if (args.length == 1) {
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.itemDoesNotExist, "", ""));
-                    return true;
-                }
-
-                if (checkItem(args[1]) == null) {
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.itemNameError, "", ""));
-                    return true;
-                }
-
-
-                givePlayerItem(player, checkItem(args[1]), 1);
-
-                String message = checkItem(args[1]).equals(Ball.makeBall()) ? ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                        replace("{ITEM}", ConfigSetting.catchBallName) : ConfigSetting.toChat(ConfigSetting.successGetBall, "", "").
-                        replace("{ITEM}", ConfigSetting.goldEggName);
-
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-
-            } else if (args[0].equalsIgnoreCase("reload")) {
+            if (args[0].equalsIgnoreCase("reload")) {
                 ConfigSetting.checkConfig();
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.reloadSuccess, "", ""));
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.reloadSuccess, "", ""));
                 return true;
 
             } else if (args[0].equalsIgnoreCase("list")) {
@@ -71,7 +45,7 @@ public class Command implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("add")) {
                 if (args.length == 1) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.addEntityDoesNotExist, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.addEntityDoesNotExist, "", ""));
                     return true;
                 }
 
@@ -83,70 +57,70 @@ public class Command implements CommandExecutor {
                             ConfigSetting.catchableEntity.add(EntityType.valueOf(entity.toUpperCase()));
                         }
                     }
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allEntityAddSuccess));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allEntityAddSuccess));
                     ConfigSetting.saveEntityList();
                     return true;
                 }
 
                 if (!entityList.contains(args[1].toUpperCase())) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownEntityType, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.unknownEntityType, "", ""));
                     return true;
                 }
 
                 if (ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.entityDoesExists, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.entityDoesExists, "", ""));
                     return true;
                 }
 
                 ConfigSetting.catchableEntity.add(EntityType.valueOf(args[1].toUpperCase()));
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successAddEntity, "", args[1].toUpperCase()));
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.successAddEntity, "", args[1].toUpperCase()));
                 ConfigSetting.saveEntityList();
                 return true;
 
             } else if (args[0].equalsIgnoreCase("remove")) {
                 if (args.length == 1) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityDoesNotExist, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.removeEntityDoesNotExist, "", ""));
                     return true;
                 }
 
                 if (args[1].equalsIgnoreCase("all")) {
                     ConfigSetting.catchableEntity.clear();
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.allEntityRemoveSuccess));
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allEntityRemoveSuccess));
                     ConfigSetting.saveEntityList();
                     return true;
                 }
 
                 if (!entityList.contains(args[1])) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownEntityType, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.unknownEntityType, "", ""));
                     return true;
                 }
 
                 if (!ConfigSetting.catchableEntity.contains(EntityType.valueOf(args[1].toUpperCase()))) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.removeEntityNotFound, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.removeEntityNotFound, "", ""));
                     return true;
                 }
 
                 ConfigSetting.catchableEntity.remove(EntityType.valueOf(args[1].toUpperCase()));
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successRemove, "", args[1].toUpperCase()));
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.successRemove, "", args[1].toUpperCase()));
                 ConfigSetting.saveEntityList();
                 return true;
 
             } else if (args[0].equalsIgnoreCase("give")) {
                 if (args.length < 3) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.invalidItemAmount, "", ""));
                     return true;
                 }
 
                 Player player = Bukkit.getPlayer(args[1]);
 
                 if (player == null) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownOrOfflinePlayer, "", "")
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.unknownOrOfflinePlayer, "", "")
                             .replace("{PLAYER}", args[1]));
                     return true;
                 }
 
                 if (checkItem(args[2]) == null) {
-                    sender.sendMessage(ConfigSetting.toChat(ConfigSetting.itemNameError, "", ""));
+                    sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.itemNameError, "", ""));
                     return true;
                 }
 
@@ -155,18 +129,18 @@ public class Command implements CommandExecutor {
                     try {
                         itemAmount = Integer.parseInt(args[3]);
                         if (itemAmount <= 0) {
-                            sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
+                            sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.invalidItemAmount, "", ""));
                             return true;
                         }
                     } catch (NumberFormatException e) {
-                        sender.sendMessage(ConfigSetting.toChat(ConfigSetting.invalidItemAmount, "", ""));
+                        sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.invalidItemAmount, "", ""));
                         return true;
                     }
                 }
 
                 givePlayerItem(player, checkItem(args[2]), itemAmount);
 
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.successGiveItemToPlayer, "", "")
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.successGiveItemToPlayer, "", "")
                         .replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName
                                 : ConfigSetting.goldEggName)
                         .replace("{PLAYER}", player.getName())
@@ -177,7 +151,7 @@ public class Command implements CommandExecutor {
             } else if (!commandArgument.contains(args[0])) {
 
                 // player entered an unknown argument
-                sender.sendMessage(ConfigSetting.toChat(ConfigSetting.unknownCommandArgument, "", ""));
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.unknownCommandArgument, "", ""));
                 return true;
             }
         }
@@ -200,13 +174,13 @@ public class Command implements CommandExecutor {
         if (sender instanceof Player) {
             return true;
         }
-        sender.sendMessage(ConfigSetting.toChat(ConfigSetting.consoleExecuteCommand, "", ""));
+        sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.consoleExecuteCommand, "", ""));
         return false;
     }
 
     private void givePlayerItem(Player player, ItemStack itemStack, int amount) {
         if (player.getInventory().firstEmpty() == -1) {
-            player.sendMessage(ConfigSetting.toChat(ConfigSetting.playerInventoryFull, "", ""));
+            player.sendMessage(ConfigSetting.toChat(TranslationFileReader.playerInventoryFull, "", ""));
             player.getWorld().dropItem(player.getLocation(), itemStack);
         } else {
             ItemStack item = itemStack.clone();

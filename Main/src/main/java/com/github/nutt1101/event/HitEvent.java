@@ -6,6 +6,7 @@ import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.github.nutt1101.*;
 import com.github.nutt1101.items.Ball;
+import com.github.nutt1101.utils.TranslationFileReader;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -46,7 +47,7 @@ public class HitEvent implements Listener {
             if (!checkCatchBall(event.getEntity())) { return; }
 
             if (!player.hasPermission("catchball.use")) {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(ConfigSetting.noPermissionToUse, 
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(TranslationFileReader.noPermissionToUse,
                     getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
                     , "").replace("{BALL}", ConfigSetting.catchBallName)));
                 
@@ -69,29 +70,30 @@ public class HitEvent implements Listener {
                 
                 if (!resCheck(player, event.getHitEntity().getLocation())) { 
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
                 if (!mmCheck(player, event.getHitEntity())) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
                 if (!gfCheck(player, event.getHitEntity().getLocation())) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
-                    player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
                 
                 if (event.getHitEntity() instanceof Tameable tameable) {
                     Player shooter = (Player) event.getEntity().getShooter();
-
                     if (tameable.isTamed()) {
-                        if (!tameable.getOwner().getName().equals(shooter.getName())){
+                        boolean isNullOwnerValue = tameable.getOwner() == null;
+                        boolean sameOwner = isNullOwnerValue ? true : tameable.getOwner().getName().equals(shooter.getName());
+                        if ((isNullOwnerValue && !ConfigSetting.allowCatchableTamedOwnerIsNull) || !sameOwner) {
                             event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
-                            player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                            player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                             return;
                         }
                     }
@@ -113,15 +115,15 @@ public class HitEvent implements Listener {
                         }
 
                         event.getHitEntity().remove();
+
                         hitEntity.getWorld().dropItem(hitLocation, new HeadDrop().getEntityHead(event.getHitEntity(), player));
-                        
-                        player.sendMessage(ConfigSetting.toChat(ConfigSetting.catchSuccess, getCoordinate(hitLocation), entity.toString()));
+                        player.sendMessage(ConfigSetting.toChat(TranslationFileReader.catchSuccess, getCoordinate(hitLocation), entity.toString()));
                         return;
                     }             
                 }
                 
                 // if player hit a can not be catch entity, catchBall will be return
-                player.sendMessage(ConfigSetting.toChat(ConfigSetting.canNotCatchable, getCoordinate(hitLocation), ""));
+                player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(hitLocation), ""));
                 hitEntity.getWorld().dropItem(hitLocation, Ball.makeBall());   
 
             // hit block, catchBall will be return
@@ -130,7 +132,7 @@ public class HitEvent implements Listener {
                 event.getEntity().remove();
 
                 hitLocation = event.getHitBlock().getLocation();
-                player.sendMessage(ConfigSetting.toChat(ConfigSetting.ballHitBlock, getCoordinate(hitLocation), ""));
+                player.sendMessage(ConfigSetting.toChat(TranslationFileReader.ballHitBlock, getCoordinate(hitLocation), ""));
                 
                 event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall());
                 return;
@@ -174,11 +176,10 @@ public class HitEvent implements Listener {
 
     // config text will be use this method , so put on this class
     public static String getCoordinate(Location location) {
-        String xyz = String.valueOf(location.getBlockX()) + ", " +
-        String.valueOf(location.getBlockY()) + ", " +
-        String.valueOf(location.getBlockZ());
 
-        return xyz;
+        return location.getBlockX() + ", " +
+                location.getBlockY() + ", " +
+                location.getBlockZ();
     }
 
     public boolean resCheck(Player player, Location location) {
@@ -193,7 +194,7 @@ public class HitEvent implements Listener {
         for (String flags : ConfigSetting.residenceFlag) {        
             if (!residence.getPermissions().playerHas(player, Flags.valueOf(flags.toLowerCase()) , true)) {
 
-                player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
+                player.sendMessage(ConfigSetting.toChat(TranslationFileReader.noResidencePermissions, "", "").
                     replace("{FLAG}", flags));
 
                 return false;
@@ -233,7 +234,7 @@ public class HitEvent implements Listener {
         for (String flags : ConfigSetting.griefPreventionFlag) {
             if (!claim.hasExplicitPermission(player, ClaimPermission.valueOf(flags))) {
 
-                player.sendMessage(ConfigSetting.toChat(ConfigSetting.noResidencePermissions, "", "").
+                player.sendMessage(ConfigSetting.toChat(TranslationFileReader.noResidencePermissions, "", "").
                     replace("{FLAG}", flags));
 
                 return false;

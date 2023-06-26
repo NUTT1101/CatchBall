@@ -24,7 +24,7 @@ public class TabComplete implements TabCompleter {
         if (command.getName().equals("ctb")) {
             final List<String> sort = new ArrayList<>();
             
-            if (!sender.hasPermission("catchball.op")) { return null; }
+            if (!sender.hasPermission("catchball.op")) { return List.of(""); }
             
             if (args.length == 1) { 
                 StringUtil.copyPartialMatches(args[0], CommandCheck.getCommandArgument(), sort);
@@ -33,18 +33,12 @@ public class TabComplete implements TabCompleter {
 
             if (args.length == 2) { 
                 entityList.clear();
-
-                if (args[0].equalsIgnoreCase("get")) {
-                    StringUtil.copyPartialMatches(args[1], Arrays.asList("CatchBall", "GoldEgg"), sort);
-                    return sort;
-
-                } else if (args[0].equalsIgnoreCase("give")) {
+                if (args[0].equalsIgnoreCase("give")) {
                     Bukkit.getOnlinePlayers().forEach(player -> {
                         sort.add(player.getName());
                     });
                     StringUtil.copyPartialMatches(args[0], sort, sort);
                     return sort;
-
                 } else if (args[0].equalsIgnoreCase("add")) {
                     Set<String> allEntityList = ConfigSetting.entityFile.getConfigurationSection("EntityList").getKeys(false);
 
@@ -73,10 +67,16 @@ public class TabComplete implements TabCompleter {
                     StringUtil.copyPartialMatches(args[2], Arrays.asList("CatchBall", "GoldEgg"), sort);
                     return sort;
                 }
+            } else if (args.length == 4) {
+                if (args[0].equalsIgnoreCase("give")) {
+                    StringUtil.copyPartialMatches(args[3], Arrays.asList(
+                            "1", "2", "3", "4", "5", "6", "7", "8", "9"
+                    ), sort);
+                    return sort;
+                }
             }
-
         }
         
-        return null;
+        return List.of("");
     }
 }
