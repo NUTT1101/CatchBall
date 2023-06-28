@@ -52,6 +52,8 @@ public class TranslationFileReader {
      public static List<String> goldEggLore = new ArrayList<>();
      public static List<String> dropSkullLore = new ArrayList<>();
      public static List<String> guiSkullLore = new ArrayList<>();
+     public static String TRUE;
+     public static String FALSE;
 
      public static YamlConfiguration localeYamlConfig;
 
@@ -202,5 +204,9 @@ public class TranslationFileReader {
                           "&7Can be used with CraftRecipe to make CatchBall");
           dropSkullLore = localeYamlConfig.isSet("DropSkullLore") ? localeYamlConfig.getStringList("DropSkullLore") : Arrays.asList("&eENTITY TYPE: &a{ENTITY}",
                   "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
+          TRUE = localeYamlConfig.isSet("TRUE") ? localeYamlConfig.getString("TRUE") :
+                  "&aTRUE";
+          FALSE = localeYamlConfig.isSet("FALSE") ? localeYamlConfig.getString("FALSE") :
+                  "&cFALSE";
      }
 }

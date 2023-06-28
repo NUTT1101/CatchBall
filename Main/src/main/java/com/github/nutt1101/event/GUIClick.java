@@ -1,6 +1,7 @@
 package com.github.nutt1101.event;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -21,76 +22,90 @@ import org.bukkit.inventory.meta.ItemMeta;
 import net.md_5.bungee.api.ChatColor;
 
 
-public class GUIClick implements Listener{
+public class GUIClick implements Listener {
     List<String> savelist = new ArrayList<>();
 
     @EventHandler
     public void guiClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         String title = ConfigSetting.toChat(TranslationFileReader.catchableListTitle, "", "");
-        
+
         if (event.getView().getTitle().equals(title)) {
             event.setCancelled(true);
 
-            if (event.getClickedInventory() == null) { return; }
+            if (event.getClickedInventory() == null) {
+                return;
+            }
 
-            if (event.getClickedInventory().equals(player.getInventory())) { return; }
-            Integer page = Integer.valueOf(ChatColor.stripColor(event.getClickedInventory().getItem(49).getItemMeta().getDisplayName()
-            .replace(" ", "").split(Pattern.quote(":") + "|" + Pattern.quote("："))[1]));
-             
-            
-            switch (event.getSlot()) {
-                case 45:
-                    new CatchableList().openCatchableList(player, page - 1);
-                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
-                    break;
-                case 53:
-                    new CatchableList().openCatchableList(player, page + 1);
-                    player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
-                    event.setCancelled(true);
-                    break;
-                default:
-                    if (event.getClickedInventory().getItem(event.getSlot()) != null && event.getClickedInventory().getItem(event.getSlot()).getType().equals(Material.PLAYER_HEAD)) {
-                        ItemStack clickItem = event.getClickedInventory().getItem(event.getSlot());
-                        ItemMeta clickItemMeta = clickItem.getItemMeta();
-                        List<String> lore = clickItemMeta.getLore();
+            if (event.getClickedInventory().equals(player.getInventory())) {
+                return;
+            }
 
-                        EntityType entityType = EntityType.valueOf(ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()));
+            ItemStack pageItem = event.getClickedInventory().getItem(49);
+            if (pageItem == null) {
+                return;
+            }
 
-                        int loreIndex = getLoreIndex(lore, "{CATCHABLE}");
-                        if (ConfigSetting.catchableEntity.contains(entityType)) {
-                            ConfigSetting.catchableEntity.remove(entityType);      
-                            lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&cFALSE")));
-                            
-                        } else {
-                            ConfigSetting.catchableEntity.add(entityType);
-                            lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&aTRUE")));
-                        }
+            ItemMeta pageItemMeta = pageItem.getItemMeta();
+            String displayName = ChatColor.stripColor(pageItemMeta.getDisplayName());
+            String[] displayNameParts = displayName.replace(" ", "").split(Pattern.quote(":") + "|" + Pattern.quote("："));
 
-                        clickItemMeta.setLore(lore);
-                        clickItem.setItemMeta(clickItemMeta);
-                        player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allowCatchMessage).
-                            replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
-                            replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
-                        
-                        ConfigSetting.saveEntityList();
-                        
+            if (displayNameParts.length >= 2) {
+                Integer page = Integer.valueOf(displayNameParts[1]);
+
+                switch (event.getSlot()) {
+                    case 45:
+                        new CatchableList().openCatchableList(player, page - 1);
+                        player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
                         break;
-                    }              
+                    case 53:
+                        new CatchableList().openCatchableList(player, page + 1);
+                        player.playSound(player.getLocation(), Sound.ITEM_BOOK_PAGE_TURN, 1.0f, 1.0f);
+                        event.setCancelled(true);
+                        break;
+                    default:
+                        if (event.getClickedInventory().getItem(event.getSlot()) != null && event.getClickedInventory().getItem(event.getSlot()).getType().equals(Material.PLAYER_HEAD)) {
+                            ItemStack clickItem = event.getClickedInventory().getItem(event.getSlot());
+                            ItemMeta clickItemMeta = clickItem.getItemMeta();
+                            List<String> lore = clickItemMeta.getLore();
+
+                            EntityType entityType = EntityType.valueOf(ChatColor.stripColor(clickItem.getItemMeta().getDisplayName()));
+
+                            int loreIndex = getLoreIndex(lore, "{CATCHABLE}");
+                            if (ConfigSetting.catchableEntity.contains(entityType)) {
+                                ConfigSetting.catchableEntity.remove(entityType);
+                                lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
+                                        toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", TranslationFileReader.FALSE)));
+
+                            } else {
+                                ConfigSetting.catchableEntity.add(entityType);
+                                lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
+                                        toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", TranslationFileReader.TRUE)));
+                            }
+
+                            clickItemMeta.setLore(lore);
+                            clickItem.setItemMeta(clickItemMeta);
+                            player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allowCatchMessage).
+                                    replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
+                                    replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
+
+                            ConfigSetting.saveEntityList();
+
+                            break;
+                        }
+                }
             }
         }
     }
 
     public int getLoreIndex(List<String> lore, String contain) {
-        for (int i=0; i<lore.size(); i++) {
+        for (int i = 0; i < lore.size(); i++) {
             if (lore.get(i).contains(contain)) {
                 return i;
             }
         }
         return 1;
     }
-     
+
 }
