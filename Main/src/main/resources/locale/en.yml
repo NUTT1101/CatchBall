@@ -40,6 +40,9 @@ catchableListTitle: "&lCatch List Settings"
 prevPage: "&aPrevious Page"
 nextPage: "&aNext Page"
 currentPage: "&eCurrent Page: &a{PAGE}"
+guiSkullLore:
+  - "&6Custom Name: {ENTITY}"
+  - "&6Allow Catch: {CATCHABLE}"
 
 #The plugin special item setting
 Items:

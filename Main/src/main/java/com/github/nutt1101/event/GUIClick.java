@@ -61,12 +61,12 @@ public class GUIClick implements Listener{
                         if (ConfigSetting.catchableEntity.contains(entityType)) {
                             ConfigSetting.catchableEntity.remove(entityType);      
                             lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(ConfigSetting.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&cFALSE")));
+                                toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&cFALSE")));
                             
                         } else {
                             ConfigSetting.catchableEntity.add(entityType);
                             lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(ConfigSetting.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&aTRUE")));
+                                toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&aTRUE")));
                         }
 
                         clickItemMeta.setLore(lore);

@@ -51,6 +51,7 @@ public class TranslationFileReader {
      public static String goldEggName;
      public static List<String> goldEggLore = new ArrayList<>();
      public static List<String> dropSkullLore = new ArrayList<>();
+     public static List<String> guiSkullLore = new ArrayList<>();
 
      public static YamlConfiguration localeYamlConfig;
 
@@ -185,6 +186,8 @@ public class TranslationFileReader {
                   "&aNext Page";
           currentPage = localeYamlConfig.isSet("currentPage") ? localeYamlConfig.getString("currentPage") :
                   "&eCurrent Page: &a{PAGE}";
+          guiSkullLore = localeYamlConfig.isSet("guiSkullLore") ? localeYamlConfig.getStringList("guiSkullLore") :
+                  Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}");
           catchBallName = localeYamlConfig.isSet("Items.CatchBall.DisplayName") ? localeYamlConfig.getString("Items.CatchBall.DisplayName") :
                   "&aCat&bch &cball";
 

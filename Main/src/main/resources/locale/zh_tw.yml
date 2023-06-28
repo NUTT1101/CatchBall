@@ -39,6 +39,9 @@ catchableListTitle: "&l捕捉清單設置"
 prevPage: "&a上一頁"
 nextPage: "&a下一頁"
 currentPage: "&e目前頁面： &a{PAGE}"
+guiSkullLore:
+  - "&6顯示名稱: {ENTITY}"
+  - "&6可以捕捉: {CATCHABLE}"
 
 #插件特殊物品設定
 Items:

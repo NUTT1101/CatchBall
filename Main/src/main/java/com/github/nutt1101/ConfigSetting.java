@@ -31,7 +31,6 @@ public class ConfigSetting {
     public static Boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
     public static String catchSuccessSound;
-    public static List<String> guiSkullLore = new ArrayList<>();
     public static YamlConfiguration entityFile;
 
     public static Boolean recipeEnabled;
@@ -74,7 +73,6 @@ public class ConfigSetting {
         catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase() :
             "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
 
-        guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}");
 
         recipeEnabled = !config.isSet("Recipe.enabled") || config.getBoolean("Recipe.enabled");
 
