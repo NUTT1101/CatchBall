@@ -31,10 +31,6 @@ public class ConfigSetting {
     public static Boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
     public static String catchSuccessSound;
-    public static String catchableListTitle;
-    public static String prevPage;
-    public static String nextPage;
-    public static String currentPage;
     public static List<String> guiSkullLore = new ArrayList<>();
     public static YamlConfiguration entityFile;
 
@@ -85,14 +81,6 @@ public class ConfigSetting {
         
         catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase() :
             "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
-
-        catchableListTitle = "&lCatch List Settings";
-
-        prevPage = "&aPrevious Page";
-        
-        nextPage = "&aNext Page";
-
-        currentPage = "&eCurrent Page: &a{PAGE}";
 
         guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}"); 
 

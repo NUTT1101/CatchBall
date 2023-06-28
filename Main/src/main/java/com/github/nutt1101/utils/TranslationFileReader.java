@@ -39,6 +39,10 @@ public class TranslationFileReader {
      public static String unknownOrOfflinePlayer;
      public static String successGiveItemToPlayer;
      public static String invalidItemAmount;
+     public static String catchableListTitle;
+     public static String prevPage;
+     public static String nextPage;
+     public static String currentPage;
 
      public static YamlConfiguration localeYamlConfig;
 
@@ -165,5 +169,13 @@ public class TranslationFileReader {
 
           invalidItemAmount = localeYamlConfig.isSet("invalidItemAmount") ? localeYamlConfig.getString("invalidItemAmount") :
                   "&cInvalid item amount!";
+          catchableListTitle = localeYamlConfig.isSet("catchableListTitle") ? localeYamlConfig.getString("catchableListTitle") :
+                  "&lCatch List Settings";
+          prevPage = localeYamlConfig.isSet("prevPage") ? localeYamlConfig.getString("prevPage") :
+                  "&aPrevious Page";
+          nextPage = localeYamlConfig.isSet("nextPage") ? localeYamlConfig.getString("nextPage") :
+                  "&aNext Page";
+          currentPage = localeYamlConfig.isSet("currentPage") ? localeYamlConfig.getString("currentPage") :
+                  "&eCurrent Page: &a{PAGE}";
      }
 }
