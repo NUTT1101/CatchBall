@@ -72,9 +72,6 @@ public class GUIClick implements Listener{
                         clickItemMeta.setLore(lore);
                         clickItem.setItemMeta(clickItemMeta);
                         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allowCatchMessage).
-                                replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
-                                replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
 
                         ConfigSetting.saveEntityList();
 
