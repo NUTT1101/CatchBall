@@ -6,6 +6,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class TranslationFileReader {
      public static String consoleExecuteCommand;
@@ -43,6 +46,10 @@ public class TranslationFileReader {
      public static String prevPage;
      public static String nextPage;
      public static String currentPage;
+     public static String catchBallName;
+     public static List<String> catchBallLore = new ArrayList<>();
+     public static String goldEggName;
+     public static List<String> goldEggLore = new ArrayList<>();
 
      public static YamlConfiguration localeYamlConfig;
 
@@ -177,5 +184,17 @@ public class TranslationFileReader {
                   "&aNext Page";
           currentPage = localeYamlConfig.isSet("currentPage") ? localeYamlConfig.getString("currentPage") :
                   "&eCurrent Page: &a{PAGE}";
+          catchBallName = localeYamlConfig.isSet("Items.CatchBall.DisplayName") ? localeYamlConfig.getString("Items.CatchBall.DisplayName") :
+                  "&aCat&bch &cball";
+
+          catchBallLore = localeYamlConfig.isSet("Items.CatchBall.Lore") ? localeYamlConfig.getStringList("Items.CatchBall.Lore") :
+                  Arrays.asList("&7Used to capture catchable entity");
+
+          goldEggName = localeYamlConfig.isSet("Items.GoldEgg.DisplayName") ? localeYamlConfig.getString("Items.GoldEgg.DisplayName") :
+                  "&6GoldEgg";
+
+          goldEggLore = localeYamlConfig.isSet("Items.GoldEgg.Lore") ? localeYamlConfig.getStringList("Items.GoldEgg.Lore") :
+                  Arrays.asList("&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG",
+                          "&7Can be used with CraftRecipe to make CatchBall");
      }
 }

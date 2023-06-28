@@ -34,7 +34,22 @@ PlayerNotExist: "&cPlease enter a player that want to give the item!"
 UnknownOrOfflinePlayer: "&cPlayer {PLAYER} not find!"
 SuccessGiveItemToPlayer: "&aSuccess give {ITEM} to &a{PLAYER}!"
 invalidItemAmount: "&cInvalid item amount!"
+
+#/ctb list GUI
 catchableListTitle: "&lCatch List Settings"
 prevPage: "&aPrevious Page"
 nextPage: "&aNext Page"
 currentPage: "&eCurrent Page: &a{PAGE}"
+
+#The plugin special item setting
+Items:
+  CatchBall:
+    DisplayName: "&aCat&bch &cBall"
+    Lore:
+      - "&7Used to capture catchable entity"
+
+  GoldEgg:
+    DisplayName: "&6GoldEgg"
+    Lore:
+      - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
+      - "&7Can be used with CraftRecipe to make CatchBall"

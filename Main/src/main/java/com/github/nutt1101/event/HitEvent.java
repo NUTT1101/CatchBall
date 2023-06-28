@@ -49,7 +49,7 @@ public class HitEvent implements Listener {
             if (!player.hasPermission("catchball.use")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(TranslationFileReader.noPermissionToUse,
                     getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
-                    , "").replace("{BALL}", ConfigSetting.catchBallName)));
+                    , "").replace("{BALL}", TranslationFileReader.catchBallName)));
                 
                 event.getEntity().remove();
 

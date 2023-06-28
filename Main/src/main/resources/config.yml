@@ -37,19 +37,6 @@ Recipe:
     - "GGG"
     - "GGG"
 
-#The plugin special item setting
-Items:
-    CatchBall:
-        DisplayName: "&aCat&bch &cBall"
-        Lore:
-        - "&7Used to capture catchable entity"
-
-    GoldEgg:
-        DisplayName: "&6GoldEgg"
-        Lore:
-        - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
-        - "&7Can be used with CraftRecipe to make CatchBall"
-
 #Catcher must have this permission flag to be capture entity. (depend on Plugin Residence)
 ResidenceFlag:
 - animalkilling

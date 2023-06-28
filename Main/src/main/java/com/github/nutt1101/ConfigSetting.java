@@ -37,12 +37,6 @@ public class ConfigSetting {
     public static List<String> dropSkullLore = new ArrayList<>();
 
     public static Boolean recipeEnabled;
-    
-    public static String catchBallName;
-    public static List<String> catchBallLore = new ArrayList<>();
-
-    public static String goldEggName;
-    public static List<String> goldEggLore = new ArrayList<>();
 
     public static List<String> residenceFlag = new ArrayList<>();
 
@@ -88,19 +82,6 @@ public class ConfigSetting {
             "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
 
         recipeEnabled = !config.isSet("Recipe.enabled") || config.getBoolean("Recipe.enabled");
-        
-        catchBallName = config.isSet("Items.CatchBall.DisplayName") ? config.getString("Items.CatchBall.DisplayName") : 
-            "&aCat&bch &cball";
-        
-        catchBallLore = config.isSet("Items.CatchBall.Lore") ? config.getStringList("Items.CatchBall.Lore") : 
-            Arrays.asList("&7Used to capture catchable entity");
-
-        goldEggName = config.isSet("Items.GoldEgg.DisplayName") ? config.getString("Items.GoldEgg.DisplayName") : 
-        "&6GoldEgg";
-        
-        goldEggLore = config.isSet("Items.GoldEgg.Lore") ? config.getStringList("Items.GoldEgg.Lore") : 
-            Arrays.asList("&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG",
-            "&7Can be used with CraftRecipe to make CatchBall");
 
         residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag") :
             Arrays.asList("animalkilling");
@@ -216,7 +197,7 @@ public class ConfigSetting {
      * @return replaced message
      */
     public static String toChat(String message, String location, String entity) {
-        message = message.contains("{BALL}") ? message.replace("{BALL}", catchBallName) : message;
+        message = message.contains("{BALL}") ? message.replace("{BALL}", TranslationFileReader.catchBallName) : message;
         message = message.contains("{LOCATION}") ? message.replace("{LOCATION}", location) : message;
         message = message.contains("{ENTITY}") ? message.replace("{ENTITY}", getEntityDisplayName(entity)) : message;
 

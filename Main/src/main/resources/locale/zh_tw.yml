@@ -33,7 +33,26 @@ AllEntityRemoveSuccess: "&e已將可捕捉生物清單清空!"
 PlayerNotExist: "&c請輸入欲給物品的玩家!"
 UnknownOrOfflinePlayer: "&c未找到玩家 {PLAYER}!"
 SuccessGiveItemToPlayer: "&a成功給予玩家 &a{PLAYER} {ITEM}!"
+
+#/ctb list 介面
 catchableListTitle: "&l捕捉清單設置"
 prevPage: "&a上一頁"
 nextPage: "&a下一頁"
 currentPage: "&e目前頁面： &a{PAGE}"
+
+#插件特殊物品設定
+Items:
+  CatchBall:
+    DisplayName: "&a生物捕捉球"
+    Lore:
+      - "&8&m－－－－－－－－－－－－－－"
+      - "&7使用工作臺將金雞蛋塞滿即可合成。"
+      - "&6使用方式 : 將捕捉球以雪球方式丟向生物即可。"
+      - "&c請注意 : 不要捕捉已擁有 NBT 的生物， 以免造成錯誤。"
+      - "&8&m－－－－－－－－－－－－－－"
+
+  GoldEgg:
+    DisplayName: "&6金雞蛋"
+    Lore:
+      - "&7雞在生蛋時會有&e{PERCENT}%&7機率生出"
+      - "&7可用於合成捕捉球"
