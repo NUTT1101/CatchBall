@@ -40,6 +40,8 @@ catchableListTitle: "&lCatch List Settings"
 prevPage: "&aPrevious Page"
 nextPage: "&aNext Page"
 currentPage: "&eCurrent Page: &a{PAGE}"
+TRUE: "&aTRUE"
+FALSE: "&cFALSE"
 guiSkullLore:
   - "&6Custom Name: {ENTITY}"
   - "&6Allow Catch: {CATCHABLE}"

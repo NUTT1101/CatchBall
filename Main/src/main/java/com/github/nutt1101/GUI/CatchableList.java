@@ -43,7 +43,7 @@ public class CatchableList {
         for (String entity : entityList) {
             ItemStack skull = new HeadDrop().skullTextures(new ItemStack(Material.PLAYER_HEAD), entityFile, entity);
             ItemMeta skullMeta = skull.getItemMeta();
-            String catchable = ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity)) ? "&aTRUE" : "&cFALSE";
+            String catchable = ConfigSetting.catchableEntity.contains(EntityType.valueOf(entity)) ? TranslationFileReader.TRUE : TranslationFileReader.FALSE;
 
             skullMeta.setDisplayName(ChatColor.WHITE + entity);
             
