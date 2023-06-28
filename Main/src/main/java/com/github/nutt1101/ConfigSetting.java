@@ -32,15 +32,12 @@ public class ConfigSetting {
     public static int chickenDropGoldEggChance;
     public static String catchSuccessSound;
     public static YamlConfiguration entityFile;
-
     public static Boolean recipeEnabled;
 
     public static List<String> residenceFlag = new ArrayList<>();
 
     public static List<String> griefPreventionFlag = new ArrayList<>();
     public static Boolean allowCatchableTamedOwnerIsNull;
-    
-
 
     /**
      * Initialize or reload the plugin
