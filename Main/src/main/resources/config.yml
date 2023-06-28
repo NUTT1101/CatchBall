@@ -15,13 +15,6 @@ CatchSuccessSound: ENTITY_ARROW_HIT_PLAYER
 # "AllowCatchableTamedOwnerIsNull" likely refers to the option of permitting players to capture tamed entities with a null owner, potentially affecting the entity capture mechanics by allowing acquisition of ownerless tamed entities.
 AllowCatchableTamedOwnerIsNull: true
 
-#The lore of the Catch List GUI
-DropSkullLore:
-- "&eENTITY TYPE: &a{ENTITY}"
-- "&eThe Catcher: &a{PLAYER}"
-- "&eCapture Time: &a{TIME}"
-- "&eCapture Location: &a{LOCATION}"
-
 #CatchBall on CraftRecipe
 Recipe:
     #Whether to turn it on or off

@@ -50,6 +50,7 @@ public class TranslationFileReader {
      public static List<String> catchBallLore = new ArrayList<>();
      public static String goldEggName;
      public static List<String> goldEggLore = new ArrayList<>();
+     public static List<String> dropSkullLore = new ArrayList<>();
 
      public static YamlConfiguration localeYamlConfig;
 
@@ -196,5 +197,7 @@ public class TranslationFileReader {
           goldEggLore = localeYamlConfig.isSet("Items.GoldEgg.Lore") ? localeYamlConfig.getStringList("Items.GoldEgg.Lore") :
                   Arrays.asList("&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG",
                           "&7Can be used with CraftRecipe to make CatchBall");
+          dropSkullLore = localeYamlConfig.isSet("DropSkullLore") ? localeYamlConfig.getStringList("DropSkullLore") : Arrays.asList("&eENTITY TYPE: &a{ENTITY}",
+                  "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
      }
 }

@@ -34,8 +34,6 @@ public class ConfigSetting {
     public static List<String> guiSkullLore = new ArrayList<>();
     public static YamlConfiguration entityFile;
 
-    public static List<String> dropSkullLore = new ArrayList<>();
-
     public static Boolean recipeEnabled;
 
     public static List<String> residenceFlag = new ArrayList<>();
@@ -76,10 +74,7 @@ public class ConfigSetting {
         catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase() :
             "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
 
-        guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}"); 
-
-        dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&eENTITY TYPE: &a{ENTITY}",
-            "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
+        guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}");
 
         recipeEnabled = !config.isSet("Recipe.enabled") || config.getBoolean("Recipe.enabled");
 

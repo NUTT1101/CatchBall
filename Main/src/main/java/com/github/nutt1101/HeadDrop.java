@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import com.github.nutt1101.event.HitEvent;
+import com.github.nutt1101.utils.TranslationFileReader;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 
@@ -61,11 +62,11 @@ public class HeadDrop {
         List<String> headLore = new ArrayList<>();
         
         if (player == null) {
-            headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
+            headLore.addAll(TranslationFileReader.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
             replace("{ENTITY}", hitEntity.getType().toString()).replace("{PLAYER}", "Dispenser").replace("{TIME}", format.format(now)).
             replace("{LOCATION}", location)).collect(Collectors.toList()));
         } else {
-            headLore.addAll(ConfigSetting.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
+            headLore.addAll(TranslationFileReader.dropSkullLore.stream().map(lore -> ChatColor.translateAlternateColorCodes('&', lore).
             replace("{ENTITY}", hitEntity.getType().toString()).replace("{PLAYER}", player.getName()).replace("{TIME}", format.format(now)).
             replace("{LOCATION}", location)).collect(Collectors.toList()));
         }

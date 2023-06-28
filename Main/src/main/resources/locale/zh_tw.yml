@@ -56,3 +56,10 @@ Items:
     Lore:
       - "&7雞在生蛋時會有&e{PERCENT}%&7機率生出"
       - "&7可用於合成捕捉球"
+
+#捕捉掉落頭顱敘述
+DropSkullLore:
+  - "&e生物種類: &a{ENTITY}"
+  - "&e抓捕者: &a{PLAYER}"
+  - "&e抓捕時間: &a{TIME}"
+  - "&e抓捕地點: &a{LOCATION}"

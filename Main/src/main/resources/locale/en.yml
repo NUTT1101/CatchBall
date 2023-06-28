@@ -53,3 +53,10 @@ Items:
     Lore:
       - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
       - "&7Can be used with CraftRecipe to make CatchBall"
+
+#The lore of the Catch List GUI
+DropSkullLore:
+  - "&eENTITY TYPE: &a{ENTITY}"
+  - "&eThe Catcher: &a{PLAYER}"
+  - "&eCapture Time: &a{TIME}"
+  - "&eCapture Location: &a{LOCATION}"
