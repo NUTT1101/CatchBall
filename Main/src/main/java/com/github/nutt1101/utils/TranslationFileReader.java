@@ -52,7 +52,6 @@ public class TranslationFileReader {
      public static List<String> goldEggLore = new ArrayList<>();
      public static List<String> dropSkullLore = new ArrayList<>();
      public static List<String> guiSkullLore = new ArrayList<>();
-
      public static YamlConfiguration localeYamlConfig;
 
      public static void init() throws IOException {
