@@ -61,7 +61,7 @@ public class HitEvent implements Listener {
                 return;
             }
 
-            if (ConfigSetting.hitModel == 1) { // 使用原來的方法
+            if (ConfigSetting.hitModel == 1) {
                 event.setCancelled(true);
 
                 event.getEntity().remove();
@@ -133,7 +133,7 @@ public class HitEvent implements Listener {
                     event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall());
                     return;
                 }
-            } else if (ConfigSetting.hitModel == 2) { // 改成用戶拿著雪球點到生物時才會觸發
+            } else if (ConfigSetting.hitModel == 2) {
                 if (event.getHitEntity() != null) {
                     Player shooter = (Player) event.getEntity().getShooter();
                     if (!shooter.hasPermission("catchball.use")) {
