@@ -9,8 +9,6 @@ Update-Check: true
 ChickenDropGoldEgg: true
 #Chance of chicken to drop GoldEgg  
 ChickenDropGoldEggChance: 50%
-#Catch animal method 1/2
-hitModel: 1
 #Captured sound effects, No sound to type (false)
 #Sound Support : https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 CatchSuccessSound: ENTITY_ARROW_HIT_PLAYER

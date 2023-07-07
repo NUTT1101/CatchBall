@@ -27,7 +27,6 @@ public class ConfigSetting {
     public static String locale;
     public static boolean updatecheck;
     public static String version;
-    public static int hitModel;
     public static List<EntityType> catchableEntity = new ArrayList<>();
     public static boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
@@ -71,10 +70,6 @@ public class ConfigSetting {
 
         chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance")
                 ? Integer.parseInt(config.getString("ChickenDropGoldEggChance").replace("%", ""))
-                : 50;
-
-        hitModel = config.isSet("hitModel")
-                ? Integer.parseInt(config.getString("hitModel"))
                 : 50;
 
         catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase()
