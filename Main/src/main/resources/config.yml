@@ -1,3 +1,4 @@
+# Some of the content has been relocated to the locale folder within the configuration file.
 # Whether the plugin is enabled or not (true/false)
 Enabled: true
 
