@@ -146,12 +146,12 @@ public class ConfigSetting {
 
         if (updatecheck) {
             if (!isLatestVersion(plugin.getDescription().getVersion(), version)) {
-                plugin.getLogger().log(Level.INFO,
-                        ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
-                plugin.getLogger().log(Level.INFO,
-                        ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
+                plugin.getLogger().log(Level.WARNING,
+                        "Plugin has a new update available: " + version);
+                plugin.getLogger().log(Level.WARNING,
+                        "Download here: https://www.spigotmc.org/resources/catchball.94867/");
             } else {
-                plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Plugin is already the latest version");
+                plugin.getLogger().log(Level.INFO, "Plugin is already the latest version");
             }
         }
     }
