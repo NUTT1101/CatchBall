@@ -6,34 +6,34 @@ ArgDoesNotExist: "&a指令使用方法:
       \n&b/ctb list - &7列出所有可捕捉實體與捕捉狀態
       \n&b/ctb add [ALL | (實體名稱)] - &7將指定的實體新增至捕捉清單
       \n&b/ctb remove [ALL | (實體名稱)] - &7將指定的實體從捕捉清單移除
-      \n&b/ctb give [玩家名稱] [GoldEgg | CathcBall] [數量] - &7取得特定數量的插件特殊物品"
+      \n&b/ctb give [玩家名稱] [GoldEgg | CatchBall] [數量] - &7取得特定數量的插件特殊物品"
 ArgTooMuch: "&c輸入的指令參數過多。"
 UnknownCommandArgument: "&c未知的指令參數。"
 SuccessGetBall: "&a成功提取 {ITEM}。"
 ReloadSuccess: "&a插件設定重新讀取完畢。"
 CanNotCatchable: "&c此生物無法捕捉！ 捕捉球已掉落於 &e{LOCATION}&c。"
 BallHitBlock: "&c您丟到地板或實體方塊上了！ 捕捉球已掉落於 &e{LOCATION}&c。"
-NoPermissionToUse: "&c您沒有權限使用 {BALL}, 所以 {BALL} &c掉落在 &e{LOCATION}."
+NoPermissionToUse: "&c您沒有權限使用 {BALL}，所以 {BALL} &c掉落在 &e{LOCATION}。"
 CatchSuccess: "&a成功捕捉 {ENTITY}。"
-ItemDoesNotExist: "&c請輸入要提取的物品  &7CatchBall | GoldEgg&c。"
-ItemNameError: "&c請輸入正確的物品名稱  &7CatchBall | GoldEgg&c。"
+ItemDoesNotExist: "&c請輸入要提取的物品 CatchBall | GoldEgg。"
+ItemNameError: "&c請輸入正確的物品名稱 CatchBall | GoldEgg。"
 AddEntityDoesNotExist: "&c請輸入要新增至捕捉生物清單的實體名稱。"
 UnknownEntityType: "&c未知的實體名稱。"
 EntityDoesExists: "&c實體已存在列表裡面。"
-SuccessAddEntity: "&a成功將 &b{ENTITY} &a新增至捕捉清單。"
+SuccessAddEntity: "&a成功將 {ENTITY} 新增至捕捉清單。"
 RemoveEntityDoesNotExist: "&c請輸入要從捕捉列表移除的生物名稱。"
 RemoveEntityNotFound: "&c未在捕捉列表內找到實體。"
-SuccessRemove: "&a成功從捕捉列表移除 &b{ENTITY}&a。"
+SuccessRemove: "&a成功從捕捉列表移除 {ENTITY}。"
 SkullDoesNotFound: "&c頭顱存放的實體數據遺失。"
 LocationUnsafe: "&c未能找到一個安全的區域生成，故此次重生已取消。"
-NoResidencePermissions: "&c您無法在此生成或捕捉動物，因為您缺少了此領地的 &e{FLAG} &c權限。"
+NoResidencePermissions: "&c您無法在此生成或捕捉動物，因為您缺少了此領地的 {FLAG} 權限。"
 AllEntityAddSuccess: "&a已將所有生物新增至可捕捉清單內!"
 AllEntityRemoveSuccess: "&e已將可捕捉生物清單清空!"
 PlayerNotExist: "&c請輸入欲給物品的玩家!"
 UnknownOrOfflinePlayer: "&c未找到玩家 {PLAYER}!"
-SuccessGiveItemToPlayer: "&a成功給予玩家 &a{PLAYER} {ITEM}!"
+SuccessGiveItemToPlayer: "&a成功給予玩家 {PLAYER} {ITEM}!"
 
-#/ctb list 介面
+# /ctb list 介面
 catchableListTitle: "&l捕捉清單設置"
 prevPage: "&a上一頁"
 nextPage: "&a下一頁"
@@ -42,15 +42,15 @@ guiSkullLore:
   - "&6顯示名稱: {ENTITY}"
   - "&6捕捉狀態: {CATCHABLE}"
 
-#插件特殊物品設定
+# 插件特殊物品設定
 Items:
   CatchBall:
     DisplayName: "&a生物捕捉球"
     Lore:
       - "&8&m－－－－－－－－－－－－－－"
       - "&7使用工作臺將金雞蛋塞滿即可合成。"
-      - "&6使用方式 : 將捕捉球以雪球方式丟向生物即可。"
-      - "&c請注意 : 不要捕捉已擁有 NBT 的生物， 以免造成錯誤。"
+      - "&6使用方式: 將捕捉球以雪球方式丟向生物即可。"
+      - "&c請注意: 不要捕捉已擁有NBT的生物，以免造成錯誤。"
       - "&8&m－－－－－－－－－－－－－－"
 
   GoldEgg:
@@ -59,7 +59,7 @@ Items:
       - "&7雞在生蛋時會有&e{PERCENT}%&7機率生出"
       - "&7可用於合成捕捉球"
 
-#捕捉掉落頭顱敘述
+# 捕捉掉落頭顱敘述
 DropSkullLore:
   - "&e生物種類: &a{ENTITY}"
   - "&e抓捕者: &a{PLAYER}"
