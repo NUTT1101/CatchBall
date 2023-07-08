@@ -261,6 +261,8 @@ public class HitEvent implements Listener {
         switch (CatchBall.getRealServerVersion()) {
             case "v1_20" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
             case "v1_19" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);
+            case "v1_18" -> checkCustom = NBT_v1_18.isCustomEntity(hitEntity);
+            case "v1_17" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
             case "v1_16" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
             default -> {
                 plugin.getLogger().log(Level.INFO, "can not check entity if it not a entity.");

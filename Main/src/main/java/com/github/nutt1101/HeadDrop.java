@@ -74,6 +74,8 @@ public class HeadDrop {
         switch (CatchBall.getRealServerVersion()) {
             case "v1_20" -> headMeta = NBT_v1_20.saveEntityNBT(plugin, hitEntity, headMeta);
             case "v1_19" -> headMeta = NBT_v1_19.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "v1_18" -> headMeta = NBT_v1_18.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "v1_17" -> headMeta = NBT_v1_17.saveEntityNBT(plugin, hitEntity, headMeta);
             case "v1_16" -> headMeta = NBT_v1_16.saveEntityNBT(plugin, hitEntity, headMeta);
             default -> {
                 plugin.getLogger().log(Level.WARNING, "Save entity NBT error.");
