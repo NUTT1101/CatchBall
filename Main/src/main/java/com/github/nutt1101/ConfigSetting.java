@@ -38,6 +38,8 @@ public class ConfigSetting {
 
     public static List<String> griefPreventionFlag = new ArrayList<>();
     public static boolean allowCatchableTamedOwnerIsNull;
+    public static boolean ShowParticles;
+    public static String CustomParticles;
 
     /**
      * Initialize or reload the plugin
@@ -84,6 +86,9 @@ public class ConfigSetting {
                 : Arrays.asList("Access");
         allowCatchableTamedOwnerIsNull = !config.isSet("AllowCatchableTamedOwnerIsNull")
                 || config.getBoolean("AllowCatchableTamedOwnerIsNull");
+        ShowParticles = !config.isSet("ShowParticles")
+                || config.getBoolean("ShowParticles");
+        CustomParticles = config.isSet("CustomParticles") ? config.getString("CustomParticles") : "CLOUD";
 
         try {
             TranslationFileReader.init();
