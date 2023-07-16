@@ -23,7 +23,6 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 
 public class ConfigSetting {
     private final static Plugin plugin = CatchBall.plugin;
-    public static boolean enabled;
     public static String locale;
     public static boolean updatecheck;
     public static String version;
@@ -53,16 +52,11 @@ public class ConfigSetting {
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
 
-        enabled = !config.isSet("Enabled") || config.getBoolean("Enabled");
         locale = config.isSet("Locale") ? config.getString("Locale") : "en";
 
         entityFileCreate();
 
         chickenDropGoldEgg = !config.isSet("ChickenDropGoldEgg") || config.getBoolean("ChickenDropGoldEgg");
-
-        if (!enabled) {
-            return;
-        }
 
         updatecheck = !config.isSet("Update-Check") || config.getBoolean("Update-Check");
 

@@ -1,6 +1,4 @@
 # Some of the content has been relocated to the locale folder within the configuration file.
-# Whether the plugin is enabled or not (true/false)
-Enabled: true
 
 # Locale, Current support:
 # en(English), zh_tw(繁體中文_臺灣)
@@ -26,7 +24,8 @@ AllowCatchableTamedOwnerIsNull: true
 ShowParticles: true
 
 # What particle do you want?
-CustomParticles: CLOUD
+# Particle Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
+CustomParticles: CAMPFIRE_COSY_SMOKE
 
 # CatchBall on CraftRecipe
 Recipe:
