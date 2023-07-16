@@ -1,3 +1,9 @@
+<body>
+  <center>
+    <img src="https://github.com/NUTT1101/CatchBall/assets/95519633/320e05cc-55cf-4623-93e7-498578462ec9" alt="Plugin icon"width="150" height="150">
+  </center>
+</body>
+
 ## Introduction:
 - [Spigot(English)](https://www.spigotmc.org/resources/catchball.94867/)
 - [巴哈姆特(ChineseTw)](https://forum.gamer.com.tw/C.php?bsn=18673&snA=192726&tnum=2&subbsn=14)
