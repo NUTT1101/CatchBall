@@ -1,3 +1,6 @@
+# Help us to translate to other languages at Crowdin!
+# https://crowdin.com/project/catchball
+
 ConsoleExcuteCommand: "&c此指令只有玩家才可執行。"
 NoPermission: "&c您沒有權限。"
 PlayerInventoryFull: "&a您的背包已滿，物品已掉落在您腳下。"

@@ -2,6 +2,8 @@
 
 # Locale, Current support:
 # en(English), zh_tw(繁體中文_臺灣)
+# Help us to translate to other languages at Crowdin!
+# https://crowdin.com/project/catchball
 Locale: en
 
 # Whether the plugin checks for updates and posts the message on the console
