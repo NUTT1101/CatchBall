@@ -21,7 +21,8 @@ CatchSuccessSound: ENTITY_ARROW_HIT_PLAYER
 AllowCatchableTamedOwnerIsNull: true
 
 # Show particles if player catches entity.
-ShowParticles: true
+# This is an unstable feature, please report all bugs to our Discord or GitHub issues.
+ShowParticles: false
 
 # What particle do you want?
 # Particle Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
