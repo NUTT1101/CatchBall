@@ -27,10 +27,38 @@ SuccessRemove: "&aSuccessfully removed from the catchable list &b{ENTITY}!"
 SkullDoesNotFound: "&cThe data stored in the skull is missing!"
 LocationUnsafe: "&cCould not find a safe area to spawn, so this request has been cancelled!"
 NoResidencePermissions: "&cYou can’t spawn entity here because you are lacking {FLAG} permission for this residense!"
-AllowCatchMessage: "&b{ENTITY} &6allow catch: {STATUS} !"
 AllEntityAddSuccess: "&aAll Entity added success!"
 AllEntityRemoveSuccess: "&eAll Entity removed success!"
 PlayerNotExist: "&cPlease enter a player that want to give the item!"
 UnknownOrOfflinePlayer: "&cPlayer {PLAYER} not find!"
 SuccessGiveItemToPlayer: "&aSuccess give {ITEM} to &a{PLAYER}!"
 invalidItemAmount: "&cInvalid item amount!"
+
+#/ctb list GUI
+catchableListTitle: "&lCatch List Settings"
+prevPage: "&aPrevious Page"
+nextPage: "&aNext Page"
+currentPage: "&eCurrent Page: &a{PAGE}"
+guiSkullLore:
+  - "&6Custom Name: {ENTITY}"
+  - "&6Allow Catch: {CATCHABLE}"
+
+#The plugin special item setting
+Items:
+  CatchBall:
+    DisplayName: "&aCat&bch &cBall"
+    Lore:
+      - "&7Used to capture catchable entity"
+
+  GoldEgg:
+    DisplayName: "&6GoldEgg"
+    Lore:
+      - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
+      - "&7Can be used with CraftRecipe to make CatchBall"
+
+#The lore of the Catch List GUI
+DropSkullLore:
+  - "&eENTITY TYPE: &a{ENTITY}"
+  - "&eThe Catcher: &a{PLAYER}"
+  - "&eCapture Time: &a{TIME}"
+  - "&eCapture Location: &a{LOCATION}"

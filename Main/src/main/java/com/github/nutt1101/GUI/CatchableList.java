@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.github.nutt1101.ConfigSetting;
 import com.github.nutt1101.HeadDrop;
+import com.github.nutt1101.utils.TranslationFileReader;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -37,7 +38,7 @@ public class CatchableList {
         YamlConfiguration entityFile = ConfigSetting.entityFile;
         Set<String> entityList = entityFile.getConfigurationSection("EntityList").getKeys(false);
         
-        Inventory catchableInventory = Bukkit.createInventory(player, 54, ConfigSetting.toChat(ConfigSetting.catchableListTitle, "", ""));
+        Inventory catchableInventory = Bukkit.createInventory(player, 54, ConfigSetting.toChat(TranslationFileReader.catchableListTitle, "", ""));
         
         for (String entity : entityList) {
             ItemStack skull = new HeadDrop().skullTextures(new ItemStack(Material.PLAYER_HEAD), entityFile, entity);
@@ -47,8 +48,8 @@ public class CatchableList {
             skullMeta.setDisplayName(ChatColor.WHITE + entity);
             
             List<String> lore = new ArrayList<>();
-            for (int i=0; i < ConfigSetting.guiSkullLore.size(); i++) {
-                lore.add(i, ChatColor.translateAlternateColorCodes('&', ConfigSetting.guiSkullLore.get(i).
+            for (int i=0; i < TranslationFileReader.guiSkullLore.size(); i++) {
+                lore.add(i, ChatColor.translateAlternateColorCodes('&', TranslationFileReader.guiSkullLore.get(i).
                 replace("{ENTITY}", ChatColor.AQUA + entityFile.getString("EntityList." + entity + ".DisplayName")).
                 replace("{CATCHABLE}", catchable)));
             }
@@ -72,9 +73,9 @@ public class CatchableList {
 
         catchableInventory.addItem(Arrays.copyOfRange(skullList, start, finish));
         
-        catchableInventory.setItem(45, itemSet(prevPage, ConfigSetting.prevPage, page));
-        catchableInventory.setItem(49, itemSet(currentPage, ConfigSetting.currentPage, page));
-        catchableInventory.setItem(53, itemSet(nextPage, ConfigSetting.nextPage, page));
+        catchableInventory.setItem(45, itemSet(prevPage, TranslationFileReader.prevPage, page));
+        catchableInventory.setItem(49, itemSet(currentPage, TranslationFileReader.currentPage, page));
+        catchableInventory.setItem(53, itemSet(nextPage, TranslationFileReader.nextPage, page));
 
         player.openInventory(catchableInventory);
     }

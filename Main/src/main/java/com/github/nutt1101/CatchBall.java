@@ -29,10 +29,6 @@ public class CatchBall extends JavaPlugin{
 
         ConfigSetting.checkConfig();
 
-        if (!ConfigSetting.enabled) {
-            this.getLogger().log(Level.WARNING, "Plugin Status: " + pluginStatus);
-            
-        } else {
             new Metrics(this, 12380);
             registerEvent();
             registerCommand();
@@ -49,7 +45,6 @@ public class CatchBall extends JavaPlugin{
                 getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "GriefPrevention Hook!");
             }
         }
-    }
 
     // register event
     public void registerEvent() {

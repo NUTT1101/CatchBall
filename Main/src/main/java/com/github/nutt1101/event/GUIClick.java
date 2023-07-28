@@ -2,6 +2,7 @@ package com.github.nutt1101.event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 
 import com.github.nutt1101.ConfigSetting;
@@ -26,8 +27,8 @@ public class GUIClick implements Listener{
     @EventHandler
     public void guiClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        String title = ConfigSetting.toChat(ConfigSetting.catchableListTitle, "", "");
-        
+        String title = ConfigSetting.toChat(TranslationFileReader.catchableListTitle, "", "");
+
         if (event.getView().getTitle().equals(title)) {
             event.setCancelled(true);
 
@@ -35,9 +36,9 @@ public class GUIClick implements Listener{
 
             if (event.getClickedInventory().equals(player.getInventory())) { return; }
             Integer page = Integer.valueOf(ChatColor.stripColor(event.getClickedInventory().getItem(49).getItemMeta().getDisplayName()
-            .replace(" ", "").split(":")[1]));
-             
-            
+                    .replace(" ", "").split(Pattern.quote(":") + "|" + Pattern.quote("："))[1]));
+
+
             switch (event.getSlot()) {
                 case 45:
                     new CatchableList().openCatchableList(player, page - 1);
@@ -58,27 +59,24 @@ public class GUIClick implements Listener{
 
                         int loreIndex = getLoreIndex(lore, "{CATCHABLE}");
                         if (ConfigSetting.catchableEntity.contains(entityType)) {
-                            ConfigSetting.catchableEntity.remove(entityType);      
+                            ConfigSetting.catchableEntity.remove(entityType);
                             lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(ConfigSetting.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&cFALSE")));
-                            
+                                    toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&cFALSE")));
+
                         } else {
                             ConfigSetting.catchableEntity.add(entityType);
                             lore.set(loreIndex, ChatColor.translateAlternateColorCodes('&', ConfigSetting.
-                                toChat(ConfigSetting.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&aTRUE")));
+                                    toChat(TranslationFileReader.guiSkullLore.get(loreIndex), "", "").replace("{CATCHABLE}", "&aTRUE")));
                         }
 
                         clickItemMeta.setLore(lore);
                         clickItem.setItemMeta(clickItemMeta);
                         player.playSound(player.getLocation(), Sound.BLOCK_BREWING_STAND_BREW, 1.0f, 1.0f);
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', TranslationFileReader.allowCatchMessage).
-                            replace("{ENTITY}", ChatColor.stripColor(clickItem.getItemMeta().getLore().get(0).split(" ")[2])).
-                            replace("{STATUS}", clickItem.getItemMeta().getLore().get(1).split(" ")[2]));
-                        
+
                         ConfigSetting.saveEntityList();
-                        
+
                         break;
-                    }              
+                    }
             }
         }
     }
@@ -91,5 +89,5 @@ public class GUIClick implements Listener{
         }
         return 1;
     }
-     
+
 }

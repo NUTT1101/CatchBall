@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 
 import com.github.nutt1101.ConfigSetting;
+import com.github.nutt1101.utils.TranslationFileReader;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -17,11 +18,11 @@ public class Ball {
         ItemStack catchball = new ItemStack(Material.SNOWBALL);
 
         ItemMeta meta = catchball.getItemMeta();
-        meta.setDisplayName(ConfigSetting.toChat(ConfigSetting.catchBallName, "", ""));
+        meta.setDisplayName(ConfigSetting.toChat(TranslationFileReader.catchBallName, "", ""));
         meta.addEnchant(Enchantment.DURABILITY, 1, true);
         meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-        meta.setLore(ConfigSetting.catchBallLore.stream().map(lore -> ChatColor.
+        meta.setLore(TranslationFileReader.catchBallLore.stream().map(lore -> ChatColor.
                         translateAlternateColorCodes('&', lore)).
                 collect(Collectors.toList()));
 

@@ -1,62 +1,55 @@
-#Whether the plugin is enabled or not(true/false)
-Enabled: true
-#Locale, Current support:
-#en(English), zh_tw(繁體中文_臺灣)
+# Some of the content has been relocated to the locale folder within the configuration file.
+
+# Locale, Current support:
+# en(English), zh_tw(繁體中文_臺灣)
 Locale: en
-#Whether the plugin check for update and post the message on console
+
+# Whether the plugin checks for updates and posts the message on the console
 Update-Check: true
-#Whether the chickens will drop the "GoldEgg" (true/false)
+
+# Whether the chickens will drop the "GoldEgg" (true/false)
 ChickenDropGoldEgg: true
-#Chance of chicken to drop GoldEgg  
+
+# Chance of chicken to drop GoldEgg
 ChickenDropGoldEggChance: 50%
-#Captured sound effects, No sound to type (false)
-#Sound Support : https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+
+# Captured sound effects, No sound to type (false)
+# Sound Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
 CatchSuccessSound: ENTITY_ARROW_HIT_PLAYER
+
 # "AllowCatchableTamedOwnerIsNull" likely refers to the option of permitting players to capture tamed entities with a null owner, potentially affecting the entity capture mechanics by allowing acquisition of ownerless tamed entities.
 AllowCatchableTamedOwnerIsNull: true
 
-#The lore of the Catch List GUI
-DropSkullLore:
-- "&eENTITY TYPE: &a{ENTITY}"
-- "&eThe Catcher: &a{PLAYER}"
-- "&eCapture Time: &a{TIME}"
-- "&eCapture Location: &a{LOCATION}"
+# Show particles if player catches entity.
+# This is an unstable feature, please report all bugs to our Discord or GitHub issues.
+ShowParticles: false
 
-#CatchBall on CraftRecipe
+# What particle do you want?
+# Particle Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
+CustomParticles: CAMPFIRE_COSY_SMOKE
+
+# CatchBall on CraftRecipe
 Recipe:
-    #Whether to turn it on or off
+    # Whether to turn it on or off
     enabled: true
-    #Recipe key
+    # Recipe key
     key:
-        #GOLDEGG is the plugin provide custom item
-        #Item Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/material/package-summary.html
+        # GOLDEGG is the plugin provided custom item
+        # Item Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/material/package-summary.html
         G: GOLDEGG
-    #Recipe
+    # Recipe
     shape:
-    - "GGG"
-    - "GGG"
-    - "GGG"
+        - "GGG"
+        - "GGG"
+        - "GGG"
 
-#The plugin special item setting
-Items:
-    CatchBall:
-        DisplayName: "&aCat&bch &cBall"
-        Lore:
-        - "&7Used to capture catchable entity"
-
-    GoldEgg:
-        DisplayName: "&6GoldEgg"
-        Lore:
-        - "&7Chickens have a &e{PERCENT}% &7chance of them lay GOLDEGG"
-        - "&7Can be used with CraftRecipe to make CatchBall"
-
-#Catcher must have this permission flag to be capture entity. (depend on Plugin Residence)
+# Catcher must have this permission flag to capture entity (depends on Plugin Residence)
 ResidenceFlag:
-- animalkilling
+    - animalkilling
 
-#Catcher must have this permission flag to be capture entity. (depend on Plugin GriefPrevention)
+# Catcher must have this permission flag to capture entity (depends on Plugin GriefPrevention)
 GriefPreventionFlag:
-- Access
+    - Access
 
 CatchableEntity:
     - SHEEP

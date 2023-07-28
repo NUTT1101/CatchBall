@@ -141,8 +141,8 @@ public class Command implements CommandExecutor {
                 givePlayerItem(player, checkItem(args[2]), itemAmount);
 
                 sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.successGiveItemToPlayer, "", "")
-                        .replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? ConfigSetting.catchBallName
-                                : ConfigSetting.goldEggName)
+                        .replace("{ITEM}", args[2].toLowerCase().equals("catchball") ? TranslationFileReader.catchBallName
+                                : TranslationFileReader.goldEggName)
                         .replace("{PLAYER}", player.getName())
                         .replace("&", "§"));
 

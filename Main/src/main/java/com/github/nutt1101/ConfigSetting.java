@@ -23,123 +23,88 @@ import me.ryanhamshire.GriefPrevention.ClaimPermission;
 
 public class ConfigSetting {
     private final static Plugin plugin = CatchBall.plugin;
-    public static Boolean enabled;
     public static String locale;
-    public static Boolean updatecheck;
+    public static boolean updatecheck;
     public static String version;
     public static List<EntityType> catchableEntity = new ArrayList<>();
-    public static Boolean chickenDropGoldEgg;
+    public static boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
     public static String catchSuccessSound;
-    public static String catchableListTitle;
-    public static String prevPage;
-    public static String nextPage;
-    public static String currentPage;
-    public static List<String> guiSkullLore = new ArrayList<>();
     public static YamlConfiguration entityFile;
-
-    public static List<String> dropSkullLore = new ArrayList<>();
-
-    public static Boolean recipeEnabled;
-    
-    public static String catchBallName;
-    public static List<String> catchBallLore = new ArrayList<>();
-
-    public static String goldEggName;
-    public static List<String> goldEggLore = new ArrayList<>();
+    public static boolean recipeEnabled;
 
     public static List<String> residenceFlag = new ArrayList<>();
 
     public static List<String> griefPreventionFlag = new ArrayList<>();
-    public static Boolean allowCatchableTamedOwnerIsNull;
-    
-
+    public static boolean allowCatchableTamedOwnerIsNull;
+    public static boolean ShowParticles;
+    public static String CustomParticles;
 
     /**
      * Initialize or reload the plugin
      */
     public static void checkConfig() {
-        // check if the file exist
-        if (!new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml").exists()) { plugin.saveResource("config.yml", false); }
+        // check if the file exists
+        if (!new File(plugin.getDataFolder(), "config.yml").exists()) {
+            plugin.saveResource("config.yml", false);
+        }
 
         plugin.reloadConfig();
         FileConfiguration config = plugin.getConfig();
 
-        enabled = !config.isSet("Enabled") || config.getBoolean("Enabled");
         locale = config.isSet("Locale") ? config.getString("Locale") : "en";
 
         entityFileCreate();
 
         chickenDropGoldEgg = !config.isSet("ChickenDropGoldEgg") || config.getBoolean("ChickenDropGoldEgg");
 
-        if (!enabled) { return; }
-        
         updatecheck = !config.isSet("Update-Check") || config.getBoolean("Update-Check");
 
         version = getPluginVersion();
 
-        entityFile = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder().getAbsolutePath() + "/entity.yml"));
-        
-        chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance") ? Integer.parseInt
-            (config.getString("ChickenDropGoldEggChance").replace("%", ""))  : 50;
-        
-        catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase() :
-            "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
+        entityFile = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "entity.yml"));
 
-        catchableListTitle = "&lCatch List Settings";
+        chickenDropGoldEggChance = config.isSet("ChickenDropGoldEggChance")
+                ? Integer.parseInt(config.getString("ChickenDropGoldEggChance").replace("%", ""))
+                : 50;
 
-        prevPage = "&aPrevious Page";
-        
-        nextPage = "&aNext Page";
-
-        currentPage = "&eCurrent Page: &a{PAGE}";
-
-        guiSkullLore = Arrays.asList("&6Custom Name: {ENTITY}", "&6Allow Catch: {CATCHABLE}"); 
-
-        dropSkullLore = config.isSet("DropSkullLore") ? config.getStringList("DropSkullLore") : Arrays.asList("&eENTITY TYPE: &a{ENTITY}",
-            "&eThe Catcher: &a{PLAYER}", "&eCapture Time: &a{TIME}", "&eCapture Location: &a{LOCATION}") ;
+        catchSuccessSound = config.isSet("CatchSuccessSound") ? config.getString("CatchSuccessSound").toUpperCase()
+                : "ENTITY_ARROW_HIT_PLAYER".toUpperCase();
 
         recipeEnabled = !config.isSet("Recipe.enabled") || config.getBoolean("Recipe.enabled");
-        
-        catchBallName = config.isSet("Items.CatchBall.DisplayName") ? config.getString("Items.CatchBall.DisplayName") : 
-            "&aCat&bch &cball";
-        
-        catchBallLore = config.isSet("Items.CatchBall.Lore") ? config.getStringList("Items.CatchBall.Lore") : 
-            Arrays.asList("&7Used to capture catchable entity");
 
-        goldEggName = config.isSet("Items.GoldEgg.DisplayName") ? config.getString("Items.GoldEgg.DisplayName") : 
-        "&6GoldEgg";
-        
-        goldEggLore = config.isSet("Items.GoldEgg.Lore") ? config.getStringList("Items.GoldEgg.Lore") : 
-            Arrays.asList("&7Chickens have a &e{PERCENT} &7chance of them lay GOLDEGG",
-            "&7Can be used with CraftRecipe to make CatchBall");
+        residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag")
+                : Arrays.asList("animalkilling");
 
-        residenceFlag = config.isSet("ResidenceFlag") ? config.getStringList("ResidenceFlag") :
-            Arrays.asList("animalkilling");
-
-        griefPreventionFlag = config.isSet("GriefPreventionFlag") ? config.getStringList("GriefPreventionFlag") :
-            Arrays.asList("Access");
-        allowCatchableTamedOwnerIsNull = !config.isSet("AllowCatchableTamedOwnerIsNull") || config.getBoolean("AllowCatchableTamedOwnerIsNull");
-
+        griefPreventionFlag = config.isSet("GriefPreventionFlag") ? config.getStringList("GriefPreventionFlag")
+                : Arrays.asList("Access");
+        allowCatchableTamedOwnerIsNull = !config.isSet("AllowCatchableTamedOwnerIsNull")
+                || config.getBoolean("AllowCatchableTamedOwnerIsNull");
+        ShowParticles = !config.isSet("ShowParticles")
+                || config.getBoolean("ShowParticles");
+        CustomParticles = config.isSet("CustomParticles") ? config.getString("CustomParticles") : "CLOUD";
 
         try {
             TranslationFileReader.init();
         } catch (IOException e) {
             e.printStackTrace();
-            plugin.getLogger().log(Level.WARNING, ChatColor.RED +
-                    String.format("The locale you have selected '%s' is currently not supported", locale)
-            );
+            plugin.getLogger().log(Level.WARNING,
+                    ChatColor.RED + String.format("The locale you have selected '%s' is currently not supported",
+                            locale));
             plugin.getLogger().log(Level.WARNING, ChatColor.RED + "We only support: en, zh_tw");
             locale = "en";
         }
 
         new BallRecipe();
 
-        if (!catchableEntity.isEmpty()) { catchableEntity.clear(); }
-        
+        if (!catchableEntity.isEmpty()) {
+            catchableEntity.clear();
+        }
+
         try {
             if (plugin.getServer().getPluginManager().getPlugin("Residence") != null) {
-                residenceFlag.stream().map(flag -> Flags.valueOf(flag)).collect(Collectors.toList());
+                residenceFlag = residenceFlag.stream().map(flag -> Flags.valueOf(flag)).map(Flags::name)
+                        .collect(Collectors.toList());
             }
 
         } catch (IllegalArgumentException e) {
@@ -152,17 +117,17 @@ public class ConfigSetting {
 
         try {
             if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-                for (int i=0; i < griefPreventionFlag.size(); i++) {
-                    String[] flag = griefPreventionFlag.get(i).split("");
-                    flag[0] = flag[0].toUpperCase();
-                    ClaimPermission.valueOf(String.join("", flag));
-                    griefPreventionFlag.set(i, String.join("", flag));
+                griefPreventionFlag = griefPreventionFlag.stream()
+                        .map(flag -> flag.substring(0, 1).toUpperCase() + flag.substring(1))
+                        .map(String::toUpperCase).collect(Collectors.toList());
+                for (int i = 0; i < griefPreventionFlag.size(); i++) {
+                    ClaimPermission.valueOf(griefPreventionFlag.get(i));
                 }
             }
 
         } catch (IllegalArgumentException e) {
             plugin.getLogger().log(Level.WARNING, ChatColor.RED + e.getMessage());
-            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Unknown Residence flag!");
+            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Unknown GriefPrevention flag!");
             plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Please check your config setting!");
             griefPreventionFlag.clear();
             griefPreventionFlag.add("Access");
@@ -170,7 +135,7 @@ public class ConfigSetting {
 
         for (String entity : config.getStringList("CatchableEntity")) {
             try {
-                EntityType.valueOf(entity.toUpperCase());// entityType only can be recive UpperCase words
+                EntityType.valueOf(entity.toUpperCase());// entityType only can receive UpperCase words
                 catchableEntity.add(EntityType.valueOf(entity.toUpperCase()));
 
                 // There is a common issue that you put an unknown entityType in the list of CatchableEntity
@@ -180,20 +145,22 @@ public class ConfigSetting {
 
         if (updatecheck) {
             if (!isLatestVersion(plugin.getDescription().getVersion(), version)) {
-                plugin.getLogger().log(Level.INFO, ChatColor.LIGHT_PURPLE + "Plugin has a new update available: " + version);
-                plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Download here: https://www.spigotmc.org/resources/catchball.94867/");
+                plugin.getLogger().log(Level.WARNING,
+                        "Plugin has a new update available: " + version);
+                plugin.getLogger().log(Level.WARNING,
+                        "Download here: https://www.spigotmc.org/resources/catchball.94867/");
             } else {
-                plugin.getLogger().log(Level.INFO, ChatColor.GREEN + "Plugin is already the latest version");
+                plugin.getLogger().log(Level.INFO, "Plugin is already the latest version");
             }
         }
     }
 
     /**
-     * Check the version of server to determine entity.yml file output version.
+     * Check the version of the server to determine the entity.yml file output version.
      */
     public static void entityFileCreate() {
-        File file = new File(plugin.getDataFolder() , "entity.yml");
-        InputStream inputStream = plugin.getResource(  "entity/" + locale + ".yml");
+        File file = new File(plugin.getDataFolder(), "entity.yml");
+        InputStream inputStream = plugin.getResource("entity/" + locale + ".yml");
 
         if (inputStream != null) {
             try {
@@ -211,6 +178,7 @@ public class ConfigSetting {
 
     /**
      * Get entityDisplayName saved on entity.yml.
+     *
      * @param entityName name of saved entity
      * @return entityDisplayName
      */
@@ -220,24 +188,25 @@ public class ConfigSetting {
         }
         return entityName;
     }
-    
+
     /**
      * Replace the message argument from config.yml.
-     * @param location replace {L＃OCATION} from source message
-     * @param entity replace {ENTITY} from source message
+     *
+     * @param location replace {LOCATION} from source message
+     * @param entity   replace {ENTITY} from source message
      * @return replaced message
      */
     public static String toChat(String message, String location, String entity) {
-        message = message.contains("{BALL}") ? message.replace("{BALL}", catchBallName) : message;
+        message = message.contains("{BALL}") ? message.replace("{BALL}", TranslationFileReader.catchBallName)
+                : message;
         message = message.contains("{LOCATION}") ? message.replace("{LOCATION}", location) : message;
         message = message.contains("{ENTITY}") ? message.replace("{ENTITY}", getEntityDisplayName(entity)) : message;
 
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    
-    
+
     /**
-     * Save the entity.yml file, if the catchableEntity changes.
+     * Save the entity.yml file if the catchableEntity changes.
      */
     public static void saveEntityList() {
         FileConfiguration fileConfiguration = plugin.getConfig();
@@ -247,41 +216,46 @@ public class ConfigSetting {
 
         fileConfiguration.set("CatchableEntity", savelist.toArray());
 
-        try{
-            fileConfiguration.save(new File(plugin.getDataFolder().getAbsolutePath() + "/config.yml"));
-        } catch (IOException e) { e.printStackTrace(); }
+        try {
+            fileConfiguration.save(new File(plugin.getDataFolder(), "config.yml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-
     /**
-     * check version of plugin
-     * @return version of plugin
+     * Check the version of the plugin.
+     *
+     * @return version of the plugin
      */
     public static String getPluginVersion() {
         try {
-            InputStream inputStream = new URL(("https://api.spigotmc.org/legacy/update.php?resource=94867")).openStream();
+            InputStream inputStream = new URL(("https://api.spigotmc.org/legacy/update.php?resource=94867"))
+                    .openStream();
             Scanner scanner = new Scanner(inputStream);
             String version = scanner.next().replace("v", "");
-            
+
             scanner.close();
 
             return version;
         } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING, ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
+            plugin.getLogger().log(Level.WARNING,
+                    ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
         }
 
         return "";
-        
     }
-    
-    public static boolean isLatestVersion(String current, String latest) {
-        if (current.equals(latest)) return true;
 
-        current = current.replace(".","");
+    public static boolean isLatestVersion(String current, String latest) {
+        if (current.equals(latest))
+            return true;
+
+        current = current.replace(".", "");
         latest = latest.replace(".", "");
 
         for (int i = 0; i < 3; i++) {
-            if (current.charAt(i) - '0' < latest.charAt(i) - '0') return false;
+            if (current.charAt(i) - '0' < latest.charAt(i) - '0')
+                return false;
         }
 
         return true;
