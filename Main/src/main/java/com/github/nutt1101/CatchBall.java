@@ -19,9 +19,14 @@ import net.md_5.bungee.api.ChatColor;
 
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
-    private Boolean pluginStatus = config.getBoolean("Enable");
 
     public static Plugin plugin;
+
+    private void checkPluginHook(String pluginName) {
+        if (this.getServer().getPluginManager().getPlugin(pluginName) != null) {
+            getServer().getConsoleSender().sendMessage(ChatColor.GREEN + pluginName + " Hook!");
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -33,17 +38,10 @@ public class CatchBall extends JavaPlugin{
             registerEvent();
             registerCommand();
 
-            if (this.getServer().getPluginManager().getPlugin("Residence") != null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Residence Hook!");
-            }
+        checkPluginHook("Residence");
+        checkPluginHook("MythicMobs");
+        checkPluginHook("GriefPrevention");
 
-            if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
-                getServer().getConsoleSender().sendMessage( ChatColor.GREEN + "MythicMobs Hook!");
-            }
-
-            if (this.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "GriefPrevention Hook!");
-            }
         }
 
     // register event
