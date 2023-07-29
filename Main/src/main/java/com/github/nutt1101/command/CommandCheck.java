@@ -11,16 +11,19 @@ import org.bukkit.command.CommandSender;
 
 public class CommandCheck {
     private static List<String> argmumentList = Arrays.asList("reload", "list", "add", "remove", "give");
-    
+
     public static Boolean check(CommandSender sender, Command command, String label, String[] args) {
-        
-        // Check if player has permission 
+
+        // Check if player has permission
         if (!(sender.hasPermission("catchball.op"))) {
-            sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.noPermission, "", ""));
-            return false;
+            // Check if player has specific command permission
+            if (args.length == 0 || !sender.hasPermission("catchball.command." + args[0])) {
+                sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.noPermission, "", ""));
+                return false;
+            }
         }
-        
-        // check if commandSender does not exist argument
+
+        // Check if commandSender does not exist argument
         if (args.length == 0) {
             sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.argDoesNotExist, "", ""));
             return false;
@@ -31,3 +34,4 @@ public class CommandCheck {
 
     public static List<String> getCommandArgument() { return argmumentList; };
 }
+
