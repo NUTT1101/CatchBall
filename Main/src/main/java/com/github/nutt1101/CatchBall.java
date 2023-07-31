@@ -9,13 +9,12 @@ import com.github.nutt1101.event.DropGoldEgg;
 import com.github.nutt1101.event.GUIClick;
 import com.github.nutt1101.event.HitEvent;
 import com.github.nutt1101.event.SkullClick;
+import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import net.md_5.bungee.api.ChatColor;
 
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
@@ -24,7 +23,7 @@ public class CatchBall extends JavaPlugin{
 
     private void checkPluginHook(String pluginName) {
         if (this.getServer().getPluginManager().getPlugin(pluginName) != null) {
-            getServer().getConsoleSender().sendMessage(ChatColor.GREEN + pluginName + " Hook!");
+            plugin.getLogger().log(Level.INFO, ChatColor.GREEN + pluginName + " Hook!");
         }
     }
 
