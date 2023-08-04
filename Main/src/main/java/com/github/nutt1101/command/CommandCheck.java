@@ -23,6 +23,12 @@ public class CommandCheck {
             }
         }
 
+        // Check if commandSender does not exist argument
+        if (args.length == 0) {
+            sender.sendMessage(ConfigSetting.toChat(TranslationFileReader.argDoesNotExist, "", ""));
+            return false;
+        }
+
         return true;
     }
 
