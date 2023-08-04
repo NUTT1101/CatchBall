@@ -7,7 +7,7 @@
     <groupId>com.github.nutt1101</groupId>
     <artifactId>CatchBall</artifactId>
 
-    <version>1.1.10</version>
+    <version>1.2.0</version>
 
     <modules>
         <module>v1_16</module>
