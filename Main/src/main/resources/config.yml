@@ -32,7 +32,8 @@ CustomParticles: CAMPFIRE_COSY_SMOKE
 
 # The probability (0-1) of a failed attempt to catch an entity. Set this value to 0 to disable this feature.
 # Setting it to 1 would mean every attempt to catch an entity would fail.
-catchFailRate: 0
+# This is an unstable feature, please report all bugs to our Discord or GitHub issues.
+catchFailRate: 0.0
 
 # CatchBall on CraftRecipe
 Recipe:
