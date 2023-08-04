@@ -110,6 +110,11 @@ public class HitEvent implements Listener {
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
                 for (EntityType entity : catchableEntity) {
                     if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player) && !checkCustom.equals("CUSTOM")) {
+                        if(Math.random() < ConfigSetting.catchFailRate) {
+                            hitEntity.getWorld().dropItem(hitLocation, Ball.makeBall());
+                            player.sendMessage(ConfigSetting.toChat(TranslationFileReader.catchFail, getCoordinate(hitLocation), entity.toString()));
+                            return;
+                        }
                         // hitEntity.getWorld().dropItem(hitEntity.getLocation(), entityToItemStack(entity));
                         if (!(ConfigSetting.catchSuccessSound.equals("FALSE"))) {
                             player.playSound(player.getLocation(), Sound.valueOf(ConfigSetting.catchSuccessSound), 1f, 1f);

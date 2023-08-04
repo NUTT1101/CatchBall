@@ -39,6 +39,7 @@ public class ConfigSetting {
     public static boolean allowCatchableTamedOwnerIsNull;
     public static boolean ShowParticles;
     public static String CustomParticles;
+    public static double catchFailRate;
 
     /**
      * Initialize or reload the plugin
@@ -83,6 +84,8 @@ public class ConfigSetting {
         ShowParticles = !config.isSet("ShowParticles")
                 || config.getBoolean("ShowParticles");
         CustomParticles = config.isSet("CustomParticles") ? config.getString("CustomParticles") : "CLOUD";
+        catchFailRate = !config.isSet("catchFailRate") ? config.getDouble("catchFailRate")
+        : 0.1;
 
         try {
             TranslationFileReader.init();

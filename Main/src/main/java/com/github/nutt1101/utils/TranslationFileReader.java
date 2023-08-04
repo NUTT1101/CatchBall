@@ -52,8 +52,9 @@ public class TranslationFileReader {
      public static List<String> dropSkullLore = new ArrayList<>();
      public static List<String> guiSkullLore = new ArrayList<>();
      public static YamlConfiguration localeYamlConfig;
+    public static String catchFail;
 
-     public static void init() throws IOException {
+    public static void init() throws IOException {
           prepareLocaleYamlConfig();
           load();
      }
@@ -132,5 +133,7 @@ public class TranslationFileReader {
           goldEggLore = localeYamlConfig.getStringList("Items.GoldEgg.Lore");
           dropSkullLore = localeYamlConfig.getStringList("DropSkullLore");
           guiSkullLore = localeYamlConfig.getStringList("guiSkullLore");
+
+          catchFail = localeYamlConfig.getString("catchFail", "&cOops! Your attempt to catch the creature failed. Try again!");
      }
 }
