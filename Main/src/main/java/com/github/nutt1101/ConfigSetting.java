@@ -250,17 +250,23 @@ public class ConfigSetting {
     }
 
     public static boolean isLatestVersion(String current, String latest) {
-        if (current.equals(latest))
-            return true;
 
-        current = current.replace(".", "");
-        latest = latest.replace(".", "");
+        String[] currentParts = current.split("\\.");
 
-        for (int i = 0; i < 3; i++) {
-            if (current.charAt(i) - '0' < latest.charAt(i) - '0')
-                return false;
+        String[] latestParts = latest.split("\\.");
+
+        int minLength = Math.min(currentParts.length, latestParts.length);
+
+        for (int i = 0; i < minLength; i++) {
+
+            int currentPart = Integer.parseInt(currentParts[i]);
+
+            int latestPart = Integer.parseInt(latestParts[i]);
+
+            if (currentPart < latestPart) return false;
+
+            if (currentPart > latestPart) return true;
         }
-
-        return true;
+        return currentParts.length >= latestParts.length;
     }
 }
