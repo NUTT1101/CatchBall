@@ -7,6 +7,8 @@ import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.github.nutt1101.*;
 import com.github.nutt1101.items.Ball;
 import com.github.nutt1101.utils.TranslationFileReader;
+import me.angeschossen.lands.api.LandsIntegration;
+import me.angeschossen.lands.api.land.LandWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -23,6 +25,7 @@ import org.bukkit.projectiles.BlockProjectileSource;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 
@@ -31,6 +34,9 @@ public class HitEvent implements Listener {
     private Location hitLocation;
     private final Plugin plugin = CatchBall.plugin;
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
+
+    LandsIntegration api = LandsIntegration.of(plugin);
+    LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -86,6 +92,13 @@ public class HitEvent implements Listener {
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
+
+                if (!landsCheck(player, event.getHitEntity().getLocation())) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
 
                 if (event.getHitEntity() instanceof Tameable tameable) {
                     Player shooter = (Player) event.getEntity().getShooter();
@@ -232,6 +245,20 @@ public class HitEvent implements Listener {
         return true;
     }
 
+    public boolean landsCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
+        if (world != null) { // Lands is enabled in this world
+            if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
+                // the player is allowed to break blocks with the given material at the given location
+                return true;
+            } else {
+                // the player isn't allowed to break this block in wilderness or a claimed land at this position
+                return false;
+            }
+        }
+        return true;
+    }
+
     public boolean gfCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") == null) { return true; }
 
@@ -259,7 +286,7 @@ public class HitEvent implements Listener {
 
         if (projectile instanceof ThrowableProjectile) {
             ThrowableProjectile throwableProjectile = (ThrowableProjectile) projectile;
-            if (!throwableProjectile.getItem().getItemMeta().equals(Ball.makeBall().getItemMeta())) { return false; }
+            if (!Objects.requireNonNull(throwableProjectile.getItem().getItemMeta()).equals(Ball.makeBall().getItemMeta())) { return false; }
         }
 
         return true;
