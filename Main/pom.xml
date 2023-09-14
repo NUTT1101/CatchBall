@@ -76,6 +76,14 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Lands -->
+        <dependency>
+            <groupId>com.github.angeschossen</groupId>
+            <artifactId>LandsAPI</artifactId>
+            <version>6.35.0</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- bStats -->
         <dependency>
             <groupId>org.bstats</groupId>
