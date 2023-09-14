@@ -1,6 +1,8 @@
 package com.github.nutt1101.event;
 
 
+import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
+import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
@@ -256,6 +258,12 @@ public class HitEvent implements Listener {
                 return false;
             }
         }
+        return true;
+    }
+
+    public boolean rpCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
+        // TODO: Add RedProtect support
         return true;
     }
 
