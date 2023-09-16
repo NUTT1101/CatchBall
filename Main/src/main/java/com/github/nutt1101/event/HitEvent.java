@@ -38,7 +38,6 @@ public class HitEvent implements Listener {
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
 
     LandsIntegration api = LandsIntegration.of(plugin);
-    LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -63,6 +62,8 @@ public class HitEvent implements Listener {
                 event.getEntity().remove();
 
                 if (event.getHitEntity() != null) {
+                    Entity hitEntity = event.getHitEntity();
+                    hitLocation = hitEntity.getLocation();
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                 } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall()); }
 
@@ -249,6 +250,7 @@ public class HitEvent implements Listener {
 
     public boolean landsCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
+        LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
         if (world != null) { // Lands is enabled in this world
             if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
                 // the player is allowed to break blocks with the given material at the given location
