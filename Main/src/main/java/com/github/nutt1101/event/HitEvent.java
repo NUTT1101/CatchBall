@@ -1,8 +1,5 @@
 package com.github.nutt1101.event;
 
-
-import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
-import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
@@ -56,7 +53,7 @@ public class HitEvent implements Listener {
 
             if (!player.hasPermission("catchball.use")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(TranslationFileReader.noPermissionToUse,
-                        getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
+                        getCoordinate(event.getHitBlock() == null ? Objects.requireNonNull(event.getHitEntity()).getLocation() : event.getHitBlock().getLocation())
                         , "").replace("{BALL}", TranslationFileReader.catchBallName)));
 
                 event.getEntity().remove();
