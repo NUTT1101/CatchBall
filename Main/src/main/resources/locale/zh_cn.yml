@@ -1,0 +1,55 @@
+ConsoleExecuteCommand: "&c此命令仅能由玩家执行！"
+NoPermission: "&c您未获得权限！"
+PlayerInventoryFull: "&a您的物品栏已满，因此物品会掉落在您的身边！"
+ArgDoesNotExist: "&a命令用法：\n &b/ctb 重新加载 &7重新加载插件。\n &b/ctb list &7列出所有可捕获的实体和状态。\n &b/ctb 添加 [全部 | (entity_name)] &7将实体添加到捕获列表中。\n &b/ctb 删除 [全部 | (entity_name)] &7从可捕获列表中删除实体。\n &b/ctb 给予 [player] [GoldEgg | CatchBall] [Amount] &7给予玩家特殊的插件物品"
+ArgTooMuch: "&c参数过多！"
+UnknownCommandArgument: "&c未知参数！"
+SuccessGetBall: "&a成功获取 {ITEM}！"
+ReloadSuccess: "&a插件已成功重新加载！"
+CanNotCatchable: "&c此实体无法被捕获，因此 &e{BALL} &7将掉落在 &e{LOCATION}。"
+BallHitBlock: "&c你并未击中实体，因此 {BALL} 将掉落在 {LOCATION}！"
+NoPermissionToUse: "&c您没有使用 {BALL} 的权限，因此 {BALL} &c将掉落在 &e{LOCATION} 中。"
+CatchSuccess: "&a成功捕获{ENTITY} 位置：{LOCATION}！"
+ItemDoesNotExist: "&c请输入要拾取的物品 &7CatchBall | GoldEgg."
+ItemNameError: "&c请输入正确的物品名称 &7CatchBall | GoldEgg。"
+AddEntityDoesNotExist: "&c请输入要添加到捕获生物列表中的实体名称！"
+UnknownEntityType: "&c未知实体类型！"
+EntityDoesExists: "&c该实体已存在于可捕获列表中！"
+SuccessAddEntity: "&b{ENTITY} &a已成功添加至可捕获列表！"
+RemoveEntityDoesNotExist: "&c请输入要从可捕获列表中删除的实体名称！"
+RemoveEntityNotFound: "&c在可捕获列表中找不到实体！"
+SuccessRemove: "&a成功从可捕获列表中删除 &b{ENTITY}！"
+SkullDoesNotFound: "头颅存放的实体数据已遗失！"
+LocationUnsafe: "&c无法找到一个安全区域来生成。因此，此请求已被取消！"
+NoResidencePermissions: "&c您无法在此生成实体，因为您缺乏此领地的 {FLAG} 权限！"
+AllEntityAddSuccess: "&a已将所有生物新增至可捕获列表内！"
+AllEntityRemoveSuccess: "&e已将可捕获生物列表清空！"
+PlayerNotExist: "&c请输入要给予物品的玩家！"
+UnknownOrOfflinePlayer: "&c未找到此玩家 {PLAYER}！"
+SuccessGiveItemToPlayer: "&a成功给予玩家 {PLAYER} {ITEM}"
+invalidItemAmount: "&c未知的物品数量！"
+#/ctb list GUI
+catchableListTitle: "&l捕获列表设置"
+prevPage: "&a上一页"
+nextPage: "&a下一页"
+currentPage: "&e当前页面： &a{PAGE}"
+guiSkullLore:
+  - "&6自定义实体显示名称 {ENTITY}"
+  - "&6捕获状态：{CATCHABLE}"
+#The plugin special item setting
+Items:
+  CatchBall:
+    DisplayName: "&a生物捕获球"
+    Lore:
+      - "&7用于捕获可捕获实体"
+  GoldEgg:
+    DisplayName: "&6金蛋"
+    Lore:
+      - "&7鸡在生蛋时会有 &e{PERCENT}% &7 概率生出"
+      - "&7可用于合成捕获球"
+#The lore of the Catch List GUI
+DropSkullLore:
+  - "&e生物种类：&a{ENTITY}"
+  - "&e捕获者：&a{PLAYER}"
+  - "&e捕获时间：&a{TIME}"
+  - "&e捕获地点： &a{LOCATION}"
