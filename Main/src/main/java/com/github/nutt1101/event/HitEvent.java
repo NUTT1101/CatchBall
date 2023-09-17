@@ -248,6 +248,7 @@ public class HitEvent implements Listener {
     public boolean landsCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
         LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
+
         if (world != null) { // Lands is enabled in this world
             if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
                 // the player is allowed to break blocks with the given material at the given location
@@ -257,12 +258,7 @@ public class HitEvent implements Listener {
                 return false;
             }
         }
-        return true;
-    }
 
-    public boolean rpCheck(Player player, Location location) {
-        if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
-        // TODO: Add RedProtect support
         return true;
     }
 
@@ -285,6 +281,12 @@ public class HitEvent implements Listener {
             }
         }
 
+        return true;
+    }
+
+    public boolean rpCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
+        // TODO: Add RedProtect support
         return true;
     }
 
