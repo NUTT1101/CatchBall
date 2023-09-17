@@ -4,7 +4,7 @@ author: NUTT1101, MagicTeaMC
 description: "§bA plugin that make entity to be catchable.\n§dContact Me: https://discord.gg/zxN2tXb59v"
 version: "1.2.0"
 api-version: 1.16
-softdepend: [Residence, MythicMobs, GriefPrevention, Lands, RedProtect]
+softdepend: [Residence, MythicMobs, GriefPrevention, Lands]
 permissions:
   catchball.op:
     default: op

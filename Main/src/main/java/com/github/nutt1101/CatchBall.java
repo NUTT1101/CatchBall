@@ -41,7 +41,7 @@ public class CatchBall extends JavaPlugin{
         checkPluginHook("MythicMobs");
         checkPluginHook("GriefPrevention");
         checkPluginHook("Lands");
-        checkPluginHook("RedProtect");
+        // checkPluginHook("RedProtect");
 
         }
 
