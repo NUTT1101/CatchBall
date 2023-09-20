@@ -41,6 +41,7 @@ public class CatchBall extends JavaPlugin{
         checkPluginHook("MythicMobs");
         checkPluginHook("GriefPrevention");
         checkPluginHook("Lands");
+        checkPluginHook("PlaceholderAPI");
         // checkPluginHook("RedProtect");
 
         }
@@ -57,8 +58,10 @@ public class CatchBall extends JavaPlugin{
     // register command
     public void registerCommand() {
         PluginCommand ctbCommand = this.getCommand("ctb");
-        ctbCommand.setExecutor(new Command());
-        ctbCommand.setTabCompleter(new TabComplete());
+        if (ctbCommand != null) {
+            ctbCommand.setExecutor(new Command());
+            ctbCommand.setTabCompleter(new TabComplete());
+        }
     }
 
     public static String getServerVersion() {
