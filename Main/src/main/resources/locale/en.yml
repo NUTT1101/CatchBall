@@ -1,7 +1,7 @@
 # Help us to translate to other languages at Crowdin!
 # https://crowdin.com/project/catchball
 
-ConsoleExecuteCommand: "&cThis command can only be executed by player!"
+ConsoleExcuteCommand: "&cThis command can only be executed by player!"
 NoPermission: "&cYou have no permission!"
 PlayerInventoryFull: "&aYour inventory is full, so item falls at your feet!"
 
