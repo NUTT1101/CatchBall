@@ -1,6 +1,8 @@
 # Help us to translate to other languages at Crowdin!
 # https://crowdin.com/project/catchball
 
+# If you installed PlaceholderAPI, you can use Placeholder in messages.
+
 ConsoleExcuteCommand: "&cThis command can only be executed by player!"
 NoPermission: "&cYou have no permission!"
 PlayerInventoryFull: "&aYour inventory is full, so item falls at your feet!"
