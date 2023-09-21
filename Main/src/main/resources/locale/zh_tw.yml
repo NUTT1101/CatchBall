@@ -1,7 +1,8 @@
 # Help us to translate to other languages at Crowdin!
 # https://crowdin.com/project/catchball
 
-# 如果您安裝了 PlaceholderAPI，可在訊息中使用 Placeholder。
+# 如果您安裝了 PlaceholderAPI，可在訊息中使用 Placeholder，
+# 但是關於玩家的 Placeholder 可能會導致一些問題。
 
 ConsoleExcuteCommand: "&c此指令只有玩家才可執行。"
 NoPermission: "&c您沒有權限。"

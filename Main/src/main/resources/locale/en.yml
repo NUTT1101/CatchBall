@@ -2,6 +2,7 @@
 # https://crowdin.com/project/catchball
 
 # If you installed PlaceholderAPI, you can use Placeholder in messages.
+# But Placeholder about player may cause some issues.
 
 ConsoleExcuteCommand: "&cThis command can only be executed by player!"
 NoPermission: "&cYou have no permission!"
