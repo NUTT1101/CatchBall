@@ -98,7 +98,7 @@ public class HeadDrop {
      */
     public ItemStack skullTextures(ItemStack head, YamlConfiguration entityFile, String entityType) {
         SkullMeta skullMeta = (SkullMeta) head.getItemMeta();
-        GameProfile profile = new GameProfile(UUID.randomUUID(), null);
+        GameProfile profile = new GameProfile(UUID.randomUUID(), "catchball");
         profile.getProperties().put("textures", new Property("textures", entityFile.getString("EntityList." + entityType.toUpperCase() + ".Skull")));
         
         try {
