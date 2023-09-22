@@ -34,7 +34,7 @@ public class HitEvent implements Listener {
     private final Plugin plugin = CatchBall.plugin;
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
 
-    LandsIntegration api = LandsIntegration.of(plugin);
+    LandsIntegration api;
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -44,6 +44,10 @@ public class HitEvent implements Listener {
 
     @EventHandler
     public void CatchBallHitEvent(ProjectileHitEvent event){
+
+        if(plugin.getServer().getPluginManager().getPlugin("Lands") != null) {
+            api = LandsIntegration.of(plugin);
+        }
 
         // check if shooter is a player
         if (event.getEntity().getShooter() instanceof Player) {
