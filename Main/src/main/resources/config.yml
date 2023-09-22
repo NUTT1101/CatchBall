@@ -2,6 +2,8 @@
 
 # Locale, Current support:
 # en(English), zh_tw(繁體中文_臺灣)
+# Help us to translate to other languages at Crowdin!
+# https://crowdin.com/project/catchball
 Locale: en
 
 # Whether the plugin checks for updates and posts the message on the console
@@ -27,6 +29,11 @@ ShowParticles: false
 # What particle do you want?
 # Particle Support: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Particle.html
 CustomParticles: CAMPFIRE_COSY_SMOKE
+
+# The probability (0-1) of a failed attempt to catch an entity. Set this value to 0 to disable this feature.
+# Setting it to 1 would mean every attempt to catch an entity would fail.
+# This is an unstable feature, please report all bugs to our Discord or GitHub issues.
+catchFailRate: 0.0
 
 # CatchBall on CraftRecipe
 Recipe:

@@ -1,12 +1,13 @@
 package com.github.nutt1101.event;
 
-
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.github.nutt1101.*;
 import com.github.nutt1101.items.Ball;
 import com.github.nutt1101.utils.TranslationFileReader;
+import me.angeschossen.lands.api.LandsIntegration;
+import me.angeschossen.lands.api.land.LandWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
 import me.ryanhamshire.GriefPrevention.ClaimPermission;
 import me.ryanhamshire.GriefPrevention.GriefPrevention;
@@ -23,6 +24,7 @@ import org.bukkit.projectiles.BlockProjectileSource;
 
 import java.lang.reflect.Method;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 
 
@@ -31,6 +33,8 @@ public class HitEvent implements Listener {
     private Location hitLocation;
     private final Plugin plugin = CatchBall.plugin;
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
+
+    LandsIntegration api;
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -41,6 +45,10 @@ public class HitEvent implements Listener {
     @EventHandler
     public void CatchBallHitEvent(ProjectileHitEvent event){
 
+        if(plugin.getServer().getPluginManager().getPlugin("Lands") != null) {
+            api = LandsIntegration.of(plugin);
+        }
+
         // check if shooter is a player
         if (event.getEntity().getShooter() instanceof Player) {
             Player player = (Player) event.getEntity().getShooter();
@@ -49,12 +57,14 @@ public class HitEvent implements Listener {
 
             if (!player.hasPermission("catchball.use")) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', ConfigSetting.toChat(TranslationFileReader.noPermissionToUse,
-                        getCoordinate(event.getHitBlock() == null ? event.getHitEntity().getLocation() : event.getHitBlock().getLocation())
+                        getCoordinate(event.getHitBlock() == null ? Objects.requireNonNull(event.getHitEntity()).getLocation() : event.getHitBlock().getLocation())
                         , "").replace("{BALL}", TranslationFileReader.catchBallName)));
 
                 event.getEntity().remove();
 
                 if (event.getHitEntity() != null) {
+                    Entity hitEntity = event.getHitEntity();
+                    hitLocation = hitEntity.getLocation();
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                 } else { event.getHitBlock().getWorld().dropItem(event.getHitBlock().getLocation(), Ball.makeBall()); }
 
@@ -87,6 +97,13 @@ public class HitEvent implements Listener {
                     return;
                 }
 
+                if (!landsCheck(player, event.getHitEntity().getLocation())) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
+
                 if (event.getHitEntity() instanceof Tameable tameable) {
                     Player shooter = (Player) event.getEntity().getShooter();
                     if (tameable.isTamed()) {
@@ -110,6 +127,11 @@ public class HitEvent implements Listener {
                 // check if the hitEntity is a catchable entity. on config.yml CatchableEntity
                 for (EntityType entity : catchableEntity) {
                     if (hitEntity.getType().equals(entity) && !(hitEntity instanceof Player) && !checkCustom.equals("CUSTOM")) {
+                        if(Math.random() < ConfigSetting.catchFailRate) {
+                            hitEntity.getWorld().dropItem(hitLocation, Ball.makeBall());
+                            player.sendMessage(ConfigSetting.toChat(TranslationFileReader.catchFail, getCoordinate(hitLocation), entity.toString()));
+                            return;
+                        }
                         // hitEntity.getWorld().dropItem(hitEntity.getLocation(), entityToItemStack(entity));
                         if (!(ConfigSetting.catchSuccessSound.equals("FALSE"))) {
                             player.playSound(player.getLocation(), Sound.valueOf(ConfigSetting.catchSuccessSound), 1f, 1f);
@@ -227,6 +249,23 @@ public class HitEvent implements Listener {
         return true;
     }
 
+    public boolean landsCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
+        LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
+
+        if (world != null) { // Lands is enabled in this world
+            if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
+                // the player is allowed to break blocks with the given material at the given location
+                return true;
+            } else {
+                // the player isn't allowed to break this block in wilderness or a claimed land at this position
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public boolean gfCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("GriefPrevention") == null) { return true; }
 
@@ -249,12 +288,18 @@ public class HitEvent implements Listener {
         return true;
     }
 
+    public boolean rpCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
+        // TODO: Add RedProtect support
+        return true;
+    }
+
     public boolean checkCatchBall(Projectile projectile) {
         if (!(projectile instanceof Snowball)) { return false; }
 
         if (projectile instanceof ThrowableProjectile) {
             ThrowableProjectile throwableProjectile = (ThrowableProjectile) projectile;
-            if (!throwableProjectile.getItem().getItemMeta().equals(Ball.makeBall().getItemMeta())) { return false; }
+            if (!Objects.requireNonNull(throwableProjectile.getItem().getItemMeta()).equals(Ball.makeBall().getItemMeta())) { return false; }
         }
 
         return true;

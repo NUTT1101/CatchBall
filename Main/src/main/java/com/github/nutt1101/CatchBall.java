@@ -9,19 +9,23 @@ import com.github.nutt1101.event.DropGoldEgg;
 import com.github.nutt1101.event.GUIClick;
 import com.github.nutt1101.event.HitEvent;
 import com.github.nutt1101.event.SkullClick;
+import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import net.md_5.bungee.api.ChatColor;
-
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
-    private Boolean pluginStatus = config.getBoolean("Enable");
 
     public static Plugin plugin;
+
+    private void checkPluginHook(String pluginName) {
+        if (this.getServer().getPluginManager().getPlugin(pluginName) != null) {
+            plugin.getLogger().log(Level.INFO, ChatColor.GREEN + pluginName + " Hook!");
+        }
+    }
 
     @Override
     public void onEnable() {
@@ -33,17 +37,13 @@ public class CatchBall extends JavaPlugin{
             registerEvent();
             registerCommand();
 
-            if (this.getServer().getPluginManager().getPlugin("Residence") != null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "Residence Hook!");
-            }
+        checkPluginHook("Residence");
+        checkPluginHook("MythicMobs");
+        checkPluginHook("GriefPrevention");
+        checkPluginHook("Lands");
+        checkPluginHook("PlaceholderAPI");
+        // checkPluginHook("RedProtect");
 
-            if (this.getServer().getPluginManager().getPlugin("MythicMobs") != null) {
-                getServer().getConsoleSender().sendMessage( ChatColor.GREEN + "MythicMobs Hook!");
-            }
-
-            if (this.getServer().getPluginManager().getPlugin("GriefPrevention") != null) {
-                getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "GriefPrevention Hook!");
-            }
         }
 
     // register event
@@ -58,8 +58,10 @@ public class CatchBall extends JavaPlugin{
     // register command
     public void registerCommand() {
         PluginCommand ctbCommand = this.getCommand("ctb");
-        ctbCommand.setExecutor(new Command());
-        ctbCommand.setTabCompleter(new TabComplete());
+        if (ctbCommand != null) {
+            ctbCommand.setExecutor(new Command());
+            ctbCommand.setTabCompleter(new TabComplete());
+        }
     }
 
     public static String getServerVersion() {

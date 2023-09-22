@@ -1,12 +1,20 @@
+# Help us to translate to other languages at Crowdin!
+# https://crowdin.com/project/catchball
+
+# 如果您安裝了 PlaceholderAPI，可在訊息中使用 Placeholder，
+# 但是關於玩家的 Placeholder 可能會導致一些問題。
+
 ConsoleExcuteCommand: "&c此指令只有玩家才可執行。"
 NoPermission: "&c您沒有權限。"
 PlayerInventoryFull: "&a您的背包已滿，物品已掉落在您腳下。"
+
 ArgDoesNotExist: "&a指令使用方法: 
       \n&b/ctb reload - &7重新整理插件設定
       \n&b/ctb list - &7列出所有可捕捉實體與捕捉狀態
       \n&b/ctb add [ALL | (實體名稱)] - &7將指定的實體新增至捕捉清單
       \n&b/ctb remove [ALL | (實體名稱)] - &7將指定的實體從捕捉清單移除
       \n&b/ctb give [玩家名稱] [GoldEgg | CatchBall] [數量] - &7取得特定數量的插件特殊物品"
+
 ArgTooMuch: "&c輸入的指令參數過多。"
 UnknownCommandArgument: "&c未知的指令參數。"
 SuccessGetBall: "&a成功提取 {ITEM}。"
@@ -32,6 +40,7 @@ AllEntityRemoveSuccess: "&e已將可捕捉生物清單清空!"
 PlayerNotExist: "&c請輸入欲給物品的玩家!"
 UnknownOrOfflinePlayer: "&c未找到玩家 {PLAYER}!"
 SuccessGiveItemToPlayer: "&a成功給予玩家 {PLAYER} {ITEM}!"
+catchFail: "哎呀！你捕捉生物失敗了。再試一次吧！"
 
 # /ctb list 介面
 catchableListTitle: "&l捕捉清單設置"

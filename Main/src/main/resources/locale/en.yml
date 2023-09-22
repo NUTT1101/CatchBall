@@ -1,12 +1,20 @@
-ConsoleExecuteCommand: "&cThis command can only be executed by player!"
+# Help us to translate to other languages at Crowdin!
+# https://crowdin.com/project/catchball
+
+# If you installed PlaceholderAPI, you can use Placeholder in messages.
+# But Placeholder about player may cause some issues.
+
+ConsoleExcuteCommand: "&cThis command can only be executed by player!"
 NoPermission: "&cYou have no permission!"
 PlayerInventoryFull: "&aYour inventory is full, so item falls at your feet!"
+
 ArgDoesNotExist: "&aCommands Usage: 
         \n&b/ctb reload &7Reload plugin.
         \n&b/ctb list &7Lists all catchable entities and states.
         \n&b/ctb add [ALL | (entity_name)] &7Add the entity to the catch list.
         \n&b/ctb remove [ALL | (entity_name)] &7Remove the entity from the catchable list.
         \n&b/ctb give [player] [GoldEgg | CatchBall] [Amount] &7Give special items of plugins to player"
+
 ArgTooMuch: "&cToo many Argument!"
 UnknownCommandArgument: "&cUnknown Argument!"
 SuccessGetBall: "&aSuccessfully get {ITEM}!"
@@ -33,6 +41,7 @@ PlayerNotExist: "&cPlease enter a player that want to give the item!"
 UnknownOrOfflinePlayer: "&cPlayer {PLAYER} not find!"
 SuccessGiveItemToPlayer: "&aSuccess give {ITEM} to &a{PLAYER}!"
 invalidItemAmount: "&cInvalid item amount!"
+catchFail: "Oops! Your attempt to catch the creature failed. Try again!"
 
 #/ctb list GUI
 catchableListTitle: "&lCatch List Settings"

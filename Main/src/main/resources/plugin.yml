@@ -1,10 +1,10 @@
 name: CatchBall
 main: com.github.nutt1101.CatchBall
-author: NUTT1101
+author: NUTT1101, MagicTeaMC
 description: "§bA plugin that make entity to be catchable.\n§dContact Me: https://discord.gg/zxN2tXb59v"
-version: "1.1.9"
+version: "1.2.0"
 api-version: 1.16
-softdepend: [Residence, MythicMobs, GriefPrevention]
+softdepend: [Residence, MythicMobs, GriefPrevention, Lands, PlaceholderAPI]
 permissions:
   catchball.op:
     default: op
