@@ -65,12 +65,7 @@ public class CatchBall extends JavaPlugin{
     }
 
     public static String getServerVersion() {
-        return plugin.getServer().getClass().getPackage().getName().split("\\.")[3];
-    }
-
-    public  static  String getRealServerVersion() {
-        String[] versionNodes = CatchBall.getServerVersion().split("_");
-        return versionNodes[0] + "_" + versionNodes[1];
+        return plugin.getServer().getBukkitVersion();
     }
 
 }

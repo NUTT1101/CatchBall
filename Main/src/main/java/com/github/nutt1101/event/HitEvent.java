@@ -255,10 +255,8 @@ public class HitEvent implements Listener {
 
         if (world != null) { // Lands is enabled in this world
             if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
-                // the player is allowed to break blocks with the given material at the given location
                 return true;
             } else {
-                // the player isn't allowed to break this block in wilderness or a claimed land at this position
                 return false;
             }
         }
@@ -308,12 +306,13 @@ public class HitEvent implements Listener {
     public String getIsCustomEntity(Entity hitEntity) {
         String checkCustom = null;
 
-        switch (CatchBall.getRealServerVersion()) {
-            case "v1_20" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
-            case "v1_19" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);
-            case "v1_18" -> checkCustom = NBT_v1_18.isCustomEntity(hitEntity);
-            case "v1_17" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
-            case "v1_16" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
+        switch (CatchBall.getServerVersion()) {
+            case "1.20.2-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20_2.isCustomEntity(hitEntity);
+            case "1.20.1-R0.1-SNAPSHOT", "1.20-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
+            case "1.19.4-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);
+            case "1.18.2-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_18.isCustomEntity(hitEntity);
+            case "1.17.1-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
+            case "1.16.5-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
             default -> {
                 plugin.getLogger().log(Level.INFO, "can not check entity if it not a entity.");
             }

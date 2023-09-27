@@ -5,7 +5,7 @@
     <parent>
         <artifactId>CatchBall</artifactId>
         <groupId>com.github.nutt1101</groupId>
-        <version>1.2.0</version>
+        <version>1.2.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -169,7 +169,16 @@
         <dependency>
             <groupId>com.github.nutt1101</groupId>
             <artifactId>v1_20</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
+            <type>jar</type>
+            <scope>compile</scope>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.nutt1101</groupId>
+            <artifactId>v1_20_2</artifactId>
+            <version>1.2.1</version>
             <type>jar</type>
             <scope>compile</scope>
             <optional>true</optional>
