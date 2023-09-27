@@ -40,6 +40,11 @@ public class ConfigSetting {
     public static boolean ShowParticles;
     public static String CustomParticles;
     public static double catchFailRate;
+    public static boolean UseRes;
+    public static boolean UseGF;
+    public static boolean UseLands;
+    public static boolean UsePAPI;
+    public static boolean UseMM;
 
     /**
      * Initialize or reload the plugin
@@ -156,6 +161,21 @@ public class ConfigSetting {
                 plugin.getLogger().log(Level.INFO, "Plugin is already the latest version");
             }
         }
+
+        UseRes = !config.isSet("UseRes")
+                || config.getBoolean("UseRes");
+
+        UseGF = !config.isSet("UseGF")
+                || config.getBoolean("UseGF");
+
+        UseLands = !config.isSet("UseLands")
+                || config.getBoolean("UseLands");
+
+        UsePAPI = !config.isSet("UsePAPI")
+                || config.getBoolean("UsePAPI");
+
+        UseMM = !config.isSet("UseMM")
+                || config.getBoolean("UseMM");
     }
 
     /**

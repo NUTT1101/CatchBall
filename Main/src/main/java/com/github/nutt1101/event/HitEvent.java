@@ -79,25 +79,25 @@ public class HitEvent implements Listener {
             // hit a entity
             if (event.getHitEntity() != null) {
 
-                if (!resCheck(player, event.getHitEntity().getLocation())) {
+                if (!resCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseRes) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!mmCheck(player, event.getHitEntity())) {
+                if (!mmCheck(player, event.getHitEntity()) && ConfigSetting.UseMM) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!gfCheck(player, event.getHitEntity().getLocation())) {
+                if (!gfCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseGF) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!landsCheck(player, event.getHitEntity().getLocation())) {
+                if (!landsCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseLands) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;

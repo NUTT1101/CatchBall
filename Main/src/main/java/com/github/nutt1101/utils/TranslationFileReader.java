@@ -92,7 +92,7 @@ public class TranslationFileReader {
      public static void load() {
           localeYamlConfig = YamlConfiguration.loadConfiguration(new File(CatchBall.plugin.getDataFolder(), "locale/" + ConfigSetting.locale + ".yml"));
 
-          if (CatchBall.plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+          if (CatchBall.plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI") && ConfigSetting.UsePAPI) {
                consoleExecuteCommand = PlaceholderAPI.setPlaceholders(null, localeYamlConfig.getString("ConsoleExcuteCommand", "&cThis command can only be executed by player!"));
                noPermission = PlaceholderAPI.setPlaceholders(null, localeYamlConfig.getString("NoPermission", "&cYou have no permission!"));
                playerInventoryFull = PlaceholderAPI.setPlaceholders(null, localeYamlConfig.getString("PlayerInventoryFull", "&aYour inventory is full, so item falls at your feet!"));
