@@ -15,11 +15,23 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import java.util.Arrays;
+import java.util.List;
 
 public class CatchBall extends JavaPlugin{
     private FileConfiguration config = this.getConfig();
 
     public static Plugin plugin;
+
+    private static final List<String> SUPPORTED_VERSIONS = Arrays.asList(
+            "1.20.2-R0.1-SNAPSHOT",
+            "1.20.1-R0.1-SNAPSHOT",
+            "1.20-R0.1-SNAPSHOT",
+            "1.19.4-R0.1-SNAPSHOT",
+            "1.18.2-R0.1-SNAPSHOT",
+            "1.17.1-R0.1-SNAPSHOT",
+            "1.16.5-R0.1-SNAPSHOT"
+    );
 
     private void checkPluginHook(String pluginName) {
         if (this.getServer().getPluginManager().getPlugin(pluginName) != null) {
@@ -29,22 +41,33 @@ public class CatchBall extends JavaPlugin{
 
     @Override
     public void onEnable() {
+
         plugin = this;
 
         ConfigSetting.checkConfig();
 
-            new Metrics(this, 12380);
-            registerEvent();
-            registerCommand();
+        new Metrics(this, 12380);
+        registerEvent();
+        registerCommand();
 
-        checkPluginHook("Residence");
-        checkPluginHook("MythicMobs");
-        checkPluginHook("GriefPrevention");
-        checkPluginHook("Lands");
-        checkPluginHook("PlaceholderAPI");
-        // checkPluginHook("RedProtect");
+        String serverVersion = getServer().getBukkitVersion();
 
+        if (!SUPPORTED_VERSIONS.contains(serverVersion)) {
+            getLogger().warning("Your Minecraft version is not supported by CatchBall, we only support " + String.join(", ", SUPPORTED_VERSIONS));
+            getLogger().warning("CatchBall will be automatically disabled");
+            // Disable the plugin
+            getServer().getPluginManager().disablePlugin(this);
+        } else {
+            getLogger().info("CatchBall has been enabled on a supported version: " + serverVersion);
+            checkPluginHook("Residence");
+            checkPluginHook("MythicMobs");
+            checkPluginHook("GriefPrevention");
+            checkPluginHook("Lands");
+            checkPluginHook("PlaceholderAPI");
+            // checkPluginHook("RedProtect");
         }
+
+    }
 
     // register event
     public void registerEvent() {
