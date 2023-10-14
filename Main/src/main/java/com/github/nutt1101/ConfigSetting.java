@@ -46,6 +46,7 @@ public class ConfigSetting {
     public static boolean UsePAPI;
     public static boolean UseMM;
     public static boolean UseRP;
+    public static boolean UseWG;
 
     /**
      * Initialize or reload the plugin
@@ -180,6 +181,9 @@ public class ConfigSetting {
 
         UseRP = !config.isSet("UseRP")
                 || config.getBoolean("UseRP");
+
+        UseWG = !config.isSet("UseWG")
+                || config.getBoolean("UseWG");
     }
 
     /**

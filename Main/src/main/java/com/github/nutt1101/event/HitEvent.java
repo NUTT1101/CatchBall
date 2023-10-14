@@ -111,6 +111,12 @@ public class HitEvent implements Listener {
                     return;
                 }
 
+                if (!wgCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseWG) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
 
                 if (event.getHitEntity() instanceof Tameable tameable) {
                     Player shooter = (Player) event.getEntity().getShooter();
@@ -298,6 +304,11 @@ public class HitEvent implements Listener {
         if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
         Region r = RedProtect.get().getAPI().getRegion(player.getLocation());
         return r != null && r.canSpawnPassives(player);
+    }
+
+    public boolean wgCheck(Player player, Location location) {
+        // TODO: WorldGuard support
+        return true;
     }
 
     public boolean checkCatchBall(Projectile projectile) {

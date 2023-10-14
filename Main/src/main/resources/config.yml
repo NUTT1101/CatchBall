@@ -68,6 +68,9 @@ UseLands: true
 # Disable if you don't want CatchBall check RedProtect flag
 UseRP: true
 
+# Disable if you don't want CatchBall check WorldGuard flag
+UseWG: true
+
 # Disable if you don't want CatchBall to use PlaceholderAPI in messages
 UsePAPI: true
 
