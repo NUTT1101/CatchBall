@@ -259,7 +259,7 @@ public class HitEvent implements Listener {
 
     public boolean landsCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
-        LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
+        LandWorld world = api.getWorld(Objects.requireNonNull(location.getWorld()));
 
         if (world != null) { // Lands is enabled in this world
             if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
