@@ -259,10 +259,10 @@ public class HitEvent implements Listener {
 
     public boolean landsCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
-        LandWorld world = api.getWorld(Objects.requireNonNull(location.getWorld()));
+        LandWorld world = api.getWorld(hitLocation.getWorld());
 
         if (world != null) { // Lands is enabled in this world
-            if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
+            if (world.hasFlag(player, hitLocation, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
                 return true;
             } else {
                 return false;
@@ -297,11 +297,7 @@ public class HitEvent implements Listener {
     public boolean rpCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
         Region r = RedProtect.get().getAPI().getRegion(player.getLocation());
-        if (r != null && r.canSpawnPassives(player)) {
-            return true;
-        } else {
-            return true;
-        }
+        return r != null && r.canSpawnPassives(player);
     }
 
     public boolean checkCatchBall(Projectile projectile) {
