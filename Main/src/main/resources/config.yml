@@ -65,6 +65,9 @@ GriefPreventionFlag:
 # Disable if you don't want CatchBall check Lands flag
 UseLands: true
 
+# Disable if you don't want CatchBall check RedProtect flag
+UseRP: true
+
 # Disable if you don't want CatchBall to use PlaceholderAPI in messages
 UsePAPI: true
 

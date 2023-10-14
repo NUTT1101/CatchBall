@@ -45,6 +45,7 @@ public class ConfigSetting {
     public static boolean UseLands;
     public static boolean UsePAPI;
     public static boolean UseMM;
+    public static boolean UseRP;
 
     /**
      * Initialize or reload the plugin
@@ -176,6 +177,9 @@ public class ConfigSetting {
 
         UseMM = !config.isSet("UseMM")
                 || config.getBoolean("UseMM");
+
+        UseRP = !config.isSet("UseRP")
+                || config.getBoolean("UseRP");
     }
 
     /**

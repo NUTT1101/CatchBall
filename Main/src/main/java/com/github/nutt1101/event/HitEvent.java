@@ -1,5 +1,7 @@
 package com.github.nutt1101.event;
 
+import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
+import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
@@ -98,6 +100,12 @@ public class HitEvent implements Listener {
                 }
 
                 if (!landsCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseLands) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
+                if (!rpCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseRP) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
@@ -288,8 +296,12 @@ public class HitEvent implements Listener {
 
     public boolean rpCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
-        // TODO: Add RedProtect support
-        return true;
+        Region r = RedProtect.get().getAPI().getRegion(player.getLocation());
+        if (r != null && r.canSpawnPassives(player)) {
+            return true;
+        } else {
+            return true;
+        }
     }
 
     public boolean checkCatchBall(Projectile projectile) {
