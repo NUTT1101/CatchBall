@@ -8,6 +8,12 @@ import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.github.nutt1101.*;
 import com.github.nutt1101.items.Ball;
 import com.github.nutt1101.utils.TranslationFileReader;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import me.angeschossen.lands.api.LandsIntegration;
 import me.angeschossen.lands.api.land.LandWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
@@ -37,6 +43,7 @@ public class HitEvent implements Listener {
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
 
     LandsIntegration api;
+    private WorldGuardPlugin worldGuard;
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -307,9 +314,16 @@ public class HitEvent implements Listener {
     }
 
     public boolean wgCheck(Player player, Location location) {
-        // TODO: WorldGuard support
-        return true;
+        if (plugin.getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+            return true;
+        }
+
+        LocalPlayer localPlayer = (LocalPlayer) WorldGuard.getInstance().getPlatform().getSessionManager().get((LocalPlayer) player);
+        ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())).getApplicableRegions(BukkitAdapter.asBlockVector(location));
+
+        return regions.queryState(localPlayer, com.sk89q.worldguard.protection.flags.Flags.DAMAGE_ANIMALS) == StateFlag.State.ALLOW;
     }
+
 
     public boolean checkCatchBall(Projectile projectile) {
         if (!(projectile instanceof Snowball)) { return false; }
