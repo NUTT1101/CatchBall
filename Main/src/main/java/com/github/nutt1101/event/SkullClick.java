@@ -80,7 +80,7 @@ public class SkullClick implements Listener{
                             case "1.17.1-R0.1-SNAPSHOT" -> NBT_v1_17.loadEntityNBT(plugin, entity, data);
                             case "1.16.5-R0.1-SNAPSHOT" -> NBT_v1_16.loadEntityNBT(plugin, entity, data);
                             default -> {
-                                plugin.getLogger().log(Level.INFO, "can not load nbt from skull.");
+                                plugin.getLogger().log(Level.WARNING, "can not load nbt from skull.");
                             }
                         } 
                         

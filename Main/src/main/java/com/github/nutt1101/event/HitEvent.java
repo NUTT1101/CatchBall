@@ -347,7 +347,7 @@ public class HitEvent implements Listener {
             case "1.17.1-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
             case "1.16.5-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
             default -> {
-                plugin.getLogger().log(Level.INFO, "can not check entity if it not a entity.");
+                plugin.getLogger().log(Level.WARNING, "can not check entity if it not a entity.");
             }
         }
 
