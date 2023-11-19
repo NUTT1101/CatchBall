@@ -3,7 +3,7 @@ package com.github.nutt1101;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import org.bukkit.NamespacedKey;
-import org.bukkit.craftbukkit.v1_20_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R2.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
@@ -11,7 +11,7 @@ import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 
-public class NBT_v1_20 {
+public class NBT_v1_20_2 {
 
     public static ItemMeta saveEntityNBT(Plugin plugin, Entity hitEntity, ItemMeta headMeta) {
         net.minecraft.world.entity.Entity nmsEntity = ((CraftEntity) hitEntity).getHandle();

@@ -1,11 +1,19 @@
 package com.github.nutt1101.event;
 
+import br.net.fabiozumbi12.RedProtect.Bukkit.RedProtect;
+import br.net.fabiozumbi12.RedProtect.Bukkit.Region;
 import com.bekvon.bukkit.residence.api.ResidenceApi;
 import com.bekvon.bukkit.residence.containers.Flags;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.github.nutt1101.*;
 import com.github.nutt1101.items.Ball;
 import com.github.nutt1101.utils.TranslationFileReader;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.LocalPlayer;
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.StateFlag;
 import me.angeschossen.lands.api.LandsIntegration;
 import me.angeschossen.lands.api.land.LandWorld;
 import me.ryanhamshire.GriefPrevention.Claim;
@@ -35,6 +43,7 @@ public class HitEvent implements Listener {
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
 
     LandsIntegration api;
+    private WorldGuardPlugin worldGuard;
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -79,25 +88,37 @@ public class HitEvent implements Listener {
             // hit a entity
             if (event.getHitEntity() != null) {
 
-                if (!resCheck(player, event.getHitEntity().getLocation())) {
+                if (!resCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseRes) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!mmCheck(player, event.getHitEntity())) {
+                if (!mmCheck(player, event.getHitEntity()) && ConfigSetting.UseMM) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!gfCheck(player, event.getHitEntity().getLocation())) {
+                if (!gfCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseGF) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
                 }
 
-                if (!landsCheck(player, event.getHitEntity().getLocation())) {
+                if (!landsCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseLands) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
+                if (!rpCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseRP) {
+                    event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
+                    player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
+                    return;
+                }
+
+                if (!wgCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseWG) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
@@ -251,14 +272,12 @@ public class HitEvent implements Listener {
 
     public boolean landsCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("Lands") == null) { return true; }
-        LandWorld world = api.getWorld(Objects.requireNonNull(hitLocation.getWorld()));
+        LandWorld world = api.getWorld(hitLocation.getWorld());
 
         if (world != null) { // Lands is enabled in this world
-            if (world.hasFlag(player, location, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
-                // the player is allowed to break blocks with the given material at the given location
+            if (world.hasFlag(player, hitLocation, null, me.angeschossen.lands.api.flags.Flags.ATTACK_ANIMAL, false)) {
                 return true;
             } else {
-                // the player isn't allowed to break this block in wilderness or a claimed land at this position
                 return false;
             }
         }
@@ -290,9 +309,21 @@ public class HitEvent implements Listener {
 
     public boolean rpCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("RedProtect") == null) { return true; }
-        // TODO: Add RedProtect support
-        return true;
+        Region r = RedProtect.get().getAPI().getRegion(player.getLocation());
+        return r != null && r.canSpawnPassives(player);
     }
+
+    public boolean wgCheck(Player player, Location location) {
+        if (plugin.getServer().getPluginManager().getPlugin("WorldGuard") == null) {
+            return true;
+        }
+
+        LocalPlayer localPlayer = (LocalPlayer) WorldGuard.getInstance().getPlatform().getSessionManager().get((LocalPlayer) player);
+        ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())).getApplicableRegions(BukkitAdapter.asBlockVector(location));
+
+        return regions.queryState(localPlayer, com.sk89q.worldguard.protection.flags.Flags.DAMAGE_ANIMALS) == StateFlag.State.ALLOW;
+    }
+
 
     public boolean checkCatchBall(Projectile projectile) {
         if (!(projectile instanceof Snowball)) { return false; }
@@ -308,12 +339,13 @@ public class HitEvent implements Listener {
     public String getIsCustomEntity(Entity hitEntity) {
         String checkCustom = null;
 
-        switch (CatchBall.getRealServerVersion()) {
-            case "v1_20" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
-            case "v1_19" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);
-            case "v1_18" -> checkCustom = NBT_v1_18.isCustomEntity(hitEntity);
-            case "v1_17" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
-            case "v1_16" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
+        switch (CatchBall.getServerVersion()) {
+            case "1.20.2-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20_2.isCustomEntity(hitEntity);
+            case "1.20.1-R0.1-SNAPSHOT", "1.20-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
+            case "1.19.4-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);
+            case "1.18.2-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_18.isCustomEntity(hitEntity);
+            case "1.17.1-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_17.isCustomEntity(hitEntity);
+            case "1.16.5-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_16.isCustomEntity(hitEntity);
             default -> {
                 plugin.getLogger().log(Level.INFO, "can not check entity if it not a entity.");
             }

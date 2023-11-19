@@ -71,12 +71,13 @@ public class HeadDrop {
             replace("{LOCATION}", location)).collect(Collectors.toList()));
         }
 
-        switch (CatchBall.getRealServerVersion()) {
-            case "v1_20" -> headMeta = NBT_v1_20.saveEntityNBT(plugin, hitEntity, headMeta);
-            case "v1_19" -> headMeta = NBT_v1_19.saveEntityNBT(plugin, hitEntity, headMeta);
-            case "v1_18" -> headMeta = NBT_v1_18.saveEntityNBT(plugin, hitEntity, headMeta);
-            case "v1_17" -> headMeta = NBT_v1_17.saveEntityNBT(plugin, hitEntity, headMeta);
-            case "v1_16" -> headMeta = NBT_v1_16.saveEntityNBT(plugin, hitEntity, headMeta);
+        switch (CatchBall.getServerVersion()) {
+            case "1.20.2-R0.1-SNAPSHOT" -> headMeta = NBT_v1_20_2.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "1.20.1-R0.1-SNAPSHOT", "1.20-R0.1-SNAPSHOT" -> headMeta = NBT_v1_20.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "1.19.4-R0.1-SNAPSHOT" -> headMeta = NBT_v1_19.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "1.18.2-R0.1-SNAPSHOT" -> headMeta = NBT_v1_18.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "1.17.1-R0.1-SNAPSHOT" -> headMeta = NBT_v1_17.saveEntityNBT(plugin, hitEntity, headMeta);
+            case "1.16.5-R0.1-SNAPSHOT" -> headMeta = NBT_v1_16.saveEntityNBT(plugin, hitEntity, headMeta);
             default -> {
                 plugin.getLogger().log(Level.WARNING, "Save entity NBT error.");
             }

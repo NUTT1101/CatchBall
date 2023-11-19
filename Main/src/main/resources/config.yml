@@ -50,13 +50,32 @@ Recipe:
         - "GGG"
         - "GGG"
 
+# Disable if you don't want CatchBall check Residence flag
+UseRes: true
 # Catcher must have this permission flag to capture entity (depends on Plugin Residence)
 ResidenceFlag:
     - animalkilling
 
+# Disable if you don't want CatchBall check GriefPrevention flag
+UseGF: true
 # Catcher must have this permission flag to capture entity (depends on Plugin GriefPrevention)
 GriefPreventionFlag:
     - Access
+
+# Disable if you don't want CatchBall check Lands flag
+UseLands: true
+
+# Disable if you don't want CatchBall check RedProtect flag
+UseRP: true
+
+# Disable if you don't want CatchBall check WorldGuard flag
+UseWG: true
+
+# Disable if you don't want CatchBall to use PlaceholderAPI in messages
+UsePAPI: true
+
+# Disable if you don't want CatchBall check MythicMobs mobs
+UseMM: true
 
 CatchableEntity:
     - SHEEP

@@ -72,12 +72,13 @@ public class SkullClick implements Listener{
 
                         Entity entity = player.getWorld().spawnEntity(clickLocation, entityType);
                         
-                        switch (CatchBall.getRealServerVersion()) {
-                            case "v1_20" -> NBT_v1_20.loadEntityNBT(plugin, entity, data);
-                            case "v1_19" -> NBT_v1_19.loadEntityNBT(plugin, entity, data);
-                            case "v1_18" -> NBT_v1_18.loadEntityNBT(plugin, entity, data);
-                            case "v1_17" -> NBT_v1_17.loadEntityNBT(plugin, entity, data);
-                            case "v1_16" -> NBT_v1_16.loadEntityNBT(plugin, entity, data);
+                        switch (CatchBall.getServerVersion()) {
+                            case "1.20.2-R0.1-SNAPSHOT" -> NBT_v1_20_2.loadEntityNBT(plugin, entity, data);
+                            case "1.20.1-R0.1-SNAPSHOT", "1.20-R0.1-SNAPSHOT" -> NBT_v1_20.loadEntityNBT(plugin, entity, data);
+                            case "1.19.4-R0.1-SNAPSHOT" -> NBT_v1_19.loadEntityNBT(plugin, entity, data);
+                            case "1.18.2-R0.1-SNAPSHOT" -> NBT_v1_18.loadEntityNBT(plugin, entity, data);
+                            case "1.17.1-R0.1-SNAPSHOT" -> NBT_v1_17.loadEntityNBT(plugin, entity, data);
+                            case "1.16.5-R0.1-SNAPSHOT" -> NBT_v1_16.loadEntityNBT(plugin, entity, data);
                             default -> {
                                 plugin.getLogger().log(Level.INFO, "can not load nbt from skull.");
                             }
