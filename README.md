@@ -4,6 +4,11 @@
   </center>
 </body>
 
+Project has moved to a new repository
+========================
+
+This project has been moved to a new repository. Please visit [MagicTeaMC/CatchBall](https://github.com/MagicTeaMC/CatchBall) for the latest updates and development.
+
 ## Introduction:
 - [Spigot(English)](https://www.spigotmc.org/resources/catchball.94867/)
 - [巴哈姆特(ChineseTw)](https://forum.gamer.com.tw/C.php?bsn=18673&snA=192726&tnum=2&subbsn=14)
