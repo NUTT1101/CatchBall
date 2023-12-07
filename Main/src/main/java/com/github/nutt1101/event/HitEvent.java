@@ -43,7 +43,7 @@ public class HitEvent implements Listener {
     private final String[] mmPackage = {"io.lumine.mythic.bukkit.BukkitAPIHelper", "io.lumine.xikage.mythicmobs.api.bukkit.BukkitAPIHelper"};
 
     LandsIntegration api;
-    private WorldGuardPlugin worldGuard;
+    WorldGuardPlugin worldGuard;
     
     /* private final EntityType[] blockEntity = {EntityType.ARROW, EntityType.AREA_EFFECT_CLOUD, EntityType.MINECART_COMMAND, 
         EntityType.EGG, EntityType.DRAGON_FIREBALL, EntityType.ENDER_PEARL, EntityType.THROWN_EXP_BOTTLE , EntityType.EXPERIENCE_ORB,
@@ -118,11 +118,12 @@ public class HitEvent implements Listener {
                     return;
                 }
 
-                if (!wgCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseWG) {
+                // TODO
+                /*if (!wgCheck(player, event.getHitEntity().getLocation()) && ConfigSetting.UseWG) {
                     event.getHitEntity().getWorld().dropItem(event.getHitEntity().getLocation(), Ball.makeBall());
                     player.sendMessage(ConfigSetting.toChat(TranslationFileReader.canNotCatchable, getCoordinate(event.getHitEntity().getLocation()), ""));
                     return;
-                }
+                }*/
 
 
                 if (event.getHitEntity() instanceof Tameable tameable) {
@@ -313,7 +314,8 @@ public class HitEvent implements Listener {
         return r != null && r.canSpawnPassives(player);
     }
 
-    public boolean wgCheck(Player player, Location location) {
+    // TODO
+    /* public boolean wgCheck(Player player, Location location) {
         if (plugin.getServer().getPluginManager().getPlugin("WorldGuard") == null) {
             return true;
         }
@@ -322,7 +324,7 @@ public class HitEvent implements Listener {
         ApplicableRegionSet regions = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(location.getWorld())).getApplicableRegions(BukkitAdapter.asBlockVector(location));
 
         return regions.queryState(localPlayer, com.sk89q.worldguard.protection.flags.Flags.DAMAGE_ANIMALS) == StateFlag.State.ALLOW;
-    }
+    } */
 
 
     public boolean checkCatchBall(Projectile projectile) {
@@ -340,6 +342,7 @@ public class HitEvent implements Listener {
         String checkCustom = null;
 
         switch (CatchBall.getServerVersion()) {
+            case "1.20.3-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20_3.isCustomEntity(hitEntity);
             case "1.20.2-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20_2.isCustomEntity(hitEntity);
             case "1.20.1-R0.1-SNAPSHOT", "1.20-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_20.isCustomEntity(hitEntity);
             case "1.19.4-R0.1-SNAPSHOT" -> checkCustom = NBT_v1_19.isCustomEntity(hitEntity);

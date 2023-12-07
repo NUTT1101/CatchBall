@@ -24,6 +24,7 @@ public class CatchBall extends JavaPlugin{
     public static Plugin plugin;
 
     private static final List<String> SUPPORTED_VERSIONS = Arrays.asList(
+            "1.20.3-R0.1-SNAPSHOT",
             "1.20.2-R0.1-SNAPSHOT",
             "1.20.1-R0.1-SNAPSHOT",
             "1.20-R0.1-SNAPSHOT",
@@ -65,7 +66,8 @@ public class CatchBall extends JavaPlugin{
             checkPluginHook("Lands");
             checkPluginHook("PlaceholderAPI");
             checkPluginHook("RedProtect");
-            checkPluginHook("WorldGuard");
+            // TODO
+            // checkPluginHook("WorldGuard");
         }
 
     }
