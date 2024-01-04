@@ -9,6 +9,8 @@ import com.github.nutt1101.event.DropGoldEgg;
 import com.github.nutt1101.event.GUIClick;
 import com.github.nutt1101.event.HitEvent;
 import com.github.nutt1101.event.SkullClick;
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
 import org.bukkit.ChatColor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -51,6 +53,12 @@ public class CatchBall extends JavaPlugin{
         new Metrics(this, 12380);
         registerEvent();
         registerCommand();
+
+        new UpdateChecker(this, UpdateCheckSource.HANGAR, "Maoyue_OUO/CatchBall/Release") // You can also use Spiget instead of Spigot - Spiget's API is usually much faster up to date.
+                .checkEveryXHours(1) // Check every 24 hours
+                .setDownloadLink("https://hangar.papermc.io/Maoyue_OUO/CatchBall/versions")
+                .setChangelogLink("https://hangar.papermc.io/Maoyue_OUO/CatchBall/versions")
+                .checkNow(); // And check right now
 
         String serverVersion = getServer().getBukkitVersion();
 

@@ -1,13 +1,12 @@
 # Some of the content has been relocated to the locale folder within the configuration file.
+# Discord: https://discord.gg/uQ4UXANnP2
+# GitHub: https://github.com/MagicTeaMC/CatchBall
 
 # Locale, Current support:
 # en(English), zh_tw(繁體中文_臺灣)
 # Help us to translate to other languages at Crowdin!
 # https://crowdin.com/project/catchball
 Locale: en
-
-# Whether the plugin checks for updates and posts the message on the console
-Update-Check: true
 
 # Whether the chickens will drop the "GoldEgg" (true/false)
 ChickenDropGoldEgg: true

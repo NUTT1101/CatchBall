@@ -5,7 +5,7 @@
     <parent>
         <artifactId>CatchBall</artifactId>
         <groupId>com.github.nutt1101</groupId>
-        <version>1.2.1</version>
+        <version>1.2.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -49,20 +49,25 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
 
+        <repository>
+            <id>jeff-media-public</id>
+            <url>https://repo.jeff-media.com/public/</url>
+        </repository>
+
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.2-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.mojang</groupId>
             <artifactId>authlib</artifactId>
-            <version>4.0.43</version>
+            <version>6.0.52</version>
             <scope>provided</scope>
         </dependency>
 
@@ -70,9 +75,9 @@
         <dependency>
             <groupId>res</groupId>
             <artifactId>Residence</artifactId>
-            <version>5.1.3.0</version>
+            <version>5.1.4.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Residence5.1.3.0.jar</systemPath>
+            <systemPath>${project.basedir}/libs/Residence5.1.4.1.jar</systemPath>
         </dependency>
 
         <!-- MythicMobs Api -->
@@ -140,6 +145,13 @@
             <artifactId>worldguard-bukkit</artifactId>
             <version>7.0.9</version>
             <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>SpigotUpdateChecker</artifactId>
+            <version>3.0.3</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--nms-->
@@ -216,6 +228,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.1</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.jeff_media.updatechecker</pattern>
+                            <shadedPattern>com.github.nutt1101.updatechecker</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>

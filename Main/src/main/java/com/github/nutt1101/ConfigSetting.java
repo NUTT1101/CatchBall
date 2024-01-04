@@ -25,7 +25,6 @@ public class ConfigSetting {
     private final static Plugin plugin = CatchBall.plugin;
     public static String locale;
     public static boolean updatecheck;
-    public static String version;
     public static List<EntityType> catchableEntity = new ArrayList<>();
     public static boolean chickenDropGoldEgg;
     public static int chickenDropGoldEggChance;
@@ -69,8 +68,6 @@ public class ConfigSetting {
         chickenDropGoldEgg = !config.isSet("ChickenDropGoldEgg") || config.getBoolean("ChickenDropGoldEgg");
 
         updatecheck = !config.isSet("Update-Check") || config.getBoolean("Update-Check");
-
-        version = getPluginVersion();
 
         entityFile = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), "entity.yml"));
 
@@ -152,17 +149,6 @@ public class ConfigSetting {
 
                 // There is a common issue that you put an unknown entityType in the list of CatchableEntity
             } catch (IllegalArgumentException e) {
-            }
-        }
-
-        if (updatecheck) {
-            if (!isLatestVersion(plugin.getDescription().getVersion(), version)) {
-                plugin.getLogger().log(Level.WARNING,
-                        "Plugin has a new update available: " + version);
-                plugin.getLogger().log(Level.WARNING,
-                        "Download here: https://www.spigotmc.org/resources/catchball.94867/");
-            } else {
-                plugin.getLogger().log(Level.INFO, "Plugin is already the latest version");
             }
         }
 
@@ -257,29 +243,6 @@ public class ConfigSetting {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /**
-     * Check the version of the plugin.
-     *
-     * @return version of the plugin
-     */
-    public static String getPluginVersion() {
-        try {
-            InputStream inputStream = new URL(("https://api.spigotmc.org/legacy/update.php?resource=94867"))
-                    .openStream();
-            Scanner scanner = new Scanner(inputStream);
-            String version = scanner.next().replace("v", "");
-
-            scanner.close();
-
-            return version;
-        } catch (Exception e) {
-            plugin.getLogger().log(Level.WARNING,
-                    ChatColor.RED + "Cannot check for plugin version: " + e.getMessage());
-        }
-
-        return "";
     }
 
     public static boolean isLatestVersion(String current, String latest) {
